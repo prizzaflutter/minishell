@@ -4,7 +4,7 @@ CFLAGS = -Wall -Werror -Wextra -Iincludes
 
 NAME = minishell
 
-HEADER = includes/minishell.h
+HEADER = includes/minishell.h 
 
 SRCSPARS = srcs/parsing/test1.c 
 SRCSEXEC = srcs/execution/test.c srcs/execution/main.c
