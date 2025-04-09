@@ -6,12 +6,13 @@ NAME = minishell
 
 HEADER = includes/minishell.h 
 
-SRC = srcs/execution/builtin/echo.c
+SRC = srcs/execution/builtin/echo.c srcs/execution/main.c lib/ft_strncmp.c 
 
-SRCPARS = srcs/parsing/parse.c srcs/parsing/main.c lib/ft_lstadd
+SRCPARS = 
 
 OBJ = $(SRC:%.c=%.o)
 OBJPARS = $(SRCPARS:%.c=%.o)
+
 all: $(NAME)
 
 $(NAME): $(OBJ) $(HEADER)
