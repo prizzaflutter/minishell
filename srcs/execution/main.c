@@ -3,17 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 13:12:44 by aykassim          #+#    #+#             */
-/*   Updated: 2025/04/08 13:14:35 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/04/09 10:08:42 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <readline/readline.h>
+#include <readline/history.h>
 
-int main()
-{
-	printf("Hello, World!\n");
-	return 0;
+int main(int argc, char *argv[], char **env) {
+	char *input;
+	while ((input = readline(">> ")) != NULL)
+	{
+		if (*input)
+			add_history(input);
+		free(input);
+	}
+	return (0);
 }

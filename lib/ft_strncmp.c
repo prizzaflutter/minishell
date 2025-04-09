@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/08 13:13:05 by aykassim          #+#    #+#             */
-/*   Updated: 2025/04/09 09:49:21 by iaskour          ###   ########.fr       */
+/*   Created: 2024/10/28 15:16:13 by iaskour           #+#    #+#             */
+/*   Updated: 2024/11/08 19:42:27 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <string.h>
+#include "libft.h"
 
-typedef struct s_command {
-	char **cmd;
-	char **inoutfile;
-	char *next; 
-	char *prev;
-} t_command;
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	size_t	i;
 
-#endif
+	i = 0;
+	while (s1[i] != '\0' && s2[i] != '\0' && n != 0 && s1[i] == s2[i])
+	{
+		i++;
+		n--;
+	}
+	if (n == 0)
+		return (0);
+	return ((unsigned char)s1[i] - (unsigned char)(s2[i]));
+}
