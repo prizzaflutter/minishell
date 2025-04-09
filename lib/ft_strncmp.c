@@ -6,11 +6,11 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 15:16:13 by iaskour           #+#    #+#             */
-/*   Updated: 2024/11/08 19:42:27 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/04/09 10:36:14 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {

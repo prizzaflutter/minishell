@@ -6,29 +6,20 @@ NAME = minishell
 
 HEADER = includes/minishell.h 
 
-SRCSPARS = srcs/parsing/test1.c 
-SRCSEXEC = srcs/execution/test.c srcs/execution/main.c
+SRC = srcs/execution/builtin/echo.c srcs/execution/main.c 
 
-OBJSPAR = $(SRCSPARS:srcs/parsing/%.c=obj/%.o) 
-OBJSEXEC = $(SRCSEXEC:srcs/execution/%.c=obj/%.o)
-
-OBJ = $(OBJSPAR) $(OBJSEXEC)
+OBJ = $(SRC:%.c=%.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJ) $(HEADER)
 	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) 
 
-obj/%.o: srcs/parsing/%.c $(HEADER)
-	@mkdir -p obj
-	$(CC) $(CFLAGS) -c $< -o $@
-
-obj/%.o: srcs/execution/%.c $(HEADER)
-	@mkdir -p obj
+%.o: %.c 
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -rf obj
+	rm -rf $(OBJ)
 
 fclean: clean
 	rm -f $(NAME)
