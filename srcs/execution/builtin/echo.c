@@ -6,7 +6,7 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 11:36:19 by iaskour           #+#    #+#             */
-/*   Updated: 2025/04/09 11:36:20 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/04/09 11:48:51 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void my_echo(char **argv)
 		new_line = 1;
 		i++;
 	}
-	while (argv[i])
+	while (argv[i])  
 	{
 		printf("%s", argv[i]);
 		if (argv[i + 1])
