@@ -24,5 +24,7 @@ $(NAME): $(OBJ) $(HEADER)
 clean:
 	rm -rf $(OBJ) $(OBJPARS)
 
+fclean: clean
+	rm -f $(NAME)
 
 re: fclean all
