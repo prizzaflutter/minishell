@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
+/*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/09 12:07:33 by aykassim          #+#    #+#             */
-/*   Updated: 2025/04/09 11:00:12 by aykassim         ###   ########.fr       */
+/*   Created: 2025/04/09 11:19:13 by aykassim          #+#    #+#             */
+/*   Updated: 2025/04/09 11:19:16 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token	*ft_lstnew(char *content)
+t_token	*ft_lstlast(t_token *lst)
 {
-	t_token	*nvtlist;
+	t_token	*current;
 
-	nvtlist = (t_token *) malloc(sizeof(t_token));
-	if (!nvtlist)
+	if (!lst)
 		return (NULL);
-	nvtlist->str = content;
-	nvtlist->type = 0;
-	nvtlist->next = NULL;
-	return (nvtlist);
+	current = lst;
+	while (current -> next != NULL)
+		current = current -> next;
+	return (current);
 }
