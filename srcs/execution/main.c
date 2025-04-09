@@ -6,14 +6,11 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 13:12:44 by aykassim          #+#    #+#             */
-/*   Updated: 2025/04/09 10:44:12 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/04/09 11:38:38 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+#include "minishell.h"
 
 int main(int argc, char *argv[], char **env) {
 	(void)argc;
