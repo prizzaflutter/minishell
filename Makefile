@@ -8,7 +8,7 @@ HEADER = includes/minishell.h
 
 SRC = srcs/execution/builtin/echo.c
 
-SRCPARS = srcs/parsing/parse.c srcs/parsing/main.c lib/ft_lstadd
+SRCPARS = srcs/parsing/parse.c srcs/parsing/main.c lib/ft_lstadd_back.c lib/ft_lstlast.c lib/ft_lstnew.c lib/ft_split.c 
 
 OBJ = $(SRC:%.c=%.o)
 OBJPARS = $(SRCPARS:%.c=%.o)

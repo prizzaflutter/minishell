@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 13:13:05 by aykassim          #+#    #+#             */
-/*   Updated: 2025/04/09 11:18:42 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/04/09 11:41:30 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,6 @@ void my_echo(char **argv);
 t_token	*ft_lstnew(char *content);
 void	ft_lstadd_back(t_token **lst, t_token *new);
 t_token	*ft_lstlast(t_token *lst);
+char	**ft_split(char const *str, char charset);
 
 #endif
