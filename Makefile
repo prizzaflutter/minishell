@@ -2,21 +2,24 @@ CC = cc
 
 CFLAGS = -Wall -Werror -Wextra -Iincludes
 
+LDFLAGS = -lreadline 
+
 NAME = minishell
 
 HEADER = includes/minishell.h 
 
-SRC = srcs/execution/builtin/echo.c srcs/execution/main.c lib/ft_strncmp.c 
+SRC = srcs/execution/builtin/echo.c lib/ft_strncmp.c 
 
-SRCPARS = srcs/parsing/parse.c srcs/parsing/main.c lib/ft_lstadd_back.c lib/ft_lstlast.c lib/ft_lstnew.c lib/ft_split.c 
+SRCPARS = srcs/parsing/main.c srcs/parsing/parsing.c lib/ft_lstadd_back.c lib/ft_lstlast.c \
+	lib/ft_lstnew.c lib/ft_split.c 
 
 OBJ = $(SRC:%.c=%.o)
 OBJPARS = $(SRCPARS:%.c=%.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJ) $(HEADER)
-	$(CC) $(CFLAGS) $(OBJ) $(OBJPARS) -o $(NAME) 
+$(NAME): $(OBJ) $(OBJPARS) $(HEADER)
+	$(CC) $(CFLAGS) $(OBJ) $(OBJPARS) $(LDFLAGS) -o $(NAME) 
 
 %.o: %.c 
 	$(CC) $(CFLAGS) -c $< -o $@
