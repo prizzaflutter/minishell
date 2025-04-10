@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/09 10:37:45 by aykassim          #+#    #+#             */
-/*   Updated: 2025/04/09 11:45:51 by aykassim         ###   ########.fr       */
+/*   Created: 2024/10/26 11:46:24 by iaskour           #+#    #+#             */
+/*   Updated: 2025/04/10 14:01:22 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int main(int argc, char *argv[], char **env) {
-	char *input;
-	while ((input = readline(">> >>>>")) != NULL)
-	{
-		if (*input)
-			add_history(input);
-		free(input);
-	}
-	return (0);
+size_t	ft_strlen(const char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] != '\0')
+		i++;
+	return (i);
 }

@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   free_args.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/09 10:37:45 by aykassim          #+#    #+#             */
-/*   Updated: 2025/04/09 11:45:51 by aykassim         ###   ########.fr       */
+/*   Created: 2025/03/13 11:39:52 by iaskour           #+#    #+#             */
+/*   Updated: 2025/04/10 11:46:05 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int main(int argc, char *argv[], char **env) {
-	char *input;
-	while ((input = readline(">> >>>>")) != NULL)
+void	free_args(char **cmd_args)
+{
+	int	i;
+
+	i = 0;
+	if (!cmd_args)
+		return ;
+	while (cmd_args[i])
 	{
-		if (*input)
-			add_history(input);
-		free(input);
+		free(cmd_args[i]);
+		i++;
 	}
-	return (0);
+	free(cmd_args);
 }
