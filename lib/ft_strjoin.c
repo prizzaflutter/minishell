@@ -1,33 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/09 11:36:19 by iaskour           #+#    #+#             */
-/*   Updated: 2025/04/09 11:48:51 by iaskour          ###   ########.fr       */
+/*   Created: 2024/10/27 18:56:46 by iaskour           #+#    #+#             */
+/*   Updated: 2025/04/10 14:00:24 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void my_echo(char **argv)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	int i = 0;
-	int new_line = 0;
-	if (argv[1] && ft_strncmp(argv[1], "-n", 2) == 0)
+	char	*str;
+	size_t	lenght;
+	size_t	i;
+	size_t	j;
+
+	if (s1 == NULL || s2 == NULL)
+		return (NULL);
+	lenght = (ft_strlen(s1) + ft_strlen(s2));
+	str = (char *)malloc((lenght + 1) * sizeof(char));
+	if (str == NULL)
+		return (NULL);
+	i = 0;
+	while (s1 != NULL && i < ft_strlen(s1))
 	{
-		new_line = 1;
+		str[i] = s1[i];
 		i++;
 	}
-	while (argv[i])  
-	{
-		printf("%s", argv[i]);
-		if (argv[i + 1])
-			printf(" ");
-		i++;
-	}
-	if (new_line == 1)
-		printf("\n");
+	j = 0;
+	while (s2 != NULL && i < lenght)
+		str[i++] = s2[j++];
+	str[i] = '\0';
+	return (str);
 }

@@ -1,33 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   free_args.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/09 11:36:19 by iaskour           #+#    #+#             */
-/*   Updated: 2025/04/09 11:48:51 by iaskour          ###   ########.fr       */
+/*   Created: 2025/03/13 11:39:52 by iaskour           #+#    #+#             */
+/*   Updated: 2025/04/10 11:46:05 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void my_echo(char **argv)
+void	free_args(char **cmd_args)
 {
-	int i = 0;
-	int new_line = 0;
-	if (argv[1] && ft_strncmp(argv[1], "-n", 2) == 0)
+	int	i;
+
+	i = 0;
+	if (!cmd_args)
+		return ;
+	while (cmd_args[i])
 	{
-		new_line = 1;
+		free(cmd_args[i]);
 		i++;
 	}
-	while (argv[i])  
-	{
-		printf("%s", argv[i]);
-		if (argv[i + 1])
-			printf(" ");
-		i++;
-	}
-	if (new_line == 1)
-		printf("\n");
+	free(cmd_args);
 }
