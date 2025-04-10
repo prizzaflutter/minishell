@@ -46,5 +46,5 @@ t_token	*ft_lstnew(char *content);
 void	ft_lstadd_back(t_token **lst, t_token *new);
 t_token	*ft_lstlast(t_token *lst);
 char	**ft_split(char const *str, char charset);
-
+char	*add_space_inputs(char *str);
 #endif
