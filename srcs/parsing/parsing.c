@@ -1,28 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/09 10:35:25 by aykassim          #+#    #+#             */
-/*   Updated: 2025/04/10 16:10:33 by iaskour          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-// #include "minishell.h"
-
-#include <libc.h>
-
-size_t	ft_strlen(const char *s)
-{
-	size_t	i;
-
-	i = 0;
-	while (s[i] != '\0')
-		i++;
-	return (i);
-}
+#include <minishell.h>
 
 char	*add_space_inputs(char *str)
 {
