@@ -32,6 +32,7 @@ enum token_type {
 	HEREDOC,
 	APPEND
 };
+
 // EXEC FUNCTIONS
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
 void my_echo(char **argv);

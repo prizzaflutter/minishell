@@ -6,23 +6,13 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:35:25 by aykassim          #+#    #+#             */
-/*   Updated: 2025/04/10 15:48:37 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/04/11 17:42:10 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // #include "minishell.h"
 
-#include <libc.h>
-
-size_t	ft_strlen(const char *s)
-{
-	size_t	i;
-
-	i = 0;
-	while (s[i] != '\0')
-		i++;
-	return (i);
-}
+#include <minishell.h>
 
 char	*add_space_inputs(char *str)
 {
@@ -113,10 +103,12 @@ char	*add_space_inputs(char *str)
 	return (new_str);
 }
 
-int main()
-{
-	char *new_str = add_space_inputs("echo \"hel 'test' lo\" | grep 'hi' > file.txt");
-	printf("New string: %s\n", new_str);
-	free(new_str);
-	return 0;
-}
+
+
+// int main()
+// {
+// 	char *new_str = add_space_inputs("echo \"hel 'test' lo\" | grep 'hi' > file.txt");
+// 	printf("New string: %s\n", new_str);
+// 	free(new_str);
+// 	return 0;
+// }
