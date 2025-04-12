@@ -15,7 +15,7 @@ char *configure_path(char *cmd, char **env)
 			&& !access(cmd, F_OK) && !access(cmd, X_OK))
 			cmd_path = cmd;
 		else
-			return (ft_printf(2, "Error: Command not found : %s\n", cmd), NULL);
+			return (ft_printf(2, "Error: Command not found over here= : %s\n", cmd), NULL);
 	}
 	return (cmd_path);
 }
@@ -104,10 +104,21 @@ int handle_multiple_command(t_command *cmd, char **env)
 					out_file = open(current_cmd->inoutfile[1], O_WRONLY | O_CREAT | O_TRUNC, 0642);
 				if (out_file == -1)
 				{
-					ft_printf(2, "error in file descriptor\n");
+					ft_printf(2, "error in file descriptor 1\n");
 					return 0;
 				}
 				dup2(out_file, STDOUT_FILENO);
+				close(out_file);
+			}
+			else if (current_cmd->inoutfile && current_cmd->inoutfile[0] && !ft_strncmp(current_cmd->inoutfile[0], "<", 1))
+			{
+				out_file = open(current_cmd->inoutfile[1], O_RDONLY);
+				if (out_file == -1)
+				{
+					ft_printf(2, "error in file descriptor 2\n");
+					return 0;
+				}
+				dup2(out_file, STDIN_FILENO);
 				close(out_file);
 			}
 			else if (current_cmd->next)
@@ -156,12 +167,29 @@ void handle_single_command(t_command *cmd, char **env)
 			out_file = open(cmd->inoutfile[1], O_WRONLY | O_CREAT | O_TRUNC, 0642);
 		if (out_file == -1)
 		{
-			printf("error in file descriptor\n");
+			printf("error in file descriptor singlle command 1\n");
 			return ;
 		}
 		dup2(out_file, STDOUT_FILENO);
 		close(out_file);
 	}
+	else if (cmd->inoutfile && cmd->inoutfile[0] && !ft_strncmp(cmd->inoutfile[0], "<<", 2))
+	{
+		handle_herdoc_infile(cmd);
+	}
+	else if (cmd->inoutfile && cmd->inoutfile[0] && !ft_strncmp(cmd->inoutfile[0], "<", 1))
+	{
+		out_file = open(cmd->inoutfile[1], O_RDONLY);
+		if (out_file == -1)
+		{
+			printf("error in file descriptor single command 2\n");
+			return ;
+		}
+		dup2(out_file, STDIN_FILENO);
+		close(out_file);
+	}
+	if (cmd->cmd[0] == NULL)
+		return ;
 	pid = fork();
 	if (pid == -1)
 	{
@@ -186,13 +214,6 @@ void execute_command(t_command *cmd, char **env)
 {
 	int cmd_size = 0;
 
-	printf("execute_command\n");
-	printf("cmd->cmd[0] is : %s\n", cmd->cmd[0]);
-	if (!cmd || !cmd->cmd || !cmd->cmd[0])
-	{
-		perror("Invalid command");
-		return;
-	}
 	cmd_size = ft_cmdsize(cmd);
 	if (cmd_size > 1)
 	{
@@ -234,14 +255,30 @@ char **get_command_args() {
 }
 
 char **get_redirection() {
-    char **redir = calloc(3, sizeof(char *));
-    redir[0] = get_line("Redirection operator (>, >> or ENTER to skip): ");
+    char **redir = calloc(4, sizeof(char *));
+    redir[0] = get_line("Redirection (<, >, >>, << or ENTER to skip): ");
+
     if (redir[0] && strlen(redir[0]) > 0) {
-        redir[1] = get_line("Redirection file: ");
+        if (strcmp(redir[0], "<") == 0)
+            redir[2] = strdup("in");
+        else if (strcmp(redir[0], ">") == 0 || strcmp(redir[0], ">>") == 0)
+            redir[2] = strdup("out");
+        else if (strcmp(redir[0], "<<") == 0)
+            redir[2] = strdup("heredoc");
+        else {
+            printf("Invalid redirection operator.\n");
+            free(redir[0]);
+            free(redir);
+            return NULL;
+        }
+
+        redir[1] = get_line(strcmp(redir[2], "heredoc") == 0 ?
+                            "Here-document delimiter: " : "Redirection file: ");
     } else {
         free(redir[0]);
         redir[0] = NULL;
     }
+
     return redir;
 }
 
@@ -255,8 +292,8 @@ t_command *create_command() {
 t_command *build_command_list() {
     t_command *head = NULL;
     t_command *prev = NULL;
-
     int index = 1;
+
     while (1) {
         printf("\n--- Command #%d ---\n", index++);
         t_command *cmd = create_command();
@@ -279,10 +316,20 @@ t_command *build_command_list() {
     return head;
 }
 
+
 int main(int argc, char *argv[], char **env) {
 	(void)argc;
 	(void)argv;
-    t_command *cmd_list = build_command_list();
+	t_command *cmd_list = build_command_list();
+	// t_command * cmd = malloc(sizeof(t_command));
+	// cmd->cmd = malloc(sizeof(char *) * 1);
+	// cmd->cmd[0] = NULL;
+	// cmd->inoutfile = malloc(sizeof(char *) * 3);
+	// cmd->inoutfile[0] = strdup("<<");
+	// cmd->inoutfile[1] = strdup("EOF");
+	// cmd->inoutfile[2] = NULL;
+	// cmd->next = NULL;
+	// cmd->prev = NULL;
 	execute_command(cmd_list, env);  // Pass your environment variables here
-    return 0;
+	return 0;
 }
