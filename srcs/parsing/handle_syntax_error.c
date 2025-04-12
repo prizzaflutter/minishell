@@ -1,29 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   handle_syntax_error.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/09 11:19:06 by aykassim          #+#    #+#             */
-/*   Updated: 2025/04/12 11:49:12 by aykassim         ###   ########.fr       */
+/*   Created: 2025/04/12 15:20:58 by aykassim          #+#    #+#             */
+/*   Updated: 2025/04/12 15:21:20 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token	*ft_lstnew(char *content)
-{
-	t_token	*nvtlist;
-
-	nvtlist = (t_token *) malloc(sizeof(t_token));
-	if (!nvtlist)
-	{
-		printf("Error in malloc");
-		return (NULL);
-	}
-	nvtlist->str = content;
-	nvtlist->type = define_token_type(content);
-	nvtlist->next = NULL;
-	return (nvtlist);
-}

@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/09 11:19:06 by aykassim          #+#    #+#             */
-/*   Updated: 2025/04/12 11:49:12 by aykassim         ###   ########.fr       */
+/*   Created: 2024/10/31 10:40:59 by iaskour           #+#    #+#             */
+/*   Updated: 2025/04/11 10:33:05 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token	*ft_lstnew(char *content)
+void	ft_putstr_fd(char *s, int fd)
 {
-	t_token	*nvtlist;
+	int	i;
 
-	nvtlist = (t_token *) malloc(sizeof(t_token));
-	if (!nvtlist)
+	i = 0;
+	if (s == NULL || fd < 0)
+		return ;
+	while (s[i])
 	{
-		printf("Error in malloc");
-		return (NULL);
+		ft_putchar_fd(s[i], fd);
+		i++;
 	}
-	nvtlist->str = content;
-	nvtlist->type = define_token_type(content);
-	nvtlist->next = NULL;
-	return (nvtlist);
 }

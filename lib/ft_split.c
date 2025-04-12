@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 11:22:20 by aykassim          #+#    #+#             */
-/*   Updated: 2025/04/11 18:23:45 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/04/12 11:13:11 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,16 +158,4 @@ char	**ft_split(char const *s, char c)
 		return (NULL);
 	}
 	return (strings);
-}
-		
-int main()
-{
-	char *str = "aaaaa 'worldthis' is \"a test\" aaaa'qwertyui' string";
-	char **result = ft_split(str, ' ');
-	int i = 0;
-	while (result[i])
-	{
-		printf("word[%d]: %s\n", i+1, result[i]);
-		i++;
-	}
 }

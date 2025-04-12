@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   ft_cmdsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/09 11:19:06 by aykassim          #+#    #+#             */
-/*   Updated: 2025/04/12 11:49:12 by aykassim         ###   ########.fr       */
+/*   Created: 2024/11/02 10:42:41 by iaskour           #+#    #+#             */
+/*   Updated: 2025/04/11 11:35:32 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token	*ft_lstnew(char *content)
+int	ft_cmdsize(t_command *cmd)
 {
-	t_token	*nvtlist;
+	int	counter;
 
-	nvtlist = (t_token *) malloc(sizeof(t_token));
-	if (!nvtlist)
+	counter = 0;
+	if (cmd == NULL)
+		return (counter);
+	while (cmd->next != NULL)
 	{
-		printf("Error in malloc");
-		return (NULL);
+		counter++;
+		cmd = cmd->next;
 	}
-	nvtlist->str = content;
-	nvtlist->type = define_token_type(content);
-	nvtlist->next = NULL;
-	return (nvtlist);
+	counter++;
+	return (counter);
 }
