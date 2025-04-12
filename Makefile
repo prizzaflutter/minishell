@@ -9,12 +9,12 @@ NAME = minishell
 HEADER = includes/minishell.h 
 
 
-SRCPARS = srcs/parsing/main.c srcs/parsing/parsing.c lib/ft_lstadd_back.c lib/ft_lstlast.c \
+SRCPARS =  srcs/parsing/parsing.c lib/ft_lstadd_back.c lib/ft_lstlast.c \
 	lib/ft_lstnew.c lib/ft_split.c  lib/ft_strlen.c
   
 SRC = srcs/execution/builtin/echo.c srcs/execution/main.c lib/ft_strncmp.c srcs/execution/builtin/cd.c \
 		srcs/execution/free/free_args.c srcs/execution/get_cmd_path.c lib/ft_strjoin.c lib/ft_printf/ft_printf.c lib/ft_putchar_fd.c \
-		lib/ft_putstr_fd.c lib/ft_cmdsize.c 
+		lib/ft_putstr_fd.c lib/ft_cmdsize.c srcs/execution/her_doc.c lib/get_next_line/get_next_line.c lib/get_next_line/get_next_line_utils.c \
 
 
 
