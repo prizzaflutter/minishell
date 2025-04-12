@@ -47,6 +47,7 @@ void	ft_printf(int fd, const char *format, ...);
 void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 int		ft_cmdsize(t_command *cmd);
+int		handle_herdoc_infile(t_command *cmd);
 
 
 
