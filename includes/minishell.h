@@ -20,12 +20,6 @@ typedef struct s_command {
 	void *prev;
 } t_command;
 
-typedef struct s_token {
-	char *str;
-	int type;
-	struct s_token *next;
-} t_token;
-
 enum token_type {
 	WORD,
 	PIPE,
@@ -34,6 +28,13 @@ enum token_type {
 	HEREDOC,
 	APPEND
 };
+
+typedef struct s_token {
+	char *str;
+	enum token_type type;
+	struct s_token *next;
+} t_token;
+
 
 // EXEC FUNCTIONS
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
@@ -56,4 +57,7 @@ void	ft_lstadd_back(t_token **lst, t_token *new);
 t_token	*ft_lstlast(t_token *lst);
 char	**ft_split(char const *str, char charset);
 char	*add_space_inputs(char *str);
+int		ft_strcmp(const char *s1, const char *s2);
+int		add_command_element(char *str, t_token **tokens);
+int		define_token_type(char *str);
 #endif

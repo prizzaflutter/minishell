@@ -1,29 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/09 11:19:06 by aykassim          #+#    #+#             */
-/*   Updated: 2025/04/12 11:49:12 by aykassim         ###   ########.fr       */
+/*   Created: 2025/04/12 11:47:30 by aykassim          #+#    #+#             */
+/*   Updated: 2025/04/12 11:48:19 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token	*ft_lstnew(char *content)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	t_token	*nvtlist;
+	size_t	i;
 
-	nvtlist = (t_token *) malloc(sizeof(t_token));
-	if (!nvtlist)
-	{
-		printf("Error in malloc");
-		return (NULL);
-	}
-	nvtlist->str = content;
-	nvtlist->type = define_token_type(content);
-	nvtlist->next = NULL;
-	return (nvtlist);
+	if (!s1 || !s2)
+		return (-1);
+	i = 0;
+	while (s1[i] && s2[i] && s1[i] == s2[i])
+		i++;
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
