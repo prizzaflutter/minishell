@@ -25,24 +25,24 @@ int	open_here_doc(int *fd1, int *fd2)
 	return (1);
 }
 
-int	handle_herdoc_infile(t_command *cmd)
-{
-	char	*line;
-	int		fd1;
-	int		fd2;
+// int	handle_herdoc_infile(t_command *cmd)
+// {
+// 	char	*line;
+// 	int		fd1;
+// 	int		fd2;
 
-	if (!open_here_doc(&fd1, &fd2))
-		return (0);
-	ft_printf(0, "> ");
-	line = get_next_line(0);
-	while (line)
-	{
-		if (!handle_herdoc(fd1, line, cmd))
-			break ;
-		line = get_next_line(0);
-	}
-	close (fd1);
-	dup2(fd2, STDIN_FILENO);
-	close(fd2);
-	return (1);
-}
+// 	if (!open_here_doc(&fd1, &fd2))
+// 		return (0);
+// 	ft_printf(0, "> ");
+// 	line = get_next_line(0);
+// 	while (line)
+// 	{
+// 		if (!handle_herdoc(fd1, line, cmd))
+// 			break ;
+// 		line = get_next_line(0);
+// 	}
+// 	close (fd1);
+// 	dup2(fd2, STDIN_FILENO);
+// 	close(fd2);
+// 	return (1);
+// }
