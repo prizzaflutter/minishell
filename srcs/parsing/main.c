@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:37:45 by aykassim          #+#    #+#             */
-/*   Updated: 2025/04/15 11:21:10 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/04/15 11:42:51 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,21 @@ int free_list(t_token **tokens)
 // }
 
 
-int main()
+int main(int argc, char **argv, char **env)
 {
+	(void)argc;
+	(void)argv;
+	int length = env_size(env);
+	printf("the length of env is : %d\n", length);
+	t_env *env_struct = malloc(sizeof(t_env) * length);
+	fill_env(env_struct, env);
+	t_env *current = env_struct;
+	while (current)
+	{
+		printf("Key : %s\n", current->key);
+		printf("Value : %s\n", current->value);
+		current = current->next;
+	}
 	char *str = "aaaaa ''$USER'' aaaaa";
 
 	printf("the value is .%s.\n", handle_expand(str));

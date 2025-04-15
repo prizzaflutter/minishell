@@ -1,5 +1,12 @@
 {
+<<<<<<< HEAD
 	"files.associations": {
 		"minishell.h": "c"
 	}
+=======
+    "files.associations": {
+        "iterator": "c",
+        "minishell.h": "c"
+    }
+>>>>>>> 378a91a49bd63858f967128eff09e594af60e3b6
 }
