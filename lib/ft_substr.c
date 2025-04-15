@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/31 10:40:59 by iaskour           #+#    #+#             */
-/*   Updated: 2025/04/13 16:51:05 by aykassim         ###   ########.fr       */
+/*   Created: 2025/04/15 10:46:13 by aykassim          #+#    #+#             */
+/*   Updated: 2025/04/15 10:46:21 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_putstr_fd(char *s, int fd)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	int	i;
+	size_t	slen;
+	char	*res;
 
-	i = 0;
-	if (s == NULL || fd < 0)
-		return ;
-	while (s[i])
-	{
-		ft_putchar_fd(s[i], fd);
-		i++;
-	}
+	if (!s)
+		return (NULL);
+	slen = ft_strlen(s);
+	if (start >= slen)
+		return (ft_strdup(""));
+	if (len > slen - start)
+		len = slen - start;
+	res = malloc(len + 1);
+	if (!res)
+		return (NULL);
+	ft_strlcpy(res, s + start, len + 1);
+	return (res);
 }

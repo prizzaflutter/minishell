@@ -30,7 +30,8 @@ char	*add_space_inputs(char *str)
 		}
 		else if (!is_quote)
 		{
-			if ((str[i] == '<' && str[i + 1] == '<') || (str[i] == '>' && str[i + 1] == '>'))
+			if ((str[i] == '<' && str[i + 1] == '<')
+				|| (str[i] == '>' && str[i + 1] == '>'))
 			{
 				cm++;
 				i+=2;
@@ -118,17 +119,12 @@ int add_command_element(char *str, t_token **tokens)
 	res = ft_split(str, ' ');
 	if (!res)
 		return (printf("Error in ft_split"), 0);
-	if (!res)
-		return (printf("Error in split"), 0);
 	i = 0;
 	while (res[i])
 	{
 		new_token = ft_lstnew(res[i]);
 		if (!new_token)
-		{
-			free(res);
-			return (printf("Error in token creation"), 0);
-		}
+			return (printf("Error in token creation"), free(res), 0);
 		ft_lstadd_back(tokens, new_token);
 		i++;
 	}

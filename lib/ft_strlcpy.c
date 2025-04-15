@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/31 10:40:59 by iaskour           #+#    #+#             */
-/*   Updated: 2025/04/13 16:51:05 by aykassim         ###   ########.fr       */
+/*   Created: 2025/04/15 10:48:36 by aykassim          #+#    #+#             */
+/*   Updated: 2025/04/15 10:48:42 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_putstr_fd(char *s, int fd)
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
-	int	i;
+	size_t	lens;
+	size_t	cpsize;
 
-	i = 0;
-	if (s == NULL || fd < 0)
-		return ;
-	while (s[i])
-	{
-		ft_putchar_fd(s[i], fd);
-		i++;
-	}
+	lens = ft_strlen(src);
+	if (dstsize == 0)
+		return (lens);
+	if (dstsize - 1 < lens)
+		cpsize = dstsize - 1;
+	else
+		cpsize = lens;
+	ft_memcpy(dst, src, cpsize);
+	dst[cpsize] = '\0';
+	return (lens);
 }

@@ -1,27 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/31 10:40:59 by iaskour           #+#    #+#             */
-/*   Updated: 2025/04/13 16:51:05 by aykassim         ###   ########.fr       */
+/*   Created: 2025/04/15 10:45:25 by aykassim          #+#    #+#             */
+/*   Updated: 2025/04/15 10:45:32 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_putstr_fd(char *s, int fd)
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	int	i;
+	unsigned char	*ptr1;
+	unsigned char	*ptr2;
+	size_t			i;
 
+	if (!dst && !src)
+		return (NULL);
+	if (dst == src)
+		return (dst);
+	ptr1 = (unsigned char *)dst;
+	ptr2 = (unsigned char *)src;
 	i = 0;
-	if (s == NULL || fd < 0)
-		return ;
-	while (s[i])
+	while (i < n)
 	{
-		ft_putchar_fd(s[i], fd);
+		ptr1[i] = ptr2[i];
 		i++;
 	}
+	return (dst);
 }

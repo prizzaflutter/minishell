@@ -9,12 +9,14 @@ NAME = minishell
 HEADER = includes/minishell.h 
 
 SRCPARS = srcs/parsing/main.c srcs/parsing/handle_input.c lib/ft_lstadd_back.c lib/ft_lstlast.c \
-	lib/ft_lstnew.c lib/ft_split.c lib/ft_strlen.c lib/ft_strcmp.c
+	lib/ft_lstnew.c lib/ft_split.c lib/ft_strlen.c lib/ft_strcmp.c srcs/parsing/handle_syntax_error.c \
+	srcs/parsing/handle_herdoc.c lib/ft_memcpy.c lib/ft_substr.c lib/ft_strlcpy.c lib/ft_strdup.c \
+	lib/ft_isalnum.c srcs/parsing/handle_expand.c
 
   
-SRC = srcs/execution/builtin/echo.c srcs/execution/main.c lib/ft_strncmp.c srcs/execution/builtin/cd.c \
+SRC = srcs/execution/builtin/echo.c lib/ft_strncmp.c srcs/execution/builtin/cd.c \
 		srcs/execution/free/free_args.c srcs/execution/get_cmd_path.c lib/ft_strjoin.c lib/ft_printf/ft_printf.c lib/ft_putchar_fd.c \
-		lib/ft_putstr_fd.c lib/ft_cmdsize.c srcs/execution/her_doc.c lib/get_next_line/get_next_line.c lib/get_next_line/get_next_line_utils.c \
+		lib/ft_putstr_fd.c lib/ft_cmdsize.c srcs/execution/her_doc.c
 
 OBJ = $(SRC:%.c=%.o)
 OBJPARS = $(SRCPARS:%.c=%.o)
