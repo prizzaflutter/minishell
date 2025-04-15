@@ -6,11 +6,27 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 06:42:12 by iaskour           #+#    #+#             */
-/*   Updated: 2025/04/10 11:53:57 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/04/15 09:43:39 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char *configure_path(char *cmd, t_env *env)
+{
+	char *cmd_path;
+
+	cmd_path = get_cmd_path(cmd, env);  // Assuming this is defined elsewhere
+	if (!cmd_path)
+	{
+		if ((!ft_strncmp(cmd, "./", 2) || !ft_strncmp(cmd, "/", 1))
+			&& !access(cmd, F_OK) && !access(cmd, X_OK))
+			cmd_path = cmd;
+		else
+			return (ft_printf(2, "Error: Command not found over here= : %s\n", cmd), NULL);
+	}
+	return (cmd_path);
+}
 
 char	*make_path(char **paths, char **tmp)
 {
@@ -34,19 +50,26 @@ char	*make_path(char **paths, char **tmp)
 	return (NULL);
 }
 
-char	*get_cmd_path(char *cmd, char**env)
+char	*get_cmd_path(char *cmd, t_env *env)
 {
 	int		i;
 	char	**paths;
 	char	**tmp;
 	char	*cmd_path;
 
-	i = 0;
-	while (env[i] && ft_strncmp(env[i], "PATH=", 5) != 0)
-		i++;
-	if (!env[i])
+	if (!cmd || !env)
 		return (NULL);
-	paths = ft_split(env[i] + 5, ':');
+	i = 0;
+	while(env[i].key)
+	{
+		if (ft_strncmp(env[i].key, "PATH", 4) == 0)
+			break;
+		i++;
+	}
+	printf("the env in i is : %s\n", env[i].key);
+	if (!env[i].key)
+		return (NULL);
+	paths = ft_split(env[i].value, ':');
 	tmp = ft_split(cmd, ' ');
 	if (!paths || !tmp)
 		return (free(paths), free(tmp), NULL);
@@ -54,4 +77,18 @@ char	*get_cmd_path(char *cmd, char**env)
 	free(paths);
 	free(tmp);
 	return (cmd_path);
+	// i = 0;
+	// while (env[i] && ft_strncmp(env[i], "PATH=", 5) != 0)
+	// 	i++;
+	// printf("the env in i is : %s\n", env[i]);
+	// if (!env[i])
+	// 	return (NULL);
+	// paths = ft_split(env[i] + 5, ':');
+	// tmp = ft_split(cmd, ' ');
+	// if (!paths || !tmp)
+	// 	return (free(paths), free(tmp), NULL);
+	// cmd_path = make_path(paths, tmp);
+	// free(paths);
+	// free(tmp);
+	// return (cmd_path);
 }
