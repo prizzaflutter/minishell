@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/31 10:40:59 by iaskour           #+#    #+#             */
-/*   Updated: 2025/04/13 16:51:05 by aykassim         ###   ########.fr       */
+/*   Created: 2025/04/15 10:44:42 by aykassim          #+#    #+#             */
+/*   Updated: 2025/04/15 10:50:51 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_putstr_fd(char *s, int fd)
+char	*ft_strdup(const char *s1)
 {
-	int	i;
+	char	*des;
+	size_t	len;
 
-	i = 0;
-	if (s == NULL || fd < 0)
-		return ;
-	while (s[i])
-	{
-		ft_putchar_fd(s[i], fd);
-		i++;
-	}
+	len = ft_strlen(s1);
+	des = (char *)malloc(len + 1);
+	if (!des)
+		return (NULL);
+	ft_memcpy(des, s1, len + 1);
+	return (des);
 }

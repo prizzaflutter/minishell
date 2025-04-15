@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/31 10:40:59 by iaskour           #+#    #+#             */
-/*   Updated: 2025/04/13 16:51:05 by aykassim         ###   ########.fr       */
+/*   Created: 2025/04/15 10:55:36 by aykassim          #+#    #+#             */
+/*   Updated: 2025/04/15 10:55:40 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_putstr_fd(char *s, int fd)
+int	ft_isalnum(int c)
 {
-	int	i;
-
-	i = 0;
-	if (s == NULL || fd < 0)
-		return ;
-	while (s[i])
+	if ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'z')
+		|| (c >= 'A' && c <= 'Z'))
 	{
-		ft_putchar_fd(s[i], fd);
-		i++;
+		return (1);
 	}
+	else
+		return (0);
 }
