@@ -1,73 +1,21 @@
-/*
-int handle_multiple_command(t_command *cmd, char **env)
+void fill_env(t_env *env, char **envp)
 {
-	int fd[2];
-	int prev_fd = -1;
-	pid_t pid;
-	t_command *current = cmd;
-
-	while (current)
+	int i = 0;
+	while (envp[i])
 	{
-		// Create a pipe for next command, if needed
-		if (current->next)
+		char *equal_pos = strchr(envp[i], '=');
+		if (!equal_pos)
 		{
-			if (pipe(fd) == -1)
-			{
-				perror("pipe");
-				return 0;
-			}
+			i++;
+			continue; 
 		}
+		size_t key_len = equal_pos - envp[i];
+		env[i].key = strndup(envp[i], key_len);
+		env[i].value = strdup(equal_pos + 1);
+		env[i].next = NULL;
+		if (i > 0)
+			env[i - 1].next = &env[i];
 
-		pid = fork();
-		if (pid == -1)
-		{
-			perror("fork");
-			return 0;
-		}
-
-		if (pid == 0)
-		{
-			// If it's not the first command, set input from previous pipe
-			if (prev_fd != -1)
-			{
-				dup2(prev_fd, STDIN_FILENO);
-				close(prev_fd);
-			}
-
-			// If there is a next command, set output to current pipe
-			if (current->next)
-			{
-				close(fd[0]);                 // close read end
-				dup2(fd[1], STDOUT_FILENO);   // write to pipe
-				close(fd[1]);
-			}
-
-			// Execute command
-			execve(current->cmd[0], current->cmd, env);
-			perror("execve failed");
-			exit(1);
-		}
-		else
-		{
-			// Parent process: close used write end
-			if (prev_fd != -1)
-				close(prev_fd);
-
-			// If there is a next command, keep read end for next loop
-			if (current->next)
-			{
-				close(fd[1]);        // close write end
-				prev_fd = fd[0];     // save read end
-			}
-		}
-
-		current = current->next;
+		i++;
 	}
-
-	// Wait for all child processes
-	while (wait(NULL) > 0);
-
-	return 1;
 }
-
-*/

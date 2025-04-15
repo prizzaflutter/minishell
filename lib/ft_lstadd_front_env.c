@@ -1,36 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   ft_lstadd_front_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/09 11:36:19 by iaskour           #+#    #+#             */
-/*   Updated: 2025/04/14 13:21:22 by iaskour          ###   ########.fr       */
+/*   Created: 2024/11/02 10:03:17 by iaskour           #+#    #+#             */
+/*   Updated: 2025/04/15 10:28:59 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	my_echo(char **cmd_args)
+void	ft_lstadd_front_env(t_env **env, t_env *new_env)
 {
-	int	i;
-	int	new_line;
-
-	i = 1;
-	new_line = 0;
-	if (cmd_args[1] && ft_strncmp(cmd_args[1], "-n", 2) == 0)
-	{
-		new_line = 1;
-		i++;
-	}
-	while (cmd_args[i])  
-	{
-		printf("%s", cmd_args[i]);
-		if (cmd_args[i + 1])
-			printf(" ");
-		i++;
-	}
-	if (new_line == 1)
-		printf("\n");
+	if (!env || new_env == NULL)
+		return ;
+	new_env -> next = *env;
+	*env = new_env;
 }
