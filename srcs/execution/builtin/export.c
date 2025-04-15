@@ -31,7 +31,7 @@ void	my_export(t_env **env, char **cmd_args)
 	}
 	t_env *new_env = malloc(sizeof(t_env));
 	if (!new_env)
-	{
+	{ 
 		printf("Error: Memory allocation failed\n");
 		free(key_value[0]);
 		free(key_value[1]);
