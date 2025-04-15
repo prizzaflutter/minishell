@@ -62,8 +62,8 @@ void	my_env(t_env *env);
 void	my_unset(char **argv);
 void	ft_lstadd_front_env(t_env **env, t_env *new_env);
 void	my_export(t_env **env, char **cmd_args);
-char	*ft_strjoin(char const *s1, char const *s2);
-size_t	ft_strlen(const char *s);
+void	fill_env(t_env *env, char **envp);
+int		env_size (char **env);
 
 // PARSING FUNCTIONS
 t_token	*ft_lstnew(char *content);
