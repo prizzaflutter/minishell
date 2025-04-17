@@ -77,13 +77,25 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlen(const char *s);
 int		ft_isalnum(int c);
-char	*add_space_inputs(char *str);
+char	*ft_itoa(int n);
 int		ft_strcmp(const char *s1, const char *s2);
-int		add_command_element(char *str, t_token **tokens);
+int		ft_isalpha(int c);
+char	*add_space_inputs(char *str);
+int		add_command_element(char *str, t_token **tokens, t_env *env);
 int		define_token_type(char *str);
 int		handle_unexpected_token(t_token *tokens);
-int		handle_herdocs(t_token *t_token);
-int		handle_herdoc_input(char *str);
-char *handle_expand(char *str);
+int		handle_unclosed_quotes(char *str);
+int		handle_herdocs(t_token *t_token, t_env *env);
+int		handle_herdoc_input(char *str, t_env *env);
 
+char	*handle_expand(char *str, t_env *env);
+char	*handle_expand_herdoc(char *str, int flag, t_env *env);
+// char	*handle_expand_generic(char *str, t_env *env, int flag, int is_herdoc);
+
+int		detect_quotes(char *str, int flag);
+char	*ft_strjoin_char(char *s1, char c);
+
+
+
+void print_list(t_token *tokens);
 #endif

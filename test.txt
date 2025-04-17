@@ -1,0 +1,8 @@
+Makefile
+README.md
+en.subject.pdf
+includes
+lib
+output.txt
+srcs
+test.txt
