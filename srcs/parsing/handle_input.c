@@ -34,12 +34,12 @@ char	*add_space_inputs(char *str)
 				|| (str[i] == '>' && str[i + 1] == '>'))
 			{
 				cm++;
-				i+=2;
+				i++;
 			}
 			else if (str[i] == '|' || str[i] == '>' || str[i] == '<')
 				cm++;
 		}
-			i++;
+		i++;
 	}
 	new_str = malloc(sizeof(char) * (len + cm * 2 + 1));
 	if (!new_str)
@@ -105,29 +105,61 @@ int define_token_type(char *str)
 		return (WORD);
 }
 
-int add_command_element(char *str, t_token **tokens)
+int its_have_dollar_signe(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '$')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int add_command_element(char *str, t_token **tokens, t_env *env)
 {
 	t_token	*new_token;
 	char	**res;
 	int i;
+	char	*new_str;
+	t_token	*tmp;
 
 	if (!str || !tokens)
-		return (0);
+		return (1);
 	str = add_space_inputs(str);
 	if (!str)
-		return (printf("Error in add_space_inputs"), 0);
+		return (printf("Error in add_space_inputs"), 1);
 	res = ft_split(str, ' ');
 	if (!res)
-		return (printf("Error in ft_split"), 0);
+		return (printf("Error in ft_split"), 1);
 	i = 0;
 	while (res[i])
 	{
 		new_token = ft_lstnew(res[i]);
 		if (!new_token)
-			return (printf("Error in token creation"), free(res), 0);
+			return (printf("Error in token creation"), free(res), 1);
 		ft_lstadd_back(tokens, new_token);
 		i++;
 	}
+	tmp = *tokens;
+	while (tmp)
+	{
+		if (tmp->type == WORD)
+		{
+			if (its_have_dollar_signe(tmp->str))
+			{
+				new_str = handle_expand(tmp->str, env);
+				if (!new_str)
+					return (printf("Error in handle_expand"), free(res), 1);
+				free(tmp->str);
+				tmp->str = new_str;
+			}
+		}
+		tmp = tmp->next;
+	}
 	free(res);
-	return (1);
+	return (0);
 }
