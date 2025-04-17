@@ -11,6 +11,7 @@
 # include <sys/wait.h>
 # include <limits.h>
 # include <stdarg.h>
+#include <stdbool.h>
 
 typedef struct s_command {
 	char **cmd;
@@ -22,6 +23,7 @@ typedef struct s_command {
 typedef struct s_env{
 	char *key;
 	char *value;
+	bool is_exported;
 	struct s_env *next;
 } t_env;
 
@@ -59,11 +61,13 @@ char	*is_builtin (char *cmd);
 int		my_cd (char **argv);
 void	my_pwd(void);
 void	my_env(t_env *env);
-void	my_unset(char **argv);
+void	my_unset(t_env **env, char **argv);
 void	ft_lstadd_front_env(t_env **env, t_env *new_env);
 void	my_export(t_env **env, char **cmd_args);
-char	*ft_strjoin(char const *s1, char const *s2);
-size_t	ft_strlen(const char *s);
+t_env	*fill_env (char **envp);
+int		ft_isalpha(int a);
+int		is_valid_identifier(const char *str);
+char	**convert_env_to_array(t_env *env);
 
 // PARSING FUNCTIONS
 t_token	*ft_lstnew(char *content);

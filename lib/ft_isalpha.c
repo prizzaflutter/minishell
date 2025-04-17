@@ -1,36 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/09 11:36:19 by iaskour           #+#    #+#             */
-/*   Updated: 2025/04/17 09:27:59 by iaskour          ###   ########.fr       */
+/*   Created: 2024/10/26 11:12:51 by iaskour           #+#    #+#             */
+/*   Updated: 2024/11/08 20:36:40 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-void	my_echo(char **cmd_args)
+int	ft_isalpha(int a)
 {
-	int	i;
-	int	new_line;
-
-	i = 1;
-	new_line = 0;
-	if (cmd_args[1] && ft_strncmp(cmd_args[1], "-n", 2) == 0)
-	{
-		new_line = 1;
-		i++;
-	}
-	while (cmd_args[i])
-	{
-		printf("%s", cmd_args[i]);
-		if (cmd_args[i + 1])
-			printf(" ");
-		i++;
-	}
-	if (new_line == 1)
-		printf("\n");
+	if ((a >= 65 && a <= 90) || (a >= 97 && a <= 122))
+		return (1);
+	return (0);
 }

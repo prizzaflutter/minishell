@@ -26,7 +26,6 @@ void free_command_list(t_command *cmd) {
 	}
 }
 
-
 void execute_command(t_command *cmd, t_env *env)
 {
 	int cmd_size = 0;
@@ -45,152 +44,149 @@ void execute_command(t_command *cmd, t_env *env)
 }
 
 char *get_line(const char *prompt) {
-	char *line = readline(prompt);
-	if (line && *line)
-		add_history(line);
-	return line;
+    char *line = readline(prompt);
+    if (!line) {
+        printf("exit\n"); // Bash-like behavior on Ctrl+D
+        return NULL;
+    }
+    if (*line)
+        add_history(line);
+    return line;
 }
+
 char **get_command_args() {
-	char **args = malloc(sizeof(char *) * 100);
-	int i = 0;
-	char *input = get_line("Command (e.g. ls): ");
-	args[i++] = input;
+    char **args = malloc(sizeof(char *) * 100);
+    int i = 0;
+    char *input = get_line("Command (e.g. ls): ");
+    if (!input) {
+        free(args);
+        return NULL;
+    }
+    args[i++] = input;
 
-	while (1) {
-		char prompt[64];
-		sprintf(prompt, "Argument #%d (or just ENTER to skip): ", i);
-		char *arg = get_line(prompt);
-		if (!arg || strlen(arg) == 0) {
-			free(arg);
-			break;
-		}
-		args[i++] = arg;
-	}
-	args[i] = NULL;
-	return args;
+    while (1) {
+        char prompt[64];
+        sprintf(prompt, "Argument #%d (or just ENTER to skip): ", i);
+        char *arg = get_line(prompt);
+        if (!arg || strlen(arg) == 0) {
+            free(arg);
+            break;
+        }
+        args[i++] = arg;
+    }
+    args[i] = NULL;
+    return args;
 }
+
 char **get_redirection() {
-	char **redir = calloc(4, sizeof(char *));
-	redir[0] = get_line("Redirection (<, >, >>, << or ENTER to skip): ");
+    char **redir = calloc(4, sizeof(char *));
+    redir[0] = get_line("Redirection (<, >, >>, << or ENTER to skip): ");
+    if (!redir[0]) {
+        free(redir);
+        return NULL;
+    }
 
-	if (redir[0] && strlen(redir[0]) > 0) {
-		if (strcmp(redir[0], "<") == 0)
-			redir[2] = strdup("in");
-		else if (strcmp(redir[0], ">") == 0 || strcmp(redir[0], ">>") == 0)
-			redir[2] = strdup("out");
-		else if (strcmp(redir[0], "<<") == 0)
-			redir[2] = strdup("heredoc");
-		else {
-			printf("Invalid redirection operator.\n");
-			free(redir[0]);
-			free(redir);
-			return NULL;
-		}
+    if (strlen(redir[0]) > 0) {
+        if (strcmp(redir[0], "<") == 0)
+            redir[2] = strdup("in");
+        else if (strcmp(redir[0], ">") == 0 || strcmp(redir[0], ">>") == 0)
+            redir[2] = strdup("out");
+        else if (strcmp(redir[0], "<<") == 0)
+            redir[2] = strdup("heredoc");
+        else {
+            printf("Invalid redirection operator.\n");
+            free(redir[0]);
+            free(redir);
+            return NULL;
+        }
 
-		redir[1] = get_line(strcmp(redir[2], "heredoc") == 0 ?
-							"Here-document delimiter: " : "Redirection file: ");
-	} else {
-		free(redir[0]);
-		redir[0] = NULL;
-	}
+        redir[1] = get_line(strcmp(redir[2], "heredoc") == 0 ?
+                            "Here-document delimiter: " : "Redirection file: ");
+        if (!redir[1]) {
+            free(redir[0]);
+            free(redir[2]);
+            free(redir);
+            return NULL;
+        }
+    } else {
+        free(redir[0]);
+        redir[0] = NULL;
+    }
 
-	return redir;
+    return redir;
 }
+
 t_command *create_command() {
-	t_command *cmd = calloc(1, sizeof(t_command));
-	cmd->cmd = get_command_args();
-	cmd->inoutfile = get_redirection();
-	return cmd;
+    t_command *cmd = calloc(1, sizeof(t_command));
+    cmd->cmd = get_command_args();
+    if (!cmd->cmd) {
+        free(cmd);
+        return NULL;
+    }
+
+    cmd->inoutfile = get_redirection();
+    return cmd;
 }
+
 t_command *build_command_list() {
-	t_command *head = NULL;
-	t_command *prev = NULL;
-	int index = 1;
+    t_command *head = NULL;
+    t_command *prev = NULL;
+    int index = 1;
 
-	while (1) {
-		printf("\n--- Command #%d ---\n", index++);
-		t_command *cmd = create_command();
+    while (1) {
+        printf("\n--- Command #%d ---\n", index++);
+        t_command *cmd = create_command();
+        if (!cmd)
+            break;
 
-		if (!head)
-			head = cmd;
-		if (prev) {
-			prev->next = cmd;
-			cmd->prev = prev;
-		}
-		prev = cmd;
+        if (!head)
+            head = cmd;
+        if (prev) {
+            prev->next = cmd;
+            cmd->prev = prev;
+        }
+        prev = cmd;
 
-		char *more = get_line("Add a pipe to another command? (y/n): ");
-		if (!more || strcmp(more, "y") != 0) {
-			free(more);
-			break;
-		}
-		free(more);
-	}
-	return head;
+        char *more = get_line("Add a pipe to another command? (y/n): ");
+        if (!more || strcmp(more, "y") != 0) {
+            free(more);
+            break;
+        }
+        free(more);
+    }
+    return head;
 }
-
-
-
-int env_size (char **env)
-{
-	int i = 0;
-	while(env[i])
-		i++;
-	return i;
-}
-
-void fill_env(t_env *env, char **envp)
-{
-	int i = 0;
-	while(envp[i])
-	{
-		char *equal_pos = strchr(envp[i], '=');
-		if (!equal_pos)
-		{
-			 i++;
-			 continue; 
-		}
-		size_t key_len = equal_pos - envp[i];
-		env[i].key = strndup(envp[i], key_len);
-		env[i].value = strdup(equal_pos + 1);
-		env[i].next = NULL;
-		if (i > 0)
-			env[i - 1].next = &env[i];
-		i++;
-	}
-}
-
-
 
 int main(int argc, char *argv[], char **env) {
-	(void)argc;
-	(void)argv;
+    (void)argc;
+    (void)argv;
+    t_env *env_struct = fill_env(env);
+    t_env *current = env_struct;
+    while (current) {
+        printf("Key : %s\n", current->key);
+        printf("Value : %s\n", current->value);
+        current = current->next;
+    }
 
+    while (1) {
+        t_command *cmd_list = build_command_list();
+        if (!cmd_list)
+            break;
 
-	int length = env_size(env);
-	printf("the length of env is : %d\n", length);
-	t_env *env_struct = malloc(sizeof(t_env) * length);
-	fill_env(env_struct, env);
-	t_env *current = env_struct;
-	while(current)
-	{
-		printf("Key : %s\n", current->key);
-		printf("Value : %s\n", current->value);
-		current = current->next;
-	}
-	while (1) {
-		t_command *cmd_list = build_command_list();
-		if (!cmd_list || !cmd_list->cmd || !cmd_list->cmd[0]) {
-			free_command_list(cmd_list);
-			continue;
-		}
-		if (strcmp(cmd_list->cmd[0], "exit") == 0) {
-			free_command_list(cmd_list);
-			printf("Bye 👋\n");
-			break;
-		}
-		execute_command(cmd_list, env_struct);
-		free_command_list(cmd_list); 
-	}
-	return 0;
+        if (!cmd_list->cmd || !cmd_list->cmd[0]) {
+            free_command_list(cmd_list);
+            continue;
+        }
+
+        if (strcmp(cmd_list->cmd[0], "exit") == 0) {
+            free_command_list(cmd_list);
+            printf("Bye 👋\n");
+            break;
+        }
+
+        execute_command(cmd_list, env_struct);
+        free_command_list(cmd_list); 
+    }
+
+    return 0;
 }
