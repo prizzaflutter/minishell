@@ -6,7 +6,7 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 11:36:19 by iaskour           #+#    #+#             */
-/*   Updated: 2025/04/14 13:21:22 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/04/17 09:27:59 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	my_echo(char **cmd_args)
 		new_line = 1;
 		i++;
 	}
-	while (cmd_args[i])  
+	while (cmd_args[i])
 	{
 		printf("%s", cmd_args[i]);
 		if (cmd_args[i + 1])

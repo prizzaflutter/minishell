@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/17 16:42:30 by aykassim          #+#    #+#             */
-/*   Updated: 2025/04/17 16:42:37 by aykassim         ###   ########.fr       */
+/*   Created: 2024/10/26 11:12:51 by iaskour           #+#    #+#             */
+/*   Updated: 2024/11/08 20:36:40 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 
 int	ft_isalpha(int c)
 {

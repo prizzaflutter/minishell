@@ -4,6 +4,7 @@ int excute_single_command(t_command *cmd, t_env **env)
 {
 	char **cmd_args;
 	char *cmd_path;
+	char **env_array;
 
 	cmd_args = cmd->cmd;
 	if (!cmd_args)
@@ -19,7 +20,7 @@ int excute_single_command(t_command *cmd, t_env **env)
 		else if (ft_strncmp(*cmd->cmd, "export", 6) == 0)
 			my_export(env, cmd_args);
 		else if (ft_strncmp(*cmd->cmd, "unset", 5) == 0)
-			my_unset(cmd_args);
+			my_unset(env, cmd_args);
 		else if (ft_strncmp(*cmd->cmd, "env", 3) == 0)
 			my_env(*env);
 		// else if (ft_strncmp(*cmd->cmd, "exit", 4) == 0)
@@ -27,9 +28,21 @@ int excute_single_command(t_command *cmd, t_env **env)
 		return (1);
 	}
 	cmd_path = configure_path(*cmd->cmd, *env);
+	printf("the cmd path is : %s\n", cmd_path);
 	if (!cmd_path)
 		return (free_args(cmd_args), 0);
-	if (execve(cmd_path, cmd_args, NULL) == -1)
+	env_array = convert_env_to_array(*env);
+	if (!env_array)
+	{
+		free(cmd_path);
+		return (free_args(cmd_args), 0);
+	}
+	for(int i = 0; env_array[i]; i++)
+	{
+		printf("env_array[%d]: %s\n", i, env_array[i]);
+	}
+
+	if (execve(cmd_path, cmd_args, env_array) == -1)
 	{
 		free_args(cmd_args);
 		return (printf("Error: EXECVE => (first child)"), 0);
