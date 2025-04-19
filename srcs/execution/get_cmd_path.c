@@ -53,14 +53,12 @@ char	*make_path(char **paths, char **tmp)
 
 char	*get_cmd_path(char *cmd, t_env *env)
 {
-	int		i;
 	char	**paths;
 	char	**tmp;
 	char	*cmd_path;
 
 	if (!cmd || !env)
 		return (NULL);
-	i = 0;
 	while(env)
 	{
 		if (ft_strncmp(env->key, "PATH", 4) == 0)

@@ -68,6 +68,8 @@ t_env	*fill_env (char **envp);
 int		ft_isalpha(int a);
 int		is_valid_identifier(const char *str);
 char	**convert_env_to_array(t_env *env);
+int		handle_redirections_single(t_command *cmd);
+int		handle_redirections_multiple(t_command *current_cmd, int *fd_array);
 
 // PARSING FUNCTIONS
 t_token	*ft_lstnew(char *content);

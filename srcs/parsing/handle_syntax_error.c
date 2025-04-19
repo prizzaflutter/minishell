@@ -39,9 +39,9 @@ int handle_unclosed_quotes(char *str)
 
 int	handle_some_of_unexpected_token(t_token *current)
 {
-	t_token	*top;
+	// t_token	*top;
 
-	top = current;
+	// top = current;
 	if ((current->type == REDIR_IN || current->type == REDIR_OUT
 			|| current->type == HEREDOC || current->type == APPEND)
 		&& current->next && current->next->type != WORD)

@@ -46,7 +46,7 @@ void execute_command(t_command *cmd, t_env *env)
 char *get_line(const char *prompt) {
     char *line = readline(prompt);
     if (!line) {
-        printf("exit\n"); // Bash-like behavior on Ctrl+D
+        printf("exit\n");
         return NULL;
     }
     if (*line)

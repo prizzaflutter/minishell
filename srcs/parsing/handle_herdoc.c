@@ -46,7 +46,7 @@ int handle_herdoc_input(char *str, t_env *env)
 {
 	char *line;
 	int fd;
-	int i;
+	// int i;
 	char *new_str;
 	char *new_del;
 	
@@ -54,7 +54,7 @@ int handle_herdoc_input(char *str, t_env *env)
 	fd = open("heredoc_tmp", O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (fd < 0)
 		return (-1);
-	i = 0;
+	// i = 0;
 	while (1)
 	{
 		new_del = handle_delemitre(str);

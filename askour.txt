@@ -1,0 +1,101 @@
+the cmd path is 11111 : /usr/bin/ls
+the cmd path is : /usr/bin/ls
+env_array[0]: SHELL=/bin/sh
+env_array[1]: SESSION_MANAGER=local/e1r5p1.1337.ma:@/tmp/.ICE-unix/129976,unix/e1r5p1.1337.ma:/tmp/.ICE-unix/129976
+env_array[2]: __EGL_EXTERNAL_PLATFORM_CONFIG_DIRS=/etc/egl/egl_external_platform.d:/usr/lib/x86_64-linux-gnu/GL/egl/egl_external_platform.d:/usr/share/egl/egl_external_platform.d
+env_array[3]: QT_ACCESSIBILITY=1
+env_array[4]: COLORTERM=truecolor
+env_array[5]: XDG_CONFIG_DIRS=/app/etc/xdg:/etc/xdg
+env_array[6]: SSH_AGENT_LAUNCHER=gnome-keyring
+env_array[7]: XDG_SESSION_PATH=/org/freedesktop/DisplayManager/Session5
+env_array[8]: XDG_MENU_PREFIX=gnome-
+env_array[9]: TERM_PROGRAM_VERSION=1.97.2
+env_array[10]: GNOME_DESKTOP_SESSION_ID=this-is-deprecated
+env_array[11]: GTK_IM_MODULE=ibus
+env_array[12]: SSH_AUTH_SOCK=/run/flatpak/ssh-auth
+env_array[13]: XDG_DATA_HOME=/home/iaskour/.var/app/com.visualstudio.code/data
+env_array[14]: XDG_CONFIG_HOME=/home/iaskour/.var/app/com.visualstudio.code/config
+env_array[15]: XCURSOR_PATH=/run/host/user-share/icons:/run/host/share/icons
+env_array[16]: XMODIFIERS=@im=ibus
+env_array[17]: DESKTOP_SESSION=ubuntu
+env_array[18]: ZYPAK_LIB=/app/bin/../lib
+env_array[19]: FLATPAK_ID=com.visualstudio.code
+env_array[20]: FT_HOOK_NAME=login-user
+env_array[21]: GTK_MODULES=gail:atk-bridge
+env_array[22]: FT_HOOK_PATHNAME=login-user.d
+env_array[23]: KRB5CCNAME=FILE:/tmp/krb5cc_103948_r83bwV
+env_array[24]: PWD=/home/iaskour/Desktop/minishell
+env_array[25]: ALSA_CONFIG_PATH=/usr/share/alsa/alsa-flatpak.conf
+env_array[26]: LOGNAME=iaskour
+env_array[27]: XDG_SESSION_DESKTOP=ubuntu
+env_array[28]: XDG_SESSION_TYPE=x11
+env_array[29]: GPG_AGENT_INFO=/run/user/103948/gnupg/S.gpg-agent:0:1
+env_array[30]: SYSTEMD_EXEC_PID=129998
+env_array[31]: XAUTHORITY=/run/flatpak/Xauthority
+env_array[32]: VSCODE_GIT_ASKPASS_NODE=/app/extra/vscode/code
+env_array[33]: XDG_GREETER_DATA_DIR=/var/lib/lightdm-data/iaskour
+env_array[34]: container=flatpak
+env_array[35]: GJS_DEBUG_TOPICS=JS ERROR;JS LOG
+env_array[36]: GI_TYPELIB_PATH=/app/lib/girepository-1.0
+env_array[37]: HOME=/home/iaskour
+env_array[38]: IM_CONFIG_PHASE=1
+env_array[39]: LANG=en_US.UTF-8
+env_array[40]: XDG_CURRENT_DESKTOP=Unity
+env_array[41]: SBX_CHROME_API_RQ=1
+env_array[42]: AT_SPI_BUS_ADDRESS=unix:path=/run/flatpak/at-spi-bus
+env_array[43]: GIT_ASKPASS=/app/extra/vscode/resources/app/extensions/git/dist/askpass.sh
+env_array[44]: XDG_SEAT_PATH=/org/freedesktop/DisplayManager/Seat0
+env_array[45]: PULSE_CLIENTCONFIG=/run/flatpak/pulse/config
+env_array[46]: INVOCATION_ID=2fe24ccab37e4ce898b40cae81c1626c
+env_array[47]: MANAGERPID=129374
+env_array[48]: CHROME_DESKTOP=code.desktop
+env_array[49]: XDG_CACHE_HOME=/home/iaskour/.var/app/com.visualstudio.code/cache
+env_array[50]: GJS_DEBUG_OUTPUT=stderr
+env_array[51]: VSCODE_GIT_ASKPASS_EXTRA_ARGS=
+env_array[52]: XDG_SESSION_CLASS=user
+env_array[53]: TERM=xterm-256color
+env_array[54]: ZYPAK_ZYGOTE_STRATEGY_SPAWN=1
+env_array[55]: LIBVIRT_DEFAULT_URI=qemu:///system
+env_array[56]: USER=iaskour
+env_array[57]: SANDBOX_LD_LIBRARY_PATH=/app/lib
+env_array[58]: VSCODE_GIT_IPC_HANDLE=/run/user/103948/vscode-git-3015f5b8f6.sock
+env_array[59]: NPM_CONFIG_GLOBALCONFIG=/app/etc/npmrc
+env_array[60]: DISPLAY=:99.0
+env_array[61]: SHLVL=2
+env_array[62]: FLATPAK_SANDBOX_DIR=/home/iaskour/.var/app/com.visualstudio.code/sandbox
+env_array[63]: QT_IM_MODULE=ibus
+env_array[64]: ZYPAK_BIN=/app/bin
+env_array[65]: LD_LIBRARY_PATH=/app/lib
+env_array[66]: XDG_RUNTIME_DIR=/run/user/103948
+env_array[67]: DBUS_SYSTEM_BUS_ADDRESS=unix:path=/run/dbus/system_bus_socket
+env_array[68]: DOCKER_HOST=unix:///run/user/103948/docker.sock
+env_array[69]: GST_PLUGIN_SYSTEM_PATH=/app/lib/gstreamer-1.0:/usr/lib/extensions/gstreamer-1.0:/usr/lib/x86_64-linux-gnu/gstreamer-1.0
+env_array[70]: VSCODE_GIT_ASKPASS_MAIN=/app/extra/vscode/resources/app/extensions/git/dist/askpass-main.js
+env_array[71]: JOURNAL_STREAM=8:611207
+env_array[72]: XDG_DATA_DIRS=/app/share:/usr/share:/usr/share/runtime/share:/run/host/user-share:/run/host/share
+env_array[73]: GDK_BACKEND=x11
+env_array[74]: PATH=/app/bin:/app/bin:/app/bin:/usr/bin:/home/iaskour/.var/app/com.visualstudio.code/data/node_modules/bin
+env_array[75]: GDMSESSION=ubuntu
+env_array[76]: PYTHONUSERBASE=/var/data/python
+env_array[77]: ORIGINAL_XDG_CURRENT_DESKTOP=ubuntu:GNOME
+env_array[78]: DBUS_SESSION_BUS_ADDRESS=unix:path=/run/flatpak/bus
+env_array[79]: ALSA_CONFIG_DIR=/usr/share/alsa
+env_array[80]: PULSE_SERVER=unix:/run/flatpak/pulse/native
+env_array[81]: GIO_LAUNCHED_DESKTOP_FILE_PID=132718
+env_array[82]: GIO_LAUNCHED_DESKTOP_FILE=/var/lib/flatpak/exports/share/applications/com.visualstudio.code.desktop
+env_array[83]: TERM_PROGRAM=vscode
+env_array[84]: _=./minishell
+total 1716
+drwxr-xr-x 7 iaskour 2024_khouribga     180 Apr 19 12:02 .
+drwxr-xr-x 3 iaskour 2024_khouribga      23 Apr 19 10:22 ..
+-rw-r----- 1 iaskour 2024_khouribga    4752 Apr 19 12:02 askour.txt
+-rw-r--r-- 1 iaskour 2024_khouribga 1568461 Apr 19 10:22 en.subject.pdf
+drwxr-xr-x 8 iaskour 2024_khouribga     163 Apr 19 10:23 .git
+drwxr-xr-x 2 iaskour 2024_khouribga      25 Apr 19 10:22 includes
+drwxr-xr-x 3 iaskour 2024_khouribga    4096 Apr 19 12:02 lib
+-rw-r--r-- 1 iaskour 2024_khouribga    1560 Apr 19 11:50 Makefile
+-rwxr-xr-x 1 iaskour 2024_khouribga  159664 Apr 19 12:02 minishell
+-rw-r----- 1 iaskour 2024_khouribga    5783 Apr 19 12:02 output.txt
+-rw-r--r-- 1 iaskour 2024_khouribga      11 Apr 19 10:22 README.md
+drwxr-xr-x 4 iaskour 2024_khouribga      38 Apr 19 10:22 srcs
+drwxr-xr-x 2 iaskour 2024_khouribga      27 Apr 19 10:22 .vscode
