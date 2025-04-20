@@ -12,6 +12,21 @@
 # include <limits.h>
 # include <stdarg.h>
 #include <stdbool.h>
+#include <stdint.h>
+
+
+///@brief  those struct for garbage collector
+
+//---------------------------------
+typedef struct  s_gc_node {
+	void *ptr;
+	struct s_gc_node *next;
+} t_gc_node;
+
+typedef struct s_gc {
+	t_gc_node *head;
+} t_gc;
+//--------------------------------
 
 typedef struct s_command {
 	char **cmd;
@@ -23,7 +38,6 @@ typedef struct s_command {
 typedef struct s_env{
 	char *key;
 	char *value;
-	bool is_exported;
 	struct s_env *next;
 } t_env;
 
@@ -36,6 +50,7 @@ enum token_type {
 	APPEND // >>
 };
 
+
 typedef struct s_token {
 	char *str;
 	enum token_type type;
@@ -46,30 +61,49 @@ typedef struct s_token {
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 void	my_echo(char **argv);
 int		my_cd (char **argv);
-char	*make_path(char **paths, char **tmp);
-char	*get_cmd_path(char *cmd, t_env *env);
+char	*make_path(t_gc *gc, char **paths, char **tmp);
+char	*get_cmd_path(t_gc *gc, char *cmd, t_env *env);
 void	free_args(char **cmd_args);
 void	ft_printf(int fd, const char *format, ...);
 void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 int		ft_cmdsize(t_command *cmd);
 int		handle_herdoc_infile(t_command *cmd);
-char	*configure_path(char *cmd, t_env *env);
-void	handle_single_command(t_command *cmd, t_env *env);
-int		handle_multiple_command(t_command *cmd, t_env *env);
+char	*configure_path(t_gc *gc, char *cmd, t_env *env);
+void	handle_single_command(t_gc *gc,t_command *cmd, t_env *env);
+int		handle_multiple_command(t_gc *gc, t_command *cmd, t_env *env);
 char	*is_builtin (char *cmd);
 int		my_cd (char **argv);
 void	my_pwd(void);
 void	my_env(t_env *env);
 void	my_unset(t_env **env, char **argv);
 void	ft_lstadd_front_env(t_env **env, t_env *new_env);
-void	my_export(t_env **env, char **cmd_args);
+void	my_export(t_gc *gc, t_env **env, char **cmd_args);
 t_env	*fill_env (char **envp);
 int		ft_isalpha(int a);
 int		is_valid_identifier(const char *str);
-char	**convert_env_to_array(t_env *env);
+char	**convert_env_to_array(t_gc *gc, t_env *env);
 int		handle_redirections_single(t_command *cmd);
 int		handle_redirections_multiple(t_command *current_cmd, int *fd_array);
+void	*gc_malloc(t_gc *gc, size_t size);
+void	gc_clear(t_gc *gc);
+char	*ft_strchr(const char *s, int c);
+char	*gc_strndup(t_gc *gc, const char *str, size_t n);
+char	*gc_strdup(t_gc *gc, const char *str);
+char	*gc_strcpy(t_gc *gc, char const *str, char charset);
+char	*gc_strcat(t_gc *gc, char *dst, const char *src);
+char	*gc_strjoin(t_gc *gc, char const *s1, char const *s2);
+int		gc_exist(t_gc *gc, void *ptr);
+void	ft_bzero(void *s, size_t n);
+void	*ft_calloc(t_gc *gc, size_t count, size_t size);
+char	**gc_split(t_gc *gc, char const *s, char c);
+int		is_on_parent(char *build_in_f, t_command *cmd, t_env *env, t_gc *gc);
+int		is_on_child(char *build_in_f, t_command *cmd, t_env *env, t_gc *gc);
+char	**split_key_value(t_gc *gc, char *str);
+int 	is_valid_identifier(const char *str);
+void	no_args(t_env **env);
+void	add_new_env(char *key, char *value, t_gc *gc, t_env **env);
+void	update_value(char *key, char *value, t_env **env, t_gc *gc);
 
 // PARSING FUNCTIONS
 t_token	*ft_lstnew(char *content);
@@ -93,7 +127,6 @@ int		handle_unexpected_token(t_token *tokens);
 int		handle_unclosed_quotes(char *str);
 int		handle_herdocs(t_token *t_token, t_env *env);
 int		handle_herdoc_input(char *str, t_env *env);
-
 char	*handle_expand(char *str, t_env *env);
 char	*handle_expand_herdoc(char *str, int flag, t_env *env);
 // char	*handle_expand_generic(char *str, t_env *env, int flag, int is_herdoc);

@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/20 11:00:44 by iaskour           #+#    #+#             */
-/*   Updated: 2025/04/20 12:14:56 by iaskour          ###   ########.fr       */
+/*   Created: 2024/10/27 13:15:55 by iaskour           #+#    #+#             */
+/*   Updated: 2025/04/20 10:58:18 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <stdint.h>
 
-void	my_env(t_env *env)
+void	*ft_calloc(t_gc *gc, size_t count, size_t size)
 {
-	while (env)
-	{
-		if (env->value && ft_strcmp(env->value, "="))
-			printf("%s=%s\n", env->key, env->value);
-		env = env->next;
-	}
+	void	*tmp;
+
+	if (size != 0 && count >= SIZE_MAX / size)
+		return (NULL);
+	tmp = gc_malloc(gc, count * size);
+	if (tmp == NULL)
+		return (NULL);
+	ft_bzero(tmp, (count * size));
+	return (tmp);
 }

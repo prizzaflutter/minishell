@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   gc_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/20 11:00:44 by iaskour           #+#    #+#             */
-/*   Updated: 2025/04/20 12:14:56 by iaskour          ###   ########.fr       */
+/*   Created: 2025/04/19 14:54:17 by iaskour           #+#    #+#             */
+/*   Updated: 2025/04/19 14:54:40 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	my_env(t_env *env)
+char	*gc_strdup(t_gc *gc, const char *str)
 {
-	while (env)
-	{
-		if (env->value && ft_strcmp(env->value, "="))
-			printf("%s=%s\n", env->key, env->value);
-		env = env->next;
-	}
+	char	*des;
+	size_t	len;
+
+	len = ft_strlen(str) + 1;
+	des = (char *)gc_malloc(gc, len);
+	if(!des)
+		return (NULL);
+	ft_memcpy(des, str, len);
+	return (des);
 }

@@ -1,23 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/20 11:00:44 by iaskour           #+#    #+#             */
-/*   Updated: 2025/04/20 12:14:56 by iaskour          ###   ########.fr       */
+/*   Created: 2024/10/26 13:37:28 by iaskour           #+#    #+#             */
+/*   Updated: 2025/04/19 15:03:27 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	my_env(t_env *env)
+char	*ft_strchr(const char *s, int c)
 {
-	while (env)
+	int		i;
+	char	ch;
+
+	i = 0;
+	ch = (char)c;
+	while (s[i] != '\0')
 	{
-		if (env->value && ft_strcmp(env->value, "="))
-			printf("%s=%s\n", env->key, env->value);
-		env = env->next;
+		if (s[i] == ch)
+			return ((char *) &s[i]);
+		i++;
 	}
+	if (ch == '\0' && s[i] == '\0')
+		return ((char *) &s[i]);
+	return (NULL);
 }

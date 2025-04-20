@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   gc_exist.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/20 11:00:44 by iaskour           #+#    #+#             */
-/*   Updated: 2025/04/20 12:14:56 by iaskour          ###   ########.fr       */
+/*   Created: 2025/04/19 14:53:27 by iaskour           #+#    #+#             */
+/*   Updated: 2025/04/19 18:41:10 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	my_env(t_env *env)
+int	gc_exist(t_gc *gc, void *ptr)
 {
-	while (env)
+	t_gc_node	*current;
+
+	current = gc->head;
+	while (current)
 	{
-		if (env->value && ft_strcmp(env->value, "="))
-			printf("%s=%s\n", env->key, env->value);
-		env = env->next;
+		if (current->ptr == ptr)
+			return (1);
+		current = current->next;
 	}
+	return (0);
 }

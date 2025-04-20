@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-char **convert_env_to_array(t_env *env)
+char **convert_env_to_array(t_gc *gc, t_env *env)
 {
 	int		i;
 	int		size;
@@ -18,18 +18,16 @@ char **convert_env_to_array(t_env *env)
 		size++;
 		temp = temp->next;
 	}
-	env_array = malloc(sizeof(char *) * (size + 1));
+	env_array = gc_malloc(gc, sizeof(char *) * (size + 1));
 	if (!env_array)
 		return (NULL);
 	env_array[size] = NULL;
 	while (env)
 	{
-		env_array[i] = malloc(strlen(env->key) + strlen(env->value) + 2);
+		char *tmp = gc_strcat(gc, env->key, "=");
+		env_array[i] = gc_strcat(gc, tmp, env->value);
 		if (!env_array[i])
 			return NULL;
-		strcpy(env_array[i], env->key);
-		strcat(env_array[i], "=");
-		strcat(env_array[i], env->value);
 		i++;
 		env = env->next;
 	}

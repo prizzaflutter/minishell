@@ -26,7 +26,7 @@ void free_command_list(t_command *cmd) {
 	}
 }
 
-void execute_command(t_command *cmd, t_env *env)
+void execute_command(t_gc *gc, t_command *cmd, t_env *env)
 {
 	int cmd_size = 0;
 
@@ -34,12 +34,12 @@ void execute_command(t_command *cmd, t_env *env)
 	if (cmd_size > 1)
 	{
 		printf("handle multiple command\n");
-		handle_multiple_command(cmd, env);
+		handle_multiple_command(gc, cmd, env);
 	}
 	else
 	{
 		printf("hanldle single command\n");
-		handle_single_command(cmd, env);
+		handle_single_command(gc, cmd, env);
 	}
 }
 
@@ -158,6 +158,10 @@ t_command *build_command_list() {
 }
 
 int main(int argc, char *argv[], char **env) {
+    t_gc *gc = malloc(sizeof(t_gc));
+    if (!gc)
+        return (1);
+    gc->head = NULL;
     (void)argc;
     (void)argv;
     t_env *env_struct = fill_env(env);
@@ -184,9 +188,11 @@ int main(int argc, char *argv[], char **env) {
             break;
         }
 
-        execute_command(cmd_list, env_struct);
+        execute_command(gc, cmd_list, env_struct);
+     
         free_command_list(cmd_list); 
     }
-
+   gc_clear(gc);
+   free(gc);
     return 0;
 }

@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_args.c                                        :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/13 11:39:52 by iaskour           #+#    #+#             */
-/*   Updated: 2025/04/10 11:46:05 by iaskour          ###   ########.fr       */
+/*   Created: 2024/10/26 11:58:47 by iaskour           #+#    #+#             */
+/*   Updated: 2025/04/19 16:57:46 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_args(char **cmd_args)
+void	ft_bzero(void *s, size_t n)
 {
-	int	i;
+	char	*ptr;
+	size_t	i;
 
+	ptr = (char *) s;
 	i = 0;
-	if (!cmd_args)
-		return ;
-	while (cmd_args[i])
+	while (i < n)
 	{
-		free(cmd_args[i]);
+		ptr[i] = 0;
 		i++;
 	}
-	free(cmd_args);
 }
