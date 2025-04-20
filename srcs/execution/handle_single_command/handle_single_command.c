@@ -20,15 +20,30 @@ int	excute_single_command(t_gc *gc, t_command *cmd, t_env **env)
 	return (1);
 }
 
+void	save_int_out(int *org_int, int *org_out)
+{
+	*org_int = dup(STDIN_FILENO);
+	*org_out = dup(STDOUT_FILENO);
+}
+
+void restore_in_out(int *org_int, int *org_out)
+{
+	dup2(*org_int, STDIN_FILENO);
+	dup2(*org_out, STDOUT_FILENO);
+	close(*org_int);
+	close(*org_out);
+}
+
 void handle_single_command(t_gc *gc, t_command *cmd, t_env *env)
 {
 	pid_t	pid;
 	int		status;
 	char	*build_in_f;
 	int		out_file;
-	int	org_stdin = dup(STDIN_FILENO);
-	int org_stdout = dup(STDOUT_FILENO);
+	int	org_stdin ;
+	int org_stdout;
 
+	save_int_out(&org_stdin, &org_stdout);
 	if (cmd->cmd[0] == NULL)
 		return ;
 	build_in_f = is_builtin(*cmd->cmd);
@@ -49,8 +64,5 @@ void handle_single_command(t_gc *gc, t_command *cmd, t_env *env)
 		else
 			waitpid(pid, &status, 0);
 	}
-	dup2(org_stdout, STDOUT_FILENO);
-	dup2(org_stdin, STDIN_FILENO);
-	close(org_stdin);
-	close(org_stdout);
+	restore_in_out(&org_stdin, &org_stdout);
 }

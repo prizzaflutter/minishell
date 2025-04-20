@@ -21,7 +21,7 @@ SRC = srcs/execution/main.c srcs/execution/builtin/echo.c lib/ft_strncmp.c srcs/
 	lib/ft_isalpha.c srcs/execution/utils.c srcs/execution/handle_redirections/handle_redirections_single.c srcs/execution/handle_redirections/handle_redirections_multiple.c \
 	srcs/execution/garbage_collector/gc_clear.c srcs/execution/garbage_collector/gc_malloc.c srcs/execution/garbage_collector/gc_strdup.c \
 	srcs/execution/garbage_collector/gc_strndup.c srcs/execution/garbage_collector/gc_exist.c lib/gc_strcat.c lib/gc_split.c lib/ft_bzero.c lib/ft_calloc.c  lib/gc_strjoin.c lib/gc_strcpy.c lib/ft_strchr.c \
-	srcs/execution/handle_single_command/built_in_check.c srcs/execution/builtin/built_in_helper.c
+	srcs/execution/handle_single_command/built_in_check.c srcs/execution/builtin/built_in_helper.c srcs/execution/exit_status.c
 
 
 OBJ = $(SRC:%.c=%.o)
