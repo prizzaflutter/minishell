@@ -12,25 +12,8 @@ int execute_cmd(t_gc *gc,t_command *cmd, int *fd_array, t_env **env)
 	cmd_args = cmd->cmd;
 	if (!cmd_args)
 		return (0);
-	if (is_builtin(*cmd->cmd))
-	{
-		if (ft_strncmp(*cmd->cmd, "echo", 4) == 0)
-			my_echo(cmd_args);
-		else if (ft_strncmp(*cmd->cmd, "cd", 2) == 0)
-			my_cd(cmd_args);
-		else if (ft_strncmp(*cmd->cmd, "pwd", 3) == 0)
-			my_pwd();
-		else if (ft_strncmp(*cmd->cmd, "export", 6) == 0)
-			my_export(gc, env, cmd_args);
-		else if (ft_strncmp(*cmd->cmd, "unset", 5) == 0)
-			my_unset(env, cmd_args);
-		else if (ft_strncmp(*cmd->cmd, "env", 3) == 0)
-			my_env(*env);
-		// else if (ft_strncmp(*cmd->cmd, "exit", 4) == 0)
-		// 	my_exit(cmd_args);
+	if (is_builtin_excute(gc, env, cmd) == 1)
 		return (1);
-	}
-
 	cmd_path = configure_path(gc, *cmd->cmd, *env);
 	printf("the cmd path is %s\n", cmd_path);
 	if (!cmd_path)

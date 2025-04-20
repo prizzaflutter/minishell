@@ -104,6 +104,7 @@ int 	is_valid_identifier(const char *str);
 void	no_args(t_env **env);
 void	add_new_env(char *key, char *value, t_gc *gc, t_env **env);
 void	update_value(char *key, char *value, t_env **env, t_gc *gc);
+int		is_builtin_excute(t_gc *gc, t_env **env, t_command *cmd);
 
 // PARSING FUNCTIONS
 t_token	*ft_lstnew(char *content);

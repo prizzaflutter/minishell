@@ -1,8 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   built_in_check.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/20 13:28:10 by iaskour           #+#    #+#             */
+/*   Updated: 2025/04/20 15:54:57 by iaskour          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	is_on_parent(char *build_in_f, t_command *cmd, t_env *env, t_gc *gc)
 {
-	if (!ft_strcmp(build_in_f, "cd") || !ft_strcmp(build_in_f, "unset") || (!ft_strcmp(build_in_f, "export") && cmd->cmd[1] != NULL))
+	if (!ft_strcmp(build_in_f, "cd") || !ft_strcmp(build_in_f, "unset")
+		|| (!ft_strcmp(build_in_f, "export") && cmd->cmd[1] != NULL))
 	{
 		printf("============ run on parent proccess ==================\n");
 		if (!ft_strcmp(build_in_f, "cd"))
@@ -19,7 +32,6 @@ int	is_on_parent(char *build_in_f, t_command *cmd, t_env *env, t_gc *gc)
 
 int	is_on_child(char *build_in_f, t_command *cmd, t_env *env, t_gc *gc)
 {
-	printf("============ run on child procces ===============\n");
 	if (!ft_strcmp(build_in_f, "echo"))
 		return (my_echo(cmd->cmd), 1);
 	else if (!ft_strcmp(build_in_f, "pwd"))
@@ -30,3 +42,4 @@ int	is_on_child(char *build_in_f, t_command *cmd, t_env *env, t_gc *gc)
 		return (my_env(env), 1);
 	return (0);
 }
+

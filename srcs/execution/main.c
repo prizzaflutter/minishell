@@ -190,9 +190,11 @@ int main(int argc, char *argv[], char **env) {
 
         execute_command(gc, cmd_list, env_struct);
      
-        free_command_list(cmd_list); 
+        // free_command_list(cmd_list); 
+        gc_clear(gc);
+    free(gc);
     }
-   gc_clear(gc);
-   free(gc);
+//    gc_clear(gc);
+//    free(gc);
     return 0;
 }

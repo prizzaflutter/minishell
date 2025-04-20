@@ -26,6 +26,8 @@ void handle_single_command(t_gc *gc, t_command *cmd, t_env *env)
 	int		status;
 	char	*build_in_f;
 	int		out_file;
+	int	org_stdin = dup(STDIN_FILENO);
+	int org_stdout = dup(STDOUT_FILENO);
 
 	if (cmd->cmd[0] == NULL)
 		return ;
@@ -34,25 +36,21 @@ void handle_single_command(t_gc *gc, t_command *cmd, t_env *env)
 	{
 		pid = fork();
 		if (pid == -1)
-		{
-			perror("Fork error");
-			return;
-		}
+			return (perror("For Error :"));
 		if (pid == 0)
 		{
 			out_file = handle_redirections_single(cmd);
 			if (out_file == -1)
 				exit(1);
 			if (is_on_child(build_in_f, cmd, env, gc) == 0)
-			{
 				if (excute_single_command(gc, cmd, &env) == -1)
-				{
-					perror("Execve error :");
-					exit(1);
-				}
-			}	
+					return (perror("Excve Error :"), exit(1));
 		}
 		else
 			waitpid(pid, &status, 0);
 	}
+	dup2(org_stdout, STDOUT_FILENO);
+	dup2(org_stdin, STDIN_FILENO);
+	close(org_stdin);
+	close(org_stdout);
 }
