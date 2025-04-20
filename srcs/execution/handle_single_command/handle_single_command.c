@@ -16,7 +16,7 @@ int	excute_single_command(t_gc *gc, t_command *cmd, t_env **env)
 	if (!env_array)
 		return ( 0);
 	if (execve(cmd_path, cmd_args, env_array) == -1)
-		return (printf("Error: EXECVE => (first child)"), 0);
+		return (printf("Error: EXECVE => (first child)"), exit_status(1, 127), 0);
 	return (1);
 }
 
@@ -44,7 +44,7 @@ void handle_single_command(t_gc *gc, t_command *cmd, t_env *env)
 				exit(1);
 			if (is_on_child(build_in_f, cmd, env, gc) == 0)
 				if (excute_single_command(gc, cmd, &env) == -1)
-					return (perror("Excve Error :"), exit(1));
+					return (perror("Excve Error :"), exit_status(1, 127), exit(1));
 		}
 		else
 			waitpid(pid, &status, 0);

@@ -105,6 +105,7 @@ void	no_args(t_env **env);
 void	add_new_env(char *key, char *value, t_gc *gc, t_env **env);
 void	update_value(char *key, char *value, t_env **env, t_gc *gc);
 int		is_builtin_excute(t_gc *gc, t_env **env, t_command *cmd);
+int		exit_status(int set, int new_status);
 
 // PARSING FUNCTIONS
 t_token	*ft_lstnew(char *content);
