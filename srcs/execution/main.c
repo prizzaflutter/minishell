@@ -164,7 +164,7 @@ int main(int argc, char *argv[], char **env) {
     gc->head = NULL;
     (void)argc;
     (void)argv;
-    t_env *env_struct = fill_env(env);
+    t_env *env_struct = fill_env(gc, env);
     t_env *current = env_struct;
     while (current) {
         printf("Key : %s\n", current->key);
@@ -192,7 +192,7 @@ int main(int argc, char *argv[], char **env) {
      
         free_command_list(cmd_list);
     }
-//    gc_clear(gc);
-//    free(gc);
+   gc_clear(gc);
+   free(gc);
     return 0;
 }

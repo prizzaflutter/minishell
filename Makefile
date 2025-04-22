@@ -1,6 +1,6 @@
 CC = cc 
 
-CFLAGS = -Wall -Werror -Wextra -Iincludes -fsanitize=address -g
+CFLAGS = -Wall -Werror -Wextra -g -Iincludes   
 
 LDFLAGS = -lreadline 
 
@@ -29,6 +29,9 @@ OBJPARS = $(SRCPARS:%.c=%.o)
 
 all: $(NAME)
 
+valgrind: $(NAME)
+	valgrind --leak-check=full --track-origins=yes ./$(NAME)
+
 $(NAME): $(OBJ) $(OBJPARS) $(HEADER)
 	$(CC) $(CFLAGS) $(OBJ) $(OBJPARS) $(LDFLAGS) -o $(NAME)
 
@@ -36,7 +39,7 @@ $(NAME): $(OBJ) $(OBJPARS) $(HEADER)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -rf $(OBJ) $(OBJPARS) 
+	rm -rf $(OBJ) $(OBJPARS)
 
 fclean: clean
 	rm -f $(NAME)

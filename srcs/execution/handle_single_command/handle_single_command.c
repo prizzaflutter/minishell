@@ -62,7 +62,11 @@ void handle_single_command(t_gc *gc, t_command *cmd, t_env *env)
 					return (perror("Excve Error :"), exit_status(1, 127), exit(1));
 		}
 		else
+		{
 			waitpid(pid, &status, 0);
+			if (WIFEXITED(status))
+				exit_status(1, WEXITSTATUS(status));
+		}
 	}
 	restore_in_out(&org_stdin, &org_stdout);
 }

@@ -15,16 +15,13 @@ int execute_cmd(t_gc *gc,t_command *cmd, int *fd_array, t_env **env)
 	if (is_builtin_excute(gc, env, cmd) == 1)
 		return (1);
 	cmd_path = configure_path(gc, *cmd->cmd, *env);
-	printf("the cmd path is %s\n", cmd_path);
 	if (!cmd_path)
 		return ( 0);
 	env_array = convert_env_to_array(gc, *env);
 	if (!env_array)
-		return ( 0);
+		return (0);
 	if (execve(cmd_path, cmd_args, env_array) == -1)
-	{
-		return (printf("Error: EXECVE => (first child)"), 0);
-	}
+		return (printf("Error: EXECVE => (first child)"), exit_status(1, 127), 1);
 	return (1);
 }
 
@@ -33,6 +30,7 @@ int handle_multiple_command(t_gc *gc, t_command *cmd, t_env *env)
 	int fd_array[2];
 	int prev_fd = -1;
 	int out_file;
+	int status;
 	pid_t pid;
 	t_command *current_cmd = cmd;
 
@@ -118,6 +116,12 @@ int handle_multiple_command(t_gc *gc, t_command *cmd, t_env *env)
 		}
 		current_cmd = current_cmd->next;
 	}
-	while(wait(NULL) > 0);
+	while(wait(&status) > 0)
+	{
+		if (WIFEXITED(status))
+			exit_status(1, WEXITSTATUS(status));
+		else if (WIFSIGNALED(status))
+			exit_status(1, 128 + WTERMSIG(status));
+	}
 	return 1;
 }
