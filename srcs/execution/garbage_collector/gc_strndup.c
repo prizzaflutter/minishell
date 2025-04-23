@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gc_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 14:54:17 by iaskour           #+#    #+#             */
-/*   Updated: 2025/04/20 12:57:49 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/04/22 17:16:39 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*gc_strndup(t_gc *gc, const char *str, size_t n)
 	len = 0;
 	while (str[len] && len < n)
 		len++;
-	des = (char *)gc_malloc(gc, len + 1);
+	des = (char *)gc_malloc(gc, len + 1, 0);
 	if(!des)
 		return (NULL);
 	ft_memcpy(des, str, len);

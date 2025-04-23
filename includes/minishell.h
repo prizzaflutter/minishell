@@ -11,7 +11,6 @@
 # include <sys/wait.h>
 # include <limits.h>
 # include <stdarg.h>
-#include <stdbool.h>
 #include <stdint.h>
 
 
@@ -20,6 +19,7 @@
 //---------------------------------
 typedef struct  s_gc_node {
 	void *ptr;
+    int is_token;
 	struct s_gc_node *next;
 } t_gc_node;
 
@@ -83,8 +83,8 @@ int		is_valid_identifier(const char *str);
 char	**convert_env_to_array(t_gc *gc, t_env *env);
 int		handle_redirections_single(t_command *cmd);
 int		handle_redirections_multiple(t_command *current_cmd, int fd_array[]);
-void	*gc_malloc(t_gc *gc, size_t size);
-void	gc_clear(t_gc *gc);
+void	*gc_malloc(t_gc *gc, size_t size, int is_token);
+void	gc_clear(t_gc *gc, int is_token);
 char	*ft_strchr(const char *s, int c);
 char	*gc_strndup(t_gc *gc, const char *str, size_t n);
 char	*gc_strdup(t_gc *gc, const char *str);
@@ -106,34 +106,33 @@ int		is_builtin_excute(t_gc *gc, t_env **env, t_command *cmd);
 int		exit_status(int set, int new_status);
 
 // PARSING FUNCTIONS
-t_token	*ft_lstnew(char *content);
+t_token	*ft_lstnew(t_gc *gc, char *content);
 void	ft_lstadd_back(t_token **lst, t_token *new);
 t_token	*ft_lstlast(t_token *lst);
-char	**ft_split(char const *str, char charset);
-char	*ft_strdup(const char *s1);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
+char	**ft_split(t_gc *gc, char const *str, char charset);
+char	*ft_substr(t_gc *gc,char const *s, unsigned int start, size_t len);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
-char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strjoin(t_gc *gc, char const *s1, char const *s2);
 size_t	ft_strlen(const char *s);
 int		ft_isalnum(int c);
-char	*ft_itoa(int n);
+char	*ft_itoa(t_gc *gc, int n);
 int		ft_strcmp(const char *s1, const char *s2);
 int		ft_isalpha(int c);
-char	*add_space_inputs(char *str);
-int		add_command_element(char *str, t_token **tokens, t_env *env);
+int     ft_isdigit(int c);
+char	*add_space_inputs(t_gc *gc, char *str);
+int		add_command_element(t_gc *gc,char *str, t_token **tokens, t_env *env);
 int		define_token_type(char *str);
 int		handle_unexpected_token(t_token *tokens);
 int		handle_unclosed_quotes(char *str);
-int		handle_herdocs(t_token *t_token, t_env *env);
-int		handle_herdoc_input(char *str, t_env *env);
-char	*handle_expand(char *str, t_env *env);
-char	*handle_expand_herdoc(char *str, int flag, t_env *env);
-// char	*handle_expand_generic(char *str, t_env *env, int flag, int is_herdoc);
-
+int		handle_herdocs(t_gc *gc, t_token *t_token, t_env *env);
+int		handle_herdoc_input(t_gc *gc, char *str, t_env *env);
+char	*handle_expand(t_gc *gc, char *str, t_env *env);
+char	*handle_expand_herdoc(t_gc *gc, char *str, int flag, t_env *env);
 int		detect_quotes(char *str, int flag);
-char	*ft_strjoin_char(char *s1, char c);
 
+// char	*ft_strjoin_char(char *s1, char c);
+// char	*handle_expand_generic(char *str, t_env *env, int flag, int is_herdoc);
 
 
 void print_list(t_token *tokens);

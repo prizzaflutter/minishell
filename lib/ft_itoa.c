@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 14:48:03 by aykassim          #+#    #+#             */
-/*   Updated: 2025/04/17 14:48:14 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/04/22 17:15:11 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	lenstring(long n)
 	return (len);
 }
 
-char	*ft_itoa(int n)
+char	*ft_itoa(t_gc *gc,int n)
 {
 	long	nbr;
 	int		len;
@@ -43,7 +43,7 @@ char	*ft_itoa(int n)
 
 	nbr = n;
 	len = lenstring(nbr);
-	res = malloc(len + 1);
+	res = gc_malloc(gc, len + 1, 0);
 	if (!res)
 		return (NULL);
 	if (nbr == 0)

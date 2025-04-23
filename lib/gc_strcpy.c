@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcpy.c                                        :+:      :+:    :+:   */
+/*   gc_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 15:37:36 by iaskour           #+#    #+#             */
-/*   Updated: 2025/04/19 15:53:55 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/04/22 17:15:45 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*gc_strcpy(t_gc *gc, char const *str, char charset)
         else
             len++;
     }
-	res = gc_malloc(gc, len + 1);
+	res = gc_malloc(gc, len + 1, 0);
 	if (!res)
 		return (NULL);
 	while (i < len)

@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:20:58 by aykassim          #+#    #+#             */
-/*   Updated: 2025/04/16 14:54:23 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/04/22 13:12:37 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int handle_unclosed_quotes(char *str)
 	}
 	if (is_single_quote || is_double_quote)
 	{
-		printf("syntax error near unexpected token `newline'\n");
+		printf("syntax error near unexpected token 1 `newline'\n");
 		return (1);
 	}
 	return (0);
@@ -39,9 +39,6 @@ int handle_unclosed_quotes(char *str)
 
 int	handle_some_of_unexpected_token(t_token *current)
 {
-	// t_token	*top;
-
-	// top = current;
 	if ((current->type == REDIR_IN || current->type == REDIR_OUT
 			|| current->type == HEREDOC || current->type == APPEND)
 		&& current->next && current->next->type != WORD)
@@ -54,7 +51,7 @@ int	handle_some_of_unexpected_token(t_token *current)
 			|| current->type == HEREDOC || current->type == APPEND)
 		&& (!current->next || current->next->type != WORD))
 	{
-		ft_printf(2, "syntax error near unexpected token `newline'\n");
+		ft_printf(2, "syntax error near unexpected token 2 `newline'\n");
 		return (1);
 	}
 	return (0);
@@ -72,7 +69,7 @@ int	handle_unexpected_token(t_token *tokens)
 		if (current->type == REDIR_IN && current->next
 			&& current->next->type == REDIR_OUT)
 		{
-			ft_printf(2, "syntax error near unexpected token `newline'\n");
+			ft_printf(2, "syntax error near unexpected token 3 `newline'\n");
 			return (1);
 		}
 		if (current->type == PIPE && !current->next)

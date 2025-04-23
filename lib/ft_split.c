@@ -1,21 +1,6 @@
 #include "minishell.h"
 
-void	free_strings(char **strings)
-{
-	int	j;
-
-	j = 0;
-	if (!strings)
-		return ;
-	while (strings[j])
-	{
-		free(strings[j]);
-		j++;
-	}
-	free(strings);
-}
-
-char	*ft_strcpy(char const *str, char charset)
+char	*ft_strcpy(t_gc *gc,char const *str, char charset)
 {
 	int		i;
 	int		len;
@@ -39,7 +24,7 @@ char	*ft_strcpy(char const *str, char charset)
         else
             len++;
     }
-	res = malloc(len + 1);
+	res = gc_malloc(gc, len + 1, 0);
 	if (!res)
 		return (NULL);
 	while (i < len)
@@ -51,7 +36,7 @@ char	*ft_strcpy(char const *str, char charset)
 	return (res);
 }
 
-char	**allwork(char **strings, char const *s, char c)
+char	**allwork(t_gc *gc, char **strings, char const *s, char c)
 {
 	int		i;
 	int		j;
@@ -66,12 +51,9 @@ char	**allwork(char **strings, char const *s, char c)
 			i++;
 		if (s[i] != '\0')
 		{
-			strings[j] = ft_strcpy(&s[i], c);
+			strings[j] = ft_strcpy(gc ,&s[i], c);
 			if (!strings[j])
-			{
-				free_strings(strings);
 				return (NULL);
-			}
 			j++;
 		}
 		while (s[i] != '\0' && (quote_char || s[i] != c))
@@ -128,20 +110,17 @@ int count_words(char const *str, char charset)
     return (count);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split(t_gc *gc, char const *s, char c)
 {
 	char	**strings;
 
 	if (!s)
 		return (NULL);
-	strings = (char **)malloc((count_words(s, c) + 1) * sizeof(char *));
+	strings = (char **)gc_malloc(gc ,(count_words(s, c) + 1) * sizeof(char *), 0);
 	if (!strings)
 		return (NULL);
-	strings = allwork(strings, s, c);
+	strings = allwork(gc ,strings, s, c);
 	if (!strings)
-	{
-		free(strings);
 		return (NULL);
-	}
 	return (strings);
 }

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   gc_malloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 14:52:26 by iaskour           #+#    #+#             */
-/*   Updated: 2025/04/19 18:57:00 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/04/22 16:36:30 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	*gc_malloc(t_gc *gc, size_t size)
+void	*gc_malloc(t_gc *gc, size_t size, int is_token)
 {
 	void		*ptr;
 	t_gc_node	*new;
@@ -30,6 +30,7 @@ void	*gc_malloc(t_gc *gc, size_t size)
 	}
 	new->ptr = ptr;
 	new->next = gc->head;
+    new->is_token = is_token;
 	gc->head = new;
 	return (ptr);
 }

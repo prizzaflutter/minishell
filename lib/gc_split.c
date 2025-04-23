@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gc_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 09:46:30 by iaskour           #+#    #+#             */
-/*   Updated: 2025/04/19 18:55:12 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/04/22 11:48:23 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,6 @@ static size_t	count_word(const char *s, char c)
 	}
 	return (counter);
 }
-
-// static void	*free_split(char **s, size_t len)
-// {
-// 	size_t	i;
-
-// 	i = 0;
-// 	while (i < len)
-// 	{
-// 		free(s[i]);
-// 		i++;
-// 	}
-// 	free(s);
-// 	return (NULL);
-// }
 
 static char	*fill_index(char *final_str, const char *start, size_t lenght)
 {

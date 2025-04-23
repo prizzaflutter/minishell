@@ -70,3 +70,5 @@ void handle_single_command(t_gc *gc, t_command *cmd, t_env *env)
 	}
 	restore_in_out(&org_stdin, &org_stdout);
 }
+
+/// parent :  single command : cd | export with args | unset  | exit 

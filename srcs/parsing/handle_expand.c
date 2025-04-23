@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:53:28 by aykassim          #+#    #+#             */
-/*   Updated: 2025/04/17 17:19:07 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/04/22 17:16:54 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,18 +73,16 @@ char *get_varenv_value(char *var, t_env *env)
 // 	return (res);
 // }
 
-int compute_expanded_length(char *str,int flag, t_env *env)
+int compute_expanded_length(t_gc *gc, char *str,int flag, t_env *env)
 {
 	int		i;
 	int		j;
 	int		len;
 	char	*varname;
 	char	*varvalue;
-	int		exit_status;
 
 	i = 0;
 	len = 0;
-	exit_status = 7070;
 	while (str[i])
 	{
 		if (str[i] == '$' && flag == 0)
@@ -96,7 +94,7 @@ int compute_expanded_length(char *str,int flag, t_env *env)
 				len++;
 			else if (str[i] == '?')
 			{
-				len += ft_strlen(ft_itoa(exit_status));
+				len += ft_strlen(ft_itoa(gc, exit_status(0, 0)));
 				i++;
 			}
 			else if (str[i] == '$')
@@ -109,11 +107,10 @@ int compute_expanded_length(char *str,int flag, t_env *env)
 				j = i;
 				while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
 					i++;
-				varname = ft_substr(str, j, i - j);
+				varname = ft_substr(gc, str, j, i - j);
 				varvalue = get_varenv_value(varname, env);
 				if (varvalue)
 					len += ft_strlen(varvalue);
-				free(varname);
 			}
 			else
 			{
@@ -130,24 +127,24 @@ int compute_expanded_length(char *str,int flag, t_env *env)
 	return (len);
 }
 
-int	handle_quotes(const char *str, int *i, int *in_single, int *in_double)
-{
-	if (str[*i] == '"' && !(*in_single))
-	{
-		*in_double = !(*in_double);
-		(*i)++;
-		return (1);
-	}
-	else if (str[*i] == '\'' && !(*in_double))
-	{
-		*in_single = !(*in_single);
-		(*i)++;
-		return (1);
-	}
-	return (0);
-}
+// int	handle_quotes(const char *str, int *i, int *in_single, int *in_double)
+// {
+// 	if (str[*i] == '"' && !(*in_single))
+// 	{
+// 		*in_double = !(*in_double);
+// 		(*i)++;
+// 		return (1);
+// 	}
+// 	else if (str[*i] == '\'' && !(*in_double))
+// 	{
+// 		*in_single = !(*in_single);
+// 		(*i)++;
+// 		return (1);
+// 	}
+// 	return (0);
+// }
 
-char *handle_expand_herdoc(char *str, int flag, t_env *env)
+char *handle_expand_herdoc(t_gc *gc, char *str, int flag, t_env *env)
 {
 	char *res;
 	char *env_tmp;
@@ -155,15 +152,13 @@ char *handle_expand_herdoc(char *str, int flag, t_env *env)
 	int i;
 	int j;
 	int k;
-	int exit_status;
 
 	i = 0;
 	j = 0;
 	k = 0;
-	exit_status = 7070;
 	if (!str)
 		return (NULL);
-	res = malloc(sizeof(char) * (compute_expanded_length(str, flag, env) + 1));
+	res = gc_malloc(gc, sizeof(char) * (compute_expanded_length(gc, str, flag, env) + 1), 0);
 	if (!res)
 		return (NULL);
 	if (flag == 0)
@@ -183,24 +178,24 @@ char *handle_expand_herdoc(char *str, int flag, t_env *env)
 				else if (str[i] == '?')
 				{
 					j = 0;
-					char *nbr = ft_itoa(exit_status);
+					char *nbr = ft_itoa(gc, exit_status(0, 0));
 					while (nbr[j])
 						res[k++] = nbr[j++];
-					free(nbr);
 					i++;
 					j = 0;
 				}
 				else if (str[i] == '$')
 					res[k++] = str[i++];
+                else if (ft_isdigit(str[i]))
+                    i++;
 				else if (str[i] && (ft_isalpha(str[i]) || str[i] == '_'))
 				{
 					j = i;
 					while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
 						i++;
-					env_tmp = ft_substr(str, j, i - j);
+					env_tmp = ft_substr(gc, str, j, i - j);
 					new_str = get_varenv_value(env_tmp, env);
 					j = 0;
-					free(env_tmp);
 					while (new_str && new_str[j])
 						res[k++] = new_str[j++];
 				}
@@ -220,7 +215,7 @@ char *handle_expand_herdoc(char *str, int flag, t_env *env)
 	return (res);
 }
 
-char *handle_expand(char *str, t_env *env)
+char *handle_expand(t_gc *gc, char *str, t_env *env)
 {
 	char	*res;
 	int		i;
@@ -230,16 +225,14 @@ char *handle_expand(char *str, t_env *env)
 	int		is_double_quote;
 	char	*env_tmp;
 	char	*new_str;
-	int		exit_status;
 
 	i = 0;
 	k = 0;
 	is_single_quote = 0;
 	is_double_quote = 0;
-	exit_status = 7070;
 	if (!str)
 		return (NULL);
-	res = malloc(sizeof(char) * (compute_expanded_length(str, detect_quotes(str, 0), env) + 1));
+	res = gc_malloc(gc, sizeof(char) * (compute_expanded_length(gc, str, detect_quotes(str, 0), env) + 1), 0);
 	if (!res)
 		return (NULL);
 	while (str[i])
@@ -267,24 +260,24 @@ char *handle_expand(char *str, t_env *env)
 			else if (str[i] == '?')
 			{
 				j = 0;
-				char *nbr = ft_itoa(exit_status);
+				char *nbr = ft_itoa(gc, exit_status(0, 0));
 				while (nbr[j])
 					res[k++] = nbr[j++];
-				free(nbr);
 				i++;
 				j = 0;
 			}
 			else if (str[i] == '$')
 				res[k++] = str[i++];
+            else if (ft_isdigit(str[i]))
+                i++;
 			else if (str[i] && (ft_isalpha(str[i]) || str[i] == '_'))
 			{
 				j = i;
 				while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
 					i++;
-				env_tmp = ft_substr(str, j, i - j);
+				env_tmp = ft_substr(gc, str, j, i - j);
 				new_str = get_varenv_value(env_tmp, env);
 				j = 0;
-				free(env_tmp);
 				while (new_str && new_str[j])
 					res[k++] = new_str[j++];
 			}
