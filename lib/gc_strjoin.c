@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gc_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 18:56:46 by iaskour           #+#    #+#             */
-/*   Updated: 2025/04/19 16:15:34 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/04/22 17:15:51 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*gc_strjoin(t_gc *gc, char const *s1, char const *s2)
 	if (s1 == NULL || s2 == NULL)
 		return (NULL);
 	lenght = (ft_strlen(s1) + ft_strlen(s2));
-	str = (char *)gc_malloc(gc, (lenght + 1) * sizeof(char));
+	str = (char *)gc_malloc(gc, (lenght + 1) * sizeof(char), 0);
 	if (str == NULL)
 		return (NULL);
 	i = 0;

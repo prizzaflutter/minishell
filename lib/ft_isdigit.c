@@ -1,26 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/15 10:44:42 by aykassim          #+#    #+#             */
-/*   Updated: 2025/04/15 10:50:51 by aykassim         ###   ########.fr       */
+/*   Created: 2025/04/22 15:02:50 by aykassim          #+#    #+#             */
+/*   Updated: 2025/04/22 15:03:02 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_strdup(const char *s1)
+int	ft_isdigit(int c)
 {
-	char	*des;
-	size_t	len;
-
-	len = ft_strlen(s1);
-	des = (char *)malloc(len + 1);
-	if (!des)
-		return (NULL);
-	ft_memcpy(des, s1, len + 1);
-	return (des);
+	if (c >= '0' && c <= '9')
+		return (1);
+	else
+		return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_env_struct.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 12:37:33 by iaskour           #+#    #+#             */
-/*   Updated: 2025/04/21 10:02:56 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/04/22 17:15:57 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_env	*fill_env(t_gc *gc, char **envp)
 			continue;
 		}
 		size_t key_len = equal_pos - envp[i];
-		t_env *new_node = gc_malloc(gc, sizeof(t_env));
+		t_env *new_node = gc_malloc(gc, sizeof(t_env), 0);
 		if (!new_node)
 			return NULL;
 		new_node->key = gc_strndup(gc, envp[i], key_len);

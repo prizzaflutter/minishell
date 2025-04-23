@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 13:15:55 by iaskour           #+#    #+#             */
-/*   Updated: 2025/04/20 10:58:18 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/04/22 17:15:03 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	*ft_calloc(t_gc *gc, size_t count, size_t size)
 
 	if (size != 0 && count >= SIZE_MAX / size)
 		return (NULL);
-	tmp = gc_malloc(gc, count * size);
+	tmp = gc_malloc(gc, count * size, 0);
 	if (tmp == NULL)
 		return (NULL);
 	ft_bzero(tmp, (count * size));

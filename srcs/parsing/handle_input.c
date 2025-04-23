@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-char	*add_space_inputs(char *str)
+char	*add_space_inputs(t_gc *gc, char *str)
 {
 	int		i;
 	int		j;
@@ -41,7 +41,7 @@ char	*add_space_inputs(char *str)
 		}
 		i++;
 	}
-	new_str = malloc(sizeof(char) * (len + cm * 2 + 1));
+	new_str = gc_malloc(gc , sizeof(char) * (len + cm * 2 + 1), 0);
 	if (!new_str)
 		return(printf ("Error alloc"), NULL);
 	i = 0;
@@ -119,7 +119,7 @@ int its_have_dollar_signe(char *str)
 	return (0);
 }
 
-int add_command_element(char *str, t_token **tokens, t_env *env)
+int add_command_element(t_gc *gc, char *str, t_token **tokens, t_env *env)
 {
 	t_token	*new_token;
 	char	**res;
@@ -129,18 +129,19 @@ int add_command_element(char *str, t_token **tokens, t_env *env)
 
 	if (!str || !tokens)
 		return (1);
-	str = add_space_inputs(str);
+	str = add_space_inputs(gc, str);
 	if (!str)
 		return (printf("Error in add_space_inputs"), 1);
-	res = ft_split(str, ' ');
+	res = ft_split(gc, str, ' ');
 	if (!res)
 		return (printf("Error in ft_split"), 1);
 	i = 0;
+    
 	while (res[i])
 	{
-		new_token = ft_lstnew(res[i]);
+		new_token = ft_lstnew(gc, res[i]);
 		if (!new_token)
-			return (printf("Error in token creation"), free(res), 1);
+			return (printf("Error in token creation"), 1);
 		ft_lstadd_back(tokens, new_token);
 		i++;
 	}
@@ -151,15 +152,13 @@ int add_command_element(char *str, t_token **tokens, t_env *env)
 		{
 			if (its_have_dollar_signe(tmp->str))
 			{
-				new_str = handle_expand(tmp->str, env);
+				new_str = handle_expand(gc, tmp->str, env);
 				if (!new_str)
-					return (printf("Error in handle_expand"), free(res), 1);
-				free(tmp->str);
+					return (printf("Error in handle_expand"), 1);
 				tmp->str = new_str;
 			}
 		}
 		tmp = tmp->next;
 	}
-	free(res);
 	return (0);
 }

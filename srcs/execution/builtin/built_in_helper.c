@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_helper.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 12:39:46 by iaskour           #+#    #+#             */
-/*   Updated: 2025/04/20 12:41:15 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/04/22 17:16:20 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	**split_key_value(t_gc *gc, char *str)
 	char	*equal_pos;
 
 	equal_pos = ft_strchr(str, '=');
-	result = gc_malloc(gc, sizeof(char *) * 3);
+	result = gc_malloc(gc, sizeof(char *) * 3, 0);
 	if (!result)
 		return NULL;
 	if (!equal_pos)
@@ -70,7 +70,7 @@ void	add_new_env(char *key, char *value, t_gc *gc, t_env **env)
 {
 	t_env *new_env;
 
-	new_env = gc_malloc(gc, sizeof(t_env));
+	new_env = gc_malloc(gc, sizeof(t_env), 0);
 	if (!new_env)
 		return ;
 	new_env->key = key;
