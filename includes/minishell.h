@@ -31,7 +31,7 @@ typedef struct s_gc {
 typedef struct s_command {
 	char **cmd;
 	char **inoutfile;
-	// int fd_in;
+	int  fd_in;
 	void *next; 
 	void *prev;
 } t_command;
@@ -105,7 +105,7 @@ void	add_new_env(char *key, char *value, t_gc *gc, t_env **env);
 void	update_value(char *key, char *value, t_env **env, t_gc *gc);
 int		is_builtin_excute(t_gc *gc, t_env **env, t_command *cmd);
 int		exit_status(int set, int new_status);
-void execute_command(t_gc *gc, t_command *cmd, t_env *env);
+void	execute_command(t_gc *gc, t_command *cmd, t_env *env);
 
 // PARSING FUNCTIONS
 t_token	*ft_lstnew(t_gc *gc, char *content);
