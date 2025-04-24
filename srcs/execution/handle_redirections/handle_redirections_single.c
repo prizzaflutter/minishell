@@ -4,9 +4,10 @@ int handle_redirections_single (t_command *cmd)
 {
 	int out_file = -1;
 	int i = 0; 
+
+	printf("am over her \n");
 	while (cmd->inoutfile && cmd->inoutfile[i])
 	{
-
 		if (!ft_strcmp(cmd->inoutfile[i], ">>"))
 		{
 			if (out_file == -1)
