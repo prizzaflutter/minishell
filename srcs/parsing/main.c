@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:37:45 by aykassim          #+#    #+#             */
-/*   Updated: 2025/04/23 21:11:23 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/04/24 10:42:04 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,8 +213,9 @@ int main(int ac, char **av, char **env)
             free(input);
             continue;
         }
-		print_list(tokens);
+		// print_list(tokens);
 		build_command_list(gc, tokens, &cmds);
+		print_command_list(cmds);
 		execute_command(gc, cmds, env_struct);
         gc_clear(gc, 1);
 		gc_clear(gc, 3);
