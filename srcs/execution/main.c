@@ -192,7 +192,7 @@ int main(int argc, char *argv[], char **env) {
      
         free_command_list(cmd_list);
     }
-   gc_clear(gc);
+   gc_clear(gc, 0);
    free(gc);
     return 0;
 }

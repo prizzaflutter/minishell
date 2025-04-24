@@ -8,12 +8,12 @@ NAME = minishell
 
 HEADER = includes/minishell.h 
 
-SRCPARS = srcs/parsing/main.c srcs/parsing/handle_input.c lib/ft_lstadd_back.c lib/ft_lstlast.c \
+SRCPARS = srcs/parsing/handle_input.c lib/ft_lstadd_back.c lib/ft_lstlast.c \
 	lib/ft_lstnew.c lib/ft_split.c lib/ft_strlen.c lib/ft_strcmp.c srcs/parsing/handle_syntax_error.c \
 	srcs/parsing/handle_herdoc.c lib/ft_memcpy.c lib/ft_substr.c lib/ft_strlcpy.c lib/ft_isdigit.c \
 	lib/ft_isalnum.c srcs/parsing/handle_expand.c lib/ft_itoa.c
 
-SRC = srcs/execution/builtin/echo.c lib/ft_strncmp.c srcs/execution/builtin/cd.c \
+SRC = srcs/execution/main.c srcs/execution/builtin/echo.c lib/ft_strncmp.c srcs/execution/builtin/cd.c \
 	srcs/execution/get_cmd_path.c lib/ft_strjoin.c lib/ft_printf/ft_printf.c lib/ft_putchar_fd.c \
 	lib/ft_putstr_fd.c lib/ft_cmdsize.c srcs/execution/her_doc.c srcs/execution/handle_single_command/handle_single_command.c \
 	srcs/execution/handle_multiple_command/handle_multiple_command.c srcs/execution/builtin/is_builtin.c srcs/execution/builtin/pwd.c \

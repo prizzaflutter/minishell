@@ -24,7 +24,7 @@ int handle_redirections_multiple(t_command *current_cmd, int fd_array[])
 		// else if (current_cmd->inoutfile && current_cmd->inoutfile[0] && !ft_strncmp(current_cmd->inoutfile[0], "<<", 2))
 		// {
 		// 	handle_herdoc_infile(current_cmd);
-		// }
+		// }ll
 		else if (current_cmd->inoutfile && current_cmd->inoutfile[0] && !ft_strncmp(current_cmd->inoutfile[0], "<", 1))
 		{
 			out_file = open(current_cmd->inoutfile[1], O_RDONLY);

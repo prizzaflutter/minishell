@@ -31,6 +31,7 @@ typedef struct s_gc {
 typedef struct s_command {
 	char **cmd;
 	char **inoutfile;
+	int  fd_in;
 	void *next; 
 	void *prev;
 } t_command;
