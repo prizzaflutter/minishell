@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:37:45 by aykassim          #+#    #+#             */
-/*   Updated: 2025/04/24 10:42:04 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/04/24 11:24:48 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,36 +98,6 @@ int	ft_is_only_whitespace(char *str)
 	return (1);
 }
 
-// void print_command_list(t_command *cmds)
-// {
-// 	t_command *current = cmds;
-	
-// 	int i = 0;
-// 	while (current != NULL)
-// 	{
-// 		printf("Command: ");
-// 		while (current->cmd && current->cmd[i])
-// 		{
-// 			printf("%s ", current->cmd[i]);
-// 			i++;
-// 		}
-// 		i = 0;
-// 		printf("\n");
-// 		if (current->inoutfile)
-// 		{
-// 			printf("In/Out files: ");
-// 			while (current->inoutfile && current->inoutfile[i])
-// 			{
-// 				printf("%s ", current->inoutfile[i]);
-// 				i++;
-// 			}
-// 			printf("\n");
-// 		}
-// 		current = current->next;
-// 	}
-// }
-
-
 void print_command_list(t_command *cmds)
 {
     t_command *current = cmds;
@@ -135,32 +105,26 @@ void print_command_list(t_command *cmds)
 
     while (current != NULL)
     {
-        printf("Node %d:\n", node_index);  // Print the node index
-        
-        // Print the commands for this node
+        printf("Node %d:\n", node_index);
         printf("  Commands: ");
         int i = 0;
         while (current->cmd && current->cmd[i])
         {
-            printf("[%d] %s ", i, current->cmd[i]);  // Print the index of the command
+            printf("[%d] %s ", i, current->cmd[i]);
             i++;
         }
         printf("\n");
-
-        // Print the in/out files for this node if they exist
         if (current->inoutfile)
         {
             printf("  In/Out files: ");
             i = 0;
             while (current->inoutfile && current->inoutfile[i])
             {
-                printf("[%d] %s ", i, current->inoutfile[i]);  // Print the index of the file
+                printf("[%d] %s ", i, current->inoutfile[i]);
                 i++;
             }
             printf("\n");
         }
-
-        // Move to the next node and increment the node index
         current = current->next;
         node_index++;
     }

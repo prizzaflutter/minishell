@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 19:10:16 by aykassim          #+#    #+#             */
-/*   Updated: 2025/04/22 17:17:01 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/04/24 11:30:09 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,15 @@ char	*handle_delemitre(t_gc *gc, char *str)
 
 int handle_herdoc_input(t_gc *gc, char *str, t_env *env)
 {
-	char *line;
-	int fd;
-	// int i;
-	char *new_str;
-	char *new_del;
+	char	*line;
+	int		fd;
+	char	*new_str;
+	char	*new_del;
 	
 	unlink("heredoc_tmp");
 	fd = open("heredoc_tmp", O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (fd < 0)
 		return (-1);
-	// i = 0;
 	while (1)
 	{
 		new_del = handle_delemitre(gc, str);
@@ -83,6 +81,7 @@ int handle_herdocs(t_gc *gc, t_token *t_token, t_env *env)
 {
 	int fd;
 
+	// fd = -1;
 	while (t_token)
 	{
 		if (t_token->type == HEREDOC && t_token->next && t_token->next->type == WORD)
