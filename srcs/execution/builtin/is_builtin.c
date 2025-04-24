@@ -2,6 +2,8 @@
 
 char *is_builtin (char *cmd)
 {
+	if (!cmd)
+		return  NULL;
 	if (ft_strncmp(cmd, "echo", 4) == 0)
 		return ("echo");
 	else if (ft_strncmp(cmd, "cd", 2) == 0)
@@ -22,6 +24,8 @@ char *is_builtin (char *cmd)
 
 int	is_builtin_excute(t_gc *gc, t_env **env, t_command *cmd)
 {
+	if (!cmd)
+		return (0);
 	if (ft_strncmp(*cmd->cmd, "echo", 4) == 0)
 		return (my_echo(cmd->cmd), 1);
 	else if (ft_strncmp(*cmd->cmd, "cd", 2) == 0)
