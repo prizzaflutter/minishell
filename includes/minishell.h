@@ -105,6 +105,7 @@ void	add_new_env(char *key, char *value, t_gc *gc, t_env **env);
 void	update_value(char *key, char *value, t_env **env, t_gc *gc);
 int		is_builtin_excute(t_gc *gc, t_env **env, t_command *cmd);
 int		exit_status(int set, int new_status);
+void	execute_command(t_gc *gc, t_command *cmd, t_env *env);
 
 // PARSING FUNCTIONS
 t_token	*ft_lstnew(t_gc *gc, char *content);
@@ -135,6 +136,7 @@ int		detect_quotes(char *str, int flag);
 // char	*ft_strjoin_char(char *s1, char c);
 // char	*handle_expand_generic(char *str, t_env *env, int flag, int is_herdoc);
 
+void build_command_list(t_gc *gc, t_token *tokens, t_command **cmd_list);
 
 void print_list(t_token *tokens);
 #endif
