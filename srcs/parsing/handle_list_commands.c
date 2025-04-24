@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 09:48:32 by aykassim          #+#    #+#             */
-/*   Updated: 2025/04/23 17:56:31 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/04/24 11:14:36 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ char **get_commands(t_gc *gc, t_token *tokens)
 	{
 		if (tokens->type == WORD)
 		{
-			printf("tokens->str = %s\n", tokens->str);
 			commands[i] = gc_strdup(gc, tokens->str);
 			i++;
 		}
@@ -135,7 +134,7 @@ char **get_inoutfile(t_gc *gc, t_token *tokens)
 	int		i;
 
 	i = 0;
-	inoutfiles = gc_malloc(gc, nbr_of_inoutfile(tokens) + 1, 0);
+	inoutfiles = gc_malloc(gc, sizeof(char *) * nbr_of_inoutfile(tokens) + 1, 0);
 	if (!inoutfiles)
 		return (NULL);
 	while (tokens)
@@ -143,12 +142,13 @@ char **get_inoutfile(t_gc *gc, t_token *tokens)
 		if (tokens->type != WORD && tokens->type != PIPE)
 		{
 			inoutfiles[i] = gc_strdup(gc, tokens->str);
+			i++;
 			if (tokens->next)
-				inoutfiles[i + 1] = gc_strdup(gc, tokens->next->str);
-			else
-				inoutfiles[i + 1] = NULL;
-			tokens = tokens->next;
-			i+=2;
+			{
+				inoutfiles[i] = gc_strdup(gc, tokens->next->str);
+				i++;
+				tokens = tokens->next;
+			}
 		}
 		else if (tokens->type == PIPE)
 		{
