@@ -6,7 +6,11 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:37:45 by aykassim          #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2025/04/25 11:33:39 by aykassim         ###   ########.fr       */
+=======
 /*   Updated: 2025/04/24 13:36:59 by iaskour          ###   ########.fr       */
+>>>>>>> f146fa71293ccfdb70a9f908c4c765aab8ddea2e
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +58,7 @@ int add_tokens_elemnt(t_gc *gc,char *str, t_token **tokens, t_env *env)
 {
 	int fd;
 
-	fd = -1;
+	fd = -2;
 	if (handle_unclosed_quotes(str))
 		return (-1);
 	if (add_command_element(gc, str, tokens, env))
@@ -68,7 +72,7 @@ int add_tokens_elemnt(t_gc *gc,char *str, t_token **tokens, t_env *env)
 		return (-1);
     }
 	fd = handle_herdocs(gc, *tokens, env);
-	if (fd < 0)
+	if (fd == -1)
 	{
 		printf("Error in handle_herdocs\n");
 		return (-1);
@@ -98,42 +102,36 @@ int	ft_is_only_whitespace(char *str)
 	return (1);
 }
 
-// void print_command_list(t_command *cmds)
-// {
-// 	t_command *current = cmds;
-	
-// 	int i = 0;
-// 	while (current != NULL)
-// 	{
-// 		printf("Command: ");
-// 		while (current->cmd && current->cmd[i])
-// 		{
-// 			printf("%s ", current->cmd[i]);
-// 			i++;
-// 		}
-// 		i = 0;
-// 		printf("\n");
-// 		if (current->inoutfile)
-// 		{
-// 			printf("In/Out files: ");
-// 			while (current->inoutfile && current->inoutfile[i])
-// 			{
-// 				printf("%s ", current->inoutfile[i]);
-// 				i++;
-// 			}
-// 			printf("\n");
-// 		}
-// 		current = current->next;
-// 	}
-// }
-
-
 void print_command_list(t_command *cmds)
 {
     t_command *current = cmds;
     int node_index = 0;
 
     while (current != NULL)
+<<<<<<< HEAD
+    {
+        printf("Node %d:\n", node_index);
+        printf("  Commands: ");
+        int i = 0;
+        while (current->cmd && current->cmd[i])
+        {
+            printf("[%d] %s ", i, current->cmd[i]);
+            i++;
+        }
+        printf("\n");
+        if (current->inoutfile)
+        {
+            printf("  In/Out files: ");
+            i = 0;
+            while (current->inoutfile && current->inoutfile[i])
+            {
+                printf("[%d] %s ", i, current->inoutfile[i]);
+                i++;
+            }
+            printf("\n");
+        }
+		printf("  fd_in: %d\n", current->fd_in);
+=======
         {
         int i = 0;
         while (current->cmd && current->cmd[i])
@@ -148,6 +146,7 @@ void print_command_list(t_command *cmds)
             i++;
         }
         printf("\n");
+>>>>>>> f146fa71293ccfdb70a9f908c4c765aab8ddea2e
         current = current->next;
         node_index++;
     }
@@ -172,6 +171,7 @@ int main(int ac, char **av, char **env)
 	tokens = NULL;
     env_struct = fill_env(gc, env);
 	input = NULL;
+	cmds = NULL;
 	fd = -1;
 	while (1)
     {
@@ -188,12 +188,12 @@ int main(int ac, char **av, char **env)
 
         if (ft_strcmp(input, "exit") == 0)
         {
-            printf("Exiting...\n");
+            printf("Exitinggg...\n");
             free(input);
             break;
         }
         fd = add_tokens_elemnt(gc, input, &tokens, env_struct);
-        if (fd < 0)
+        if (fd == -1)
         {
             gc_clear(gc, 1);
             tokens = NULL;

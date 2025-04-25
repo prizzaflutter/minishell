@@ -127,6 +127,7 @@ int		ft_isalpha(int c);
 int     ft_isdigit(int c);
 char	*add_space_inputs(t_gc *gc, char *str);
 int		add_command_element(t_gc *gc,char *str, t_token **tokens, t_env *env);
+char	*handle_double_single_quotes(t_gc *gc, char *str);
 int		define_token_type(char *str);
 int		handle_unexpected_token(t_token *tokens);
 int		handle_unclosed_quotes(char *str);
@@ -138,8 +139,8 @@ int		detect_quotes(char *str, int flag);
 
 // char	*ft_strjoin_char(char *s1, char c);
 // char	*handle_expand_generic(char *str, t_env *env, int flag, int is_herdoc);
-
-void build_command_list(t_gc *gc, t_token *tokens, t_command **cmd_list);
+char	*handle_double_single_quotes(t_gc *gc, char *str);
+void	build_command_list(t_gc *gc, t_token *tokens, t_command **cmd_list);
 
 void print_list(t_token *tokens);
 #endif
