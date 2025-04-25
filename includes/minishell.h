@@ -106,6 +106,9 @@ void	update_value(char *key, char *value, t_env **env, t_gc *gc);
 int		is_builtin_excute(t_gc *gc, t_env **env, t_command *cmd);
 int		exit_status(int set, int new_status);
 void	execute_command(t_gc *gc, t_command *cmd, t_env *env);
+void	save_int_out(int *org_int, int *org_out);
+void	restore_in_out(int *org_int, int *org_out);
+void	print_command_list(t_command *cmds);
 
 // PARSING FUNCTIONS
 t_token	*ft_lstnew(t_gc *gc, char *content);

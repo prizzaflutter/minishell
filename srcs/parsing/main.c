@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:37:45 by aykassim          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/04/25 11:33:39 by aykassim         ###   ########.fr       */
+=======
+/*   Updated: 2025/04/24 13:36:59 by iaskour          ###   ########.fr       */
+>>>>>>> f146fa71293ccfdb70a9f908c4c765aab8ddea2e
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +108,7 @@ void print_command_list(t_command *cmds)
     int node_index = 0;
 
     while (current != NULL)
+<<<<<<< HEAD
     {
         printf("Node %d:\n", node_index);
         printf("  Commands: ");
@@ -126,6 +131,22 @@ void print_command_list(t_command *cmds)
             printf("\n");
         }
 		printf("  fd_in: %d\n", current->fd_in);
+=======
+        {
+        int i = 0;
+        while (current->cmd && current->cmd[i])
+        {
+            printf("the command is  %s\n",  current->cmd[i]);
+            i++;
+        }
+        i = 0;
+        while(current->inoutfile && current->inoutfile[i])
+        {
+            printf("the in out file is : %s\n", current->inoutfile[i]);
+            i++;
+        }
+        printf("\n");
+>>>>>>> f146fa71293ccfdb70a9f908c4c765aab8ddea2e
         current = current->next;
         node_index++;
     }
@@ -181,7 +202,7 @@ int main(int ac, char **av, char **env)
         }
 		// print_list(tokens);
 		build_command_list(gc, tokens, &cmds);
-		print_command_list(cmds);
+		// print_command_list(cmds);
 		execute_command(gc, cmds, env_struct);
         gc_clear(gc, 1);
 		gc_clear(gc, 3);
