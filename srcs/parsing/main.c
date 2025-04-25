@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:37:45 by aykassim          #+#    #+#             */
-/*   Updated: 2025/04/24 10:42:04 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/04/24 13:36:59 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,33 +134,20 @@ void print_command_list(t_command *cmds)
     int node_index = 0;
 
     while (current != NULL)
-    {
-        printf("Node %d:\n", node_index);  // Print the node index
-        
-        // Print the commands for this node
-        printf("  Commands: ");
+        {
         int i = 0;
         while (current->cmd && current->cmd[i])
         {
-            printf("[%d] %s ", i, current->cmd[i]);  // Print the index of the command
+            printf("the command is  %s\n",  current->cmd[i]);
+            i++;
+        }
+        i = 0;
+        while(current->inoutfile && current->inoutfile[i])
+        {
+            printf("the in out file is : %s\n", current->inoutfile[i]);
             i++;
         }
         printf("\n");
-
-        // Print the in/out files for this node if they exist
-        if (current->inoutfile)
-        {
-            printf("  In/Out files: ");
-            i = 0;
-            while (current->inoutfile && current->inoutfile[i])
-            {
-                printf("[%d] %s ", i, current->inoutfile[i]);  // Print the index of the file
-                i++;
-            }
-            printf("\n");
-        }
-
-        // Move to the next node and increment the node index
         current = current->next;
         node_index++;
     }
@@ -215,7 +202,7 @@ int main(int ac, char **av, char **env)
         }
 		// print_list(tokens);
 		build_command_list(gc, tokens, &cmds);
-		print_command_list(cmds);
+		// print_command_list(cmds);
 		execute_command(gc, cmds, env_struct);
         gc_clear(gc, 1);
 		gc_clear(gc, 3);

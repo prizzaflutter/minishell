@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_syntax_error.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:20:58 by aykassim          #+#    #+#             */
-/*   Updated: 2025/04/22 13:12:37 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/04/24 11:43:12 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ int	handle_some_of_unexpected_token(t_token *current)
 			|| current->type == HEREDOC || current->type == APPEND)
 		&& (!current->next || current->next->type != WORD))
 	{
-		ft_printf(2, "syntax error near unexpected token 2 `newline'\n");
+		printf("current->str %s| current->type %d \n",current->str, current->type);
+		ft_printf(2, "syntax error near unexpected token 11111111111 `newline'\n");
 		return (1);
 	}
 	return (0);

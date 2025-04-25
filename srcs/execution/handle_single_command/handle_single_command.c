@@ -47,10 +47,8 @@ void handle_single_command(t_gc *gc, t_command *cmd, t_env *env)
 	if (cmd->cmd[0] == NULL && cmd->inoutfile[0] == NULL)
 		return ;
 	build_in_f = is_builtin(*cmd->cmd);
-	printf("am over here idriss \n");
 	if (is_on_parent(build_in_f, cmd, env, gc) == 0)
 	{
-		printf("am over here askour\n");
 		pid = fork();
 		if (pid == -1)
 			return (perror("For Error :"));

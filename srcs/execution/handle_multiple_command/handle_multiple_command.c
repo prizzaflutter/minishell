@@ -5,11 +5,10 @@ int execute_cmd(t_gc *gc,t_command *cmd, int *fd_array, t_env **env)
 	char **cmd_args;
 	char *cmd_path;
 	char **env_array;
+	(void)fd_array;
 
-	close(fd_array[0]);
-	dup2(fd_array[1], STDOUT_FILENO);
-	close(fd_array[1]);
 	cmd_args = cmd->cmd;
+
 	if (!cmd_args)
 		return (0);
 	if (is_builtin_excute(gc, env, cmd) == 1)
@@ -33,7 +32,11 @@ int handle_multiple_command(t_gc *gc, t_command *cmd, t_env *env)
 	int status;
 	pid_t pid;
 	t_command *current_cmd = cmd;
+	int std_int; 
+	int std_out;
 
+
+	save_int_out(&std_int, &std_out);
 	while(current_cmd)
 	{
 		if (current_cmd->next)
@@ -58,17 +61,23 @@ int handle_multiple_command(t_gc *gc, t_command *cmd, t_env *env)
 				dup2(prev_fd, STDIN_FILENO);
 				close(prev_fd);
 			}
-			out_file = handle_redirections_single(cmd);
+			out_file = handle_redirections_multiple(current_cmd, fd_array);
 			if (out_file == -1)
-				exit(1);
-			if (cmd->cmd[0] == NULL) 
-				return (0);
-			if (execute_cmd(gc, current_cmd, fd_array, &env) == 0)
 			{
-				close(fd_array[1]);
-				close(fd_array[0]);
+				printf("the out file == -1\n");
 				exit(1);
 			}
+			if (!out_file && current_cmd->next)
+			{
+				close(fd_array[0]);
+				dup2(fd_array[1], STDOUT_FILENO);
+				close(fd_array[1]);
+			}
+			if (current_cmd->cmd[0] == NULL) 
+				return (0);
+			if (execute_cmd(gc, current_cmd,fd_array, &env) == 0)
+				exit(1);
+			exit(0);
 		}
 		else
 		{
@@ -89,5 +98,6 @@ int handle_multiple_command(t_gc *gc, t_command *cmd, t_env *env)
 		else if (WIFSIGNALED(status))
 			exit_status(1, 128 + WTERMSIG(status));
 	}
+	restore_in_out(&std_int, &std_out);
 	return 1;
 }
