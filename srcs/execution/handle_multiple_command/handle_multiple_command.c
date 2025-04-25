@@ -5,6 +5,7 @@ int execute_cmd(t_gc *gc,t_command *cmd, int *fd_array, t_env **env)
 	char **cmd_args;
 	char *cmd_path;
 	char **env_array;
+	(void)fd_array;
 
 	cmd_args = cmd->cmd;
 
