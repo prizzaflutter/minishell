@@ -1,6 +1,6 @@
 CC = cc 
 
-CFLAGS = -Wall -Werror -Wextra -Iincludes -g #-fsanitize=address -g
+CFLAGS = -Wall -Werror -Wextra -Iincludes -fsanitize=address -g
 
 LDFLAGS = -lreadline 
 

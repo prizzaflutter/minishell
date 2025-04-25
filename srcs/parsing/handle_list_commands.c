@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 09:48:32 by aykassim          #+#    #+#             */
-/*   Updated: 2025/04/24 11:14:36 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/04/25 11:27:44 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_command	*ft_lstnew_command(t_gc *gc, t_token *tokens)
 	}
 	nvcommand->cmd = get_commands(gc, tokens);
 	nvcommand->inoutfile = get_inoutfile(gc, tokens);
+	nvcommand->fd_in = -2;
 	nvcommand->next = NULL;
 	nvcommand->prev = NULL;
 	return (nvcommand);
@@ -48,6 +49,7 @@ void	ft_lstadd_back_commmand(t_command **lst, t_command *new)
 {
 	t_command	*last;
 
+	
 	if (!lst || !new)
 		return ;
 	if (!*lst)
@@ -84,7 +86,7 @@ char **get_commands(t_gc *gc, t_token *tokens)
 	int     i;
 
 	i = 0;
-	commands = gc_malloc(gc, nbr_of_commands(tokens) + 1, 0);
+	commands = gc_malloc(gc, sizeof(char *) * (nbr_of_commands(tokens) + 1), 0);
 	if (!commands)
 		return (NULL);
 	while (tokens)
@@ -134,7 +136,7 @@ char **get_inoutfile(t_gc *gc, t_token *tokens)
 	int		i;
 
 	i = 0;
-	inoutfiles = gc_malloc(gc, sizeof(char *) * nbr_of_inoutfile(tokens) + 1, 0);
+	inoutfiles = gc_malloc(gc, sizeof(char *) * (nbr_of_inoutfile(tokens) + 1), 0);
 	if (!inoutfiles)
 		return (NULL);
 	while (tokens)
@@ -174,6 +176,7 @@ void build_command_list(t_gc *gc, t_token *tokens, t_command **cmd_list)
 		end = start;
 		while (end && end->type != PIPE)
 			end = end->next;
+		// fd = handle_herdocs(gc, start, env);
 		cmd = ft_lstnew_command(gc, start);
 		ft_lstadd_back_commmand(cmd_list, cmd);
 		if (end)

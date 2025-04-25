@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 19:10:16 by aykassim          #+#    #+#             */
-/*   Updated: 2025/04/24 11:30:09 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/04/24 15:02:56 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,15 @@ int handle_herdoc_input(t_gc *gc, char *str, t_env *env)
 int handle_herdocs(t_gc *gc, t_token *t_token, t_env *env)
 {
 	int fd;
+	int is_heredoc; 
 
-	// fd = -1;
+	fd = -1;
+	is_heredoc = 0;
 	while (t_token)
 	{
 		if (t_token->type == HEREDOC && t_token->next && t_token->next->type == WORD)
 		{
+			is_heredoc = 1;
 			fd = handle_herdoc_input(gc, t_token->next->str, env);
 			if (fd < 0)
 				return (-1);
@@ -93,5 +96,7 @@ int handle_herdocs(t_gc *gc, t_token *t_token, t_env *env)
 		}
 		t_token = t_token->next;
 	}
+	if (is_heredoc == 0)
+		return (-2);
 	return (fd);
 }

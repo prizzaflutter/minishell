@@ -119,6 +119,73 @@ int its_have_dollar_signe(char *str)
 	return (0);
 }
 
+int count_length_without_quotes(char *str)
+{
+	int i;
+	int count;
+	int is_quote;
+	char quote_char;
+
+	i = 0;
+	count = 0;
+	is_quote = 0;
+	quote_char = 0;
+	while (str[i])
+	{
+		if ((str[i] == '"' || str[i] == '\'') && !is_quote)
+		{
+			is_quote = 1;
+			quote_char = str[i];
+		}
+		else if (str[i] == quote_char && is_quote)
+		{
+			is_quote = 0;
+			quote_char = 0;
+		}
+		else
+			count++;
+		i++;
+	}
+	return (count);
+}
+
+
+char	*handle_double_single_quotes(t_gc *gc, char *str)
+{
+	char	*new_str;
+	int		is_quote;
+	char	quote_char;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	is_quote = 0;
+	quote_char = 0;
+	new_str = gc_malloc(gc, sizeof(char) * (count_length_without_quotes(str) + 1), 0);
+	if (!new_str)
+		return (NULL);
+	while (str[i])
+	{
+		if ((str[i] == '"' || str[i] == '\'') && !is_quote)
+		{
+			is_quote = 1;
+			quote_char = str[i++];
+		}
+		else if (str[i] == quote_char && is_quote)
+		{
+			is_quote = 0;
+			quote_char = 0;
+		}
+		else if (is_quote)
+			new_str[j++] = str[i++];
+		else
+			new_str[j++] = str[i++];
+	}
+	new_str[j] = '\0';
+	return (new_str);
+}
+
 int add_command_element(t_gc *gc, char *str, t_token **tokens, t_env *env)
 {
 	t_token	*new_token;
@@ -136,7 +203,6 @@ int add_command_element(t_gc *gc, char *str, t_token **tokens, t_env *env)
 	if (!res)
 		return (printf("Error in ft_split"), 1);
 	i = 0;
-    
 	while (res[i])
 	{
 		new_token = ft_lstnew(gc, res[i]);
@@ -155,7 +221,19 @@ int add_command_element(t_gc *gc, char *str, t_token **tokens, t_env *env)
 				new_str = handle_expand(gc, tmp->str, env);
 				if (!new_str)
 					return (printf("Error in handle_expand"), 1);
-				tmp->str = new_str;
+				tmp->str = handle_double_single_quotes(gc, new_str);
+				if (!tmp->str)
+					return (printf("Error in handle_double_single_quotes"), 1);
+			}
+			else if (tmp->type == HEREDOC && tmp->next && tmp->next->type == WORD)
+			{
+				
+			}
+			else
+			{
+				tmp->str = handle_double_single_quotes(gc, tmp->str);
+				if (!tmp->str)
+					return (printf("Error in handle_double_single_quotes"), 1);
 			}
 		}
 		tmp = tmp->next;
