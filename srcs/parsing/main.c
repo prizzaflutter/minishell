@@ -1,58 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/09 10:37:45 by aykassim          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/04/25 11:33:39 by aykassim         ###   ########.fr       */
-=======
-/*   Updated: 2025/04/24 13:36:59 by iaskour          ###   ########.fr       */
->>>>>>> f146fa71293ccfdb70a9f908c4c765aab8ddea2e
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
-
-void print_list(t_token *tokens)
-{
-	t_token *current = tokens;
-	int i = 1;
-	if (!tokens)
-	{
-		printf("list is empty\n");
-		return;
-	}
-	while (current != NULL)
-	{
-		printf("token[%d] = %s\n", i, current->str);
-		printf("type[%d] = %d\n", i, current->type);
-		current = current->next;
-		i++;
-	}
-}
-
-int free_list(t_token **tokens)
-{
-    t_token *tmp;
-    if (!tokens || !*tokens)
-        return (0);
-    while (*tokens)
-    {
-        tmp = *tokens;
-        *tokens = (*tokens)->next;
-        if (tmp->str)
-        {
-            free(tmp->str);
-            tmp->str = NULL;
-        }
-        free(tmp);
-    }
-    *tokens = NULL;
-    return (0);
-}
 
 int add_tokens_elemnt(t_gc *gc,char *str, t_token **tokens, t_env *env)
 {
@@ -60,17 +6,14 @@ int add_tokens_elemnt(t_gc *gc,char *str, t_token **tokens, t_env *env)
 
 	fd = -2;
 	if (handle_unclosed_quotes(str))
-		return (-1);
+		return (exit_status(1, 2), -1);
 	if (add_command_element(gc, str, tokens, env))
 	{
 		printf("Error in add_command_element\n");
 		return (-1);
 	}
 	if (handle_unexpected_token(*tokens))
-    {
-        exit_status(1, 2);
-		return (-1);
-    }
+		return (exit_status(1, 2), -1);
 	fd = handle_herdocs(gc, *tokens, env);
 	if (fd == -1)
 	{
@@ -79,80 +22,6 @@ int add_tokens_elemnt(t_gc *gc,char *str, t_token **tokens, t_env *env)
 	}
 	return (fd);
 }
-
-int	ft_isspace(char c)
-{
-	if  (c == ' ' || (c >= 9 && c <= 13))
-        return (1);
-    return (0);
-}
-
-int	ft_is_only_whitespace(char *str)
-{
-	int	i = 0;
-
-	if (!str)
-		return (1);
-	while (str[i])
-	{
-		if (!ft_isspace(str[i]))
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-void print_command_list(t_command *cmds)
-{
-    t_command *current = cmds;
-    int node_index = 0;
-
-    while (current != NULL)
-<<<<<<< HEAD
-    {
-        printf("Node %d:\n", node_index);
-        printf("  Commands: ");
-        int i = 0;
-        while (current->cmd && current->cmd[i])
-        {
-            printf("[%d] %s ", i, current->cmd[i]);
-            i++;
-        }
-        printf("\n");
-        if (current->inoutfile)
-        {
-            printf("  In/Out files: ");
-            i = 0;
-            while (current->inoutfile && current->inoutfile[i])
-            {
-                printf("[%d] %s ", i, current->inoutfile[i]);
-                i++;
-            }
-            printf("\n");
-        }
-		printf("  fd_in: %d\n", current->fd_in);
-=======
-        {
-        int i = 0;
-        while (current->cmd && current->cmd[i])
-        {
-            printf("the command is  %s\n",  current->cmd[i]);
-            i++;
-        }
-        i = 0;
-        while(current->inoutfile && current->inoutfile[i])
-        {
-            printf("the in out file is : %s\n", current->inoutfile[i]);
-            i++;
-        }
-        printf("\n");
->>>>>>> f146fa71293ccfdb70a9f908c4c765aab8ddea2e
-        current = current->next;
-        node_index++;
-    }
-}
-
-///@brief => handle fd for heredoc && double qoutes
 
 int main(int ac, char **av, char **env)
 {
@@ -175,7 +44,7 @@ int main(int ac, char **av, char **env)
 	fd = -1;
 	while (1)
     {
-        input = readline("\nfoxThrouth0.7:/>");
+        input = readline("\nminishell:</>");
         if (!input)
             break;
         if (ft_is_only_whitespace(input))
@@ -200,9 +69,8 @@ int main(int ac, char **av, char **env)
             free(input);
             continue;
         }
-		// print_list(tokens);
 		build_command_list(gc, tokens, &cmds);
-		// print_command_list(cmds);
+		call_read_from_heredoc_fd(tokens);
 		execute_command(gc, cmds, env_struct);
         gc_clear(gc, 1);
 		gc_clear(gc, 3);

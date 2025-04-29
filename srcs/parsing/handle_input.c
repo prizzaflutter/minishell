@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_input.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/29 13:14:22 by aykassim          #+#    #+#             */
+/*   Updated: 2025/04/29 19:59:46 by aykassim         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 char	*add_space_inputs(t_gc *gc, char *str)
@@ -41,9 +53,9 @@ char	*add_space_inputs(t_gc *gc, char *str)
 		}
 		i++;
 	}
-	new_str = gc_malloc(gc , sizeof(char) * (len + cm * 2 + 1), 0);
+	new_str = gc_malloc(gc, sizeof(char) * (len + cm * 2 + 1), 0);
 	if (!new_str)
-		return(printf ("Error alloc"), NULL);
+		return (printf ("Error alloc"), NULL);
 	i = 0;
 	j = 0;
 	is_quote = 0;
@@ -89,25 +101,9 @@ char	*add_space_inputs(t_gc *gc, char *str)
 	return (new_str);
 }
 
-int define_token_type(char *str)
+int	its_have_dollar_signe(char *str)
 {
-	if (ft_strcmp(str, "|") == 0)
-		return (PIPE);
-	else if (ft_strcmp(str, "<") == 0)
-		return (REDIR_IN);
-	else if (strcmp(str, ">") == 0)
-		return (REDIR_OUT);
-	else if (ft_strcmp(str, "<<") == 0)
-		return (HEREDOC);
-	else if (ft_strcmp(str, ">>") == 0)
-		return (APPEND);
-	else
-		return (WORD);
-}
-
-int its_have_dollar_signe(char *str)
-{
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -119,12 +115,12 @@ int its_have_dollar_signe(char *str)
 	return (0);
 }
 
-int count_length_without_quotes(char *str)
+int	count_length_without_quotes(char *str)
 {
-	int i;
-	int count;
-	int is_quote;
-	char quote_char;
+	int		i;
+	int		count;
+	int		is_quote;
+	char	quote_char;
 
 	i = 0;
 	count = 0;
@@ -149,7 +145,6 @@ int count_length_without_quotes(char *str)
 	return (count);
 }
 
-
 char	*handle_double_single_quotes(t_gc *gc, char *str)
 {
 	char	*new_str;
@@ -162,7 +157,8 @@ char	*handle_double_single_quotes(t_gc *gc, char *str)
 	j = 0;
 	is_quote = 0;
 	quote_char = 0;
-	new_str = gc_malloc(gc, sizeof(char) * (count_length_without_quotes(str) + 1), 0);
+	new_str = gc_malloc(gc, sizeof(char)
+			* (count_length_without_quotes(str) + 1), 0);
 	if (!new_str)
 		return (NULL);
 	while (str[i])
@@ -186,11 +182,11 @@ char	*handle_double_single_quotes(t_gc *gc, char *str)
 	return (new_str);
 }
 
-int add_command_element(t_gc *gc, char *str, t_token **tokens, t_env *env)
+int	add_command_element(t_gc *gc, char *str, t_token **tokens, t_env *env)
 {
 	t_token	*new_token;
 	char	**res;
-	int i;
+	int		i;
 	char	*new_str;
 	t_token	*tmp;
 
@@ -216,7 +212,12 @@ int add_command_element(t_gc *gc, char *str, t_token **tokens, t_env *env)
 	{
 		if (tmp->type == WORD)
 		{
-			if (its_have_dollar_signe(tmp->str))
+			if (tmp->prev && tmp->prev->type == HEREDOC && tmp->type == WORD)
+			{
+				tmp = tmp->next;
+				continue ;
+			}
+			else if (its_have_dollar_signe(tmp->str))
 			{
 				new_str = handle_expand(gc, tmp->str, env);
 				if (!new_str)
@@ -224,10 +225,6 @@ int add_command_element(t_gc *gc, char *str, t_token **tokens, t_env *env)
 				tmp->str = handle_double_single_quotes(gc, new_str);
 				if (!tmp->str)
 					return (printf("Error in handle_double_single_quotes"), 1);
-			}
-			else if (tmp->type == HEREDOC && tmp->next && tmp->next->type == WORD)
-			{
-				
 			}
 			else
 			{
