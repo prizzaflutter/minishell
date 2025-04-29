@@ -8,10 +8,12 @@ NAME = minishell
 
 HEADER = includes/minishell.h 
 
-SRCPARS = srcs/parsing/main.c  srcs/parsing/handle_input.c lib/ft_lstadd_back.c lib/ft_lstlast.c \
-	lib/ft_lstnew.c lib/ft_split.c lib/ft_strlen.c lib/ft_strcmp.c srcs/parsing/handle_syntax_error.c \
-	srcs/parsing/handle_herdoc.c lib/ft_memcpy.c lib/ft_substr.c lib/ft_strlcpy.c lib/ft_isdigit.c \
-	lib/ft_isalnum.c srcs/parsing/handle_expand.c lib/ft_itoa.c srcs/parsing/handle_list_commands.c
+SRCPARS = srcs/parsing/main.c srcs/parsing/handle_input.c srcs/parsing/handle_list_tokens.c \
+	srcs/parsing/handle_syntax_error.c srcs/parsing/handle_herdoc.c srcs/parsing/handle_list_commands.c \
+	srcs/parsing/handle_list_commands_utilis.c \
+	srcs/parsing/printing_func.c \
+	lib/ft_isalnum.c srcs/parsing/handle_expand.c lib/ft_itoa.c lib/ft_split.c lib/ft_strlen.c lib/ft_strcmp.c \
+	lib/ft_memcpy.c lib/ft_substr.c lib/ft_strlcpy.c lib/ft_isdigit.c 
 
 SRC =  srcs/execution/execute_command.c srcs/execution/builtin/echo.c lib/ft_strncmp.c srcs/execution/builtin/cd.c \
 	srcs/execution/get_cmd_path.c lib/ft_strjoin.c lib/ft_printf/ft_printf.c lib/ft_putchar_fd.c \

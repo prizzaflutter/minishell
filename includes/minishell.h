@@ -55,7 +55,9 @@ enum token_type {
 typedef struct s_token {
 	char *str;
 	enum token_type type;
+	int fd_herdoc;
 	struct s_token *next;
+	struct s_token *prev;
 } t_token;
 
 // EXEC FUNCTIONS
@@ -125,6 +127,7 @@ char	*ft_itoa(t_gc *gc, int n);
 int		ft_strcmp(const char *s1, const char *s2);
 int		ft_isalpha(int c);
 int     ft_isdigit(int c);
+int		ft_is_only_whitespace(char *str);
 char	*add_space_inputs(t_gc *gc, char *str);
 int		add_command_element(t_gc *gc,char *str, t_token **tokens, t_env *env);
 char	*handle_double_single_quotes(t_gc *gc, char *str);
@@ -132,15 +135,22 @@ int		define_token_type(char *str);
 int		handle_unexpected_token(t_token *tokens);
 int		handle_unclosed_quotes(char *str);
 int		handle_herdocs(t_gc *gc, t_token *t_token, t_env *env);
-int		handle_herdoc_input(t_gc *gc, char *str, t_env *env);
+int		handle_herdoc_input(t_gc *gc, char *str, t_token *token, t_env *env);
 char	*handle_expand(t_gc *gc, char *str, t_env *env);
 char	*handle_expand_herdoc(t_gc *gc, char *str, int flag, t_env *env);
 int		detect_quotes(char *str, int flag);
 
-// char	*ft_strjoin_char(char *s1, char c);
-// char	*handle_expand_generic(char *str, t_env *env, int flag, int is_herdoc);
 char	*handle_double_single_quotes(t_gc *gc, char *str);
 void	build_command_list(t_gc *gc, t_token *tokens, t_command **cmd_list);
 
+char	**get_inoutfile(t_gc *gc, t_token *tokens);
+char	**get_commands(t_gc *gc, t_token *tokens);
+int	get_herdoc_fd(t_token *tokens);
+
+
+// PRINTING FUNCTIONS
 void print_list(t_token *tokens);
+void call_read_from_heredoc_fd(t_token *tokens);
+void print_command_list(t_command *cmds);
+
 #endif
