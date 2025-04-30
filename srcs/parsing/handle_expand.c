@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:53:28 by aykassim          #+#    #+#             */
-/*   Updated: 2025/04/29 18:22:29 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/04/30 13:21:37 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,8 +132,6 @@ char	*handle_expand_herdoc(t_gc *gc, char *str, int flag, t_env *env)
 	k = 0;
 	if (!str)
 		return (NULL);
-	
-	printf("count : %d\n", compute_expanded_length(gc, str, flag, env));
 	res = gc_malloc(gc, sizeof(char)
 			* (compute_expanded_length(gc, str, flag, env) + 1), 0);
 	if (!res)
@@ -218,6 +216,7 @@ char	*handle_expand(t_gc *gc, char *str, t_env *env)
 	is_double_quote = 0;
 	if (!str)
 		return (NULL);
+	printf("count = %d\n", compute_expanded_length(gc, str, detect_quotes(str, 0), env));
 	res = gc_malloc(gc, sizeof (char) * (compute_expanded_length(gc, str, detect_quotes(str, 0), env) + 1), 0);
 	if (!res)
 		return (NULL);
