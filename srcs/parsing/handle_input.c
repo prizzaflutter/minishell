@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 13:14:22 by aykassim          #+#    #+#             */
-/*   Updated: 2025/04/29 19:59:46 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/04/30 17:08:22 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,12 +132,18 @@ int	count_length_without_quotes(char *str)
 		{
 			is_quote = 1;
 			quote_char = str[i];
+			i++;
+			continue ;
 		}
 		else if (str[i] == quote_char && is_quote)
 		{
 			is_quote = 0;
 			quote_char = 0;
+			i++;
+			continue ;
 		}
+		else if (is_quote)		
+			count++;
 		else
 			count++;
 		i++;
@@ -166,12 +172,16 @@ char	*handle_double_single_quotes(t_gc *gc, char *str)
 		if ((str[i] == '"' || str[i] == '\'') && !is_quote)
 		{
 			is_quote = 1;
-			quote_char = str[i++];
+			quote_char = str[i];
+			i++;
+			continue ;
 		}
 		else if (str[i] == quote_char && is_quote)
 		{
 			is_quote = 0;
 			quote_char = 0;
+			i++;
+			continue ;
 		}
 		else if (is_quote)
 			new_str[j++] = str[i++];
@@ -219,7 +229,7 @@ int	add_command_element(t_gc *gc, char *str, t_token **tokens, t_env *env)
 			}
 			else if (its_have_dollar_signe(tmp->str))
 			{
-				new_str = handle_expand(gc, tmp->str, env);
+				new_str = handle_expand_generale(gc, tmp->str, detect_quotes(tmp->str, 0), env);
 				if (!new_str)
 					return (printf("Error in handle_expand"), 1);
 				tmp->str = handle_double_single_quotes(gc, new_str);
