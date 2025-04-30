@@ -1,35 +1,70 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/30 15:40:58 by iaskour           #+#    #+#             */
+/*   Updated: 2025/04/30 17:06:15 by iaskour          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-char **convert_env_to_array(t_gc *gc, t_env *env)
+int	size_of_env(t_env *env)
+{
+	t_env	*tmp;
+	int		size;
+
+	tmp = env;
+	size = 0;
+	while (tmp)
+	{
+		size++;
+		tmp = tmp->next;
+	}
+	return (size);
+}
+
+char	**convert_env_to_array(t_gc *gc, t_env *env)
 {
 	int		i;
 	int		size;
 	char	**env_array;
-	t_env	*temp;
+	char	*tmp;
 
 	i = 0;
-	size = 0;
 	env_array = NULL;
+	size = size_of_env(env);
 	if (!env)
 		return (NULL);
-	temp = env;
-	while (temp)
-	{
-		size++;
-		temp = temp->next;
-	}
 	env_array = gc_malloc(gc, sizeof(char *) * (size + 1), 0);
 	if (!env_array)
 		return (NULL);
 	env_array[size] = NULL;
 	while (env)
 	{
-		char *tmp = gc_strcat(gc, env->key, "=");
+		tmp = gc_strcat(gc, env->key, "=");
 		env_array[i] = gc_strcat(gc, tmp, env->value);
 		if (!env_array[i])
-			return NULL;
+			return (NULL);
 		i++;
 		env = env->next;
 	}
 	return (env_array);
+}
+
+void	save_int_out(int *org_int, int *org_out)
+{
+	*org_int = dup(STDIN_FILENO);
+	*org_out = dup(STDOUT_FILENO);
+}
+
+void	restore_in_out(int *org_int, int *org_out)
+{
+	dup2(*org_int, STDIN_FILENO);
+	dup2(*org_out, STDOUT_FILENO);
+	close(*org_int);
+	close(*org_out);
 }

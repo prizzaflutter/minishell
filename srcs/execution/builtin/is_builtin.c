@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   is_builtin.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/30 15:53:37 by iaskour           #+#    #+#             */
+/*   Updated: 2025/04/30 15:55:04 by iaskour          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-char *is_builtin (char *cmd)
+char	*is_builtin(char *cmd)
 {
 	if (!cmd)
-		return  NULL;
+		return (NULL);
 	if (ft_strncmp(cmd, "echo", 4) == 0)
 		return ("echo");
 	else if (ft_strncmp(cmd, "cd", 2) == 0)

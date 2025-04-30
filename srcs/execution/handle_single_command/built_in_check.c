@@ -6,7 +6,7 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 13:28:10 by iaskour           #+#    #+#             */
-/*   Updated: 2025/04/21 09:14:12 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/04/30 16:11:05 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	is_on_parent(char *build_in_f, t_command *cmd, t_env *env, t_gc *gc)
 		else if (!ft_strcmp(build_in_f, "unset"))
 			return (my_unset(&env, cmd->cmd), exit_status(1, 0), 1);
 		else if (!ft_strcmp(build_in_f, "export"))
-			return (my_export(gc, &env, cmd->cmd),exit_status(1, 0), 1);
+			return (my_export(gc, &env, cmd->cmd), exit_status(1, 0), 1);
 		// else if (ft_strcmp(build_in_f, "exit"))
 		// 	my_exit(cmd->cmd);
 	}
@@ -42,4 +42,3 @@ int	is_on_child(char *build_in_f, t_command *cmd, t_env *env, t_gc *gc)
 		return (my_env(env), exit_status(1, 0), 1);
 	return (0);
 }
-

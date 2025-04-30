@@ -1,9 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_cmd_path.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/30 15:38:01 by iaskour           #+#    #+#             */
+/*   Updated: 2025/04/30 15:40:02 by iaskour          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
-char *configure_path(t_gc *gc, char *cmd, t_env *env)
+char	*configure_path(t_gc *gc, char *cmd, t_env *env)
 {
-	char *cmd_path;
+	char	*cmd_path;
 
 	cmd_path = get_cmd_path(gc, cmd, env);
 	if (!cmd_path)
@@ -12,7 +23,8 @@ char *configure_path(t_gc *gc, char *cmd, t_env *env)
 			&& !access(cmd, F_OK) && !access(cmd, X_OK))
 			cmd_path = cmd;
 		else
-			return (ft_printf(2, "Error: Command not found : %s\n", cmd), exit_status(1, 127), NULL);
+			return (ft_printf(2, "Error: Command not found : %s\n", cmd),
+				exit_status(1, 127), NULL);
 	}
 	return (cmd_path);
 }
@@ -44,10 +56,10 @@ char	*get_cmd_path(t_gc *gc, char *cmd, t_env *env)
 
 	if (!cmd || !env)
 		return (NULL);
-	while(env)
+	while (env)
 	{
 		if (ft_strncmp(env->key, "PATH", 4) == 0)
-			break;
+			break ;
 		env = env->next;
 	}
 	if (!env || !env->value)

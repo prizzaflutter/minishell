@@ -6,11 +6,13 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:52:25 by iaskour           #+#    #+#             */
-/*   Updated: 2025/04/30 14:52:26 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/04/30 15:18:25 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+
 
 int handle_redirections_single (t_command *cmd)
 {
@@ -22,15 +24,19 @@ int handle_redirections_single (t_command *cmd)
 	{
 		if (!ft_strcmp(cmd->inoutfile[i], ">>"))
 		{
-			if (out_file == -1)
+			if (out_file != -1)
 				close(out_file);
 			out_file = open (cmd->inoutfile[i + 1], O_WRONLY | O_CREAT | O_APPEND, 0644);
+			if (out_file == -1)
+				return (-1);
 		}
 		else if (!ft_strcmp(cmd->inoutfile[i], ">"))
 		{
-			if (out_file == -1)
+			if (out_file != -1)
 				close(out_file);
 			out_file = open(cmd->inoutfile[i + 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			if (out_file == -1)
+				return (-1);
 		}
 		else if (!ft_strcmp(cmd->inoutfile[i], "<"))
 		{
