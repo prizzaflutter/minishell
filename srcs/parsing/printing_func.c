@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void pri_list(t_token *tokens)
+void print_list(t_token *tokens)
 {
 	t_token *current = tokens;
 	int node_index = 0;

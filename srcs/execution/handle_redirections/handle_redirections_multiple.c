@@ -6,7 +6,7 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 11:54:25 by iaskour           #+#    #+#             */
-/*   Updated: 2025/04/25 10:59:06 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/04/30 13:33:48 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int handle_redirections_multiple(t_command *cmd, int fd_array[])
 			if (out_file != -1)
 				close(out_file);
 			out_file = open(cmd->inoutfile[i + 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			if(out_file)
+			if(out_file == -1)
 				return (-1);
 		}
 		else if (!ft_strcmp(cmd->inoutfile[i], "<"))

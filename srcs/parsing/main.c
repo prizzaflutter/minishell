@@ -23,6 +23,7 @@ int add_tokens_elemnt(t_gc *gc,char *str, t_token **tokens, t_env *env)
 	return (fd);
 }
 
+
 int main(int ac, char **av, char **env)
 {
 	(void)ac;
@@ -69,6 +70,7 @@ int main(int ac, char **av, char **env)
             free(input);
             continue;
         }
+        // print_list(tokens);
 		build_command_list(gc, tokens, &cmds);
 		call_read_from_heredoc_fd(tokens);
 		execute_command(gc, cmds, env_struct);
