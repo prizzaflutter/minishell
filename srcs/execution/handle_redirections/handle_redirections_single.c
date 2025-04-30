@@ -1,8 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_redirections_single.c                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/30 14:52:25 by iaskour           #+#    #+#             */
+/*   Updated: 2025/04/30 14:52:26 by iaskour          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int handle_redirections_single (t_command *cmd)
 {
 	int out_file = -1;
+	int in_file = -1;
 	int i = 0; 
 
 	while (cmd->inoutfile && cmd->inoutfile[i])
@@ -21,14 +34,14 @@ int handle_redirections_single (t_command *cmd)
 		}
 		else if (!ft_strcmp(cmd->inoutfile[i], "<"))
 		{
-			out_file = open(cmd->inoutfile[1], O_RDONLY);
-			if (out_file == -1)
+			in_file = open(cmd->inoutfile[1], O_RDONLY);
+			if (in_file == -1)
 			{
 				printf("error in file descriptor single command 2\n");
 				return (-1);
 			}
-			dup2(out_file, STDIN_FILENO);
-			close(out_file);
+			dup2(in_file, STDIN_FILENO);
+			close(in_file);
 		}
 		i += 2;
 	}
