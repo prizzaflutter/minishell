@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 13:14:22 by aykassim          #+#    #+#             */
-/*   Updated: 2025/04/30 17:08:22 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/01 13:05:48 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,6 +200,11 @@ int	add_command_element(t_gc *gc, char *str, t_token **tokens, t_env *env)
 	char	*new_str;
 	t_token	*tmp;
 
+	char **char_tmp;
+	t_token *new_token_tmp;
+	t_token	*tokens_tmp;
+
+	tokens_tmp = NULL;
 	if (!str || !tokens)
 		return (1);
 	str = add_space_inputs(gc, str);
@@ -211,19 +216,23 @@ int	add_command_element(t_gc *gc, char *str, t_token **tokens, t_env *env)
 	i = 0;
 	while (res[i])
 	{
-		new_token = ft_lstnew(gc, res[i]);
-		if (!new_token)
+		new_token_tmp = ft_lstnew(gc, res[i], 4);
+		if (!new_token_tmp)
 			return (printf("Error in token creation"), 1);
-		ft_lstadd_back(tokens, new_token);
+		ft_lstadd_back(&tokens_tmp, new_token_tmp);
 		i++;
 	}
-	tmp = *tokens;
+	tmp = tokens_tmp;
 	while (tmp)
 	{
 		if (tmp->type == WORD)
 		{
 			if (tmp->prev && tmp->prev->type == HEREDOC && tmp->type == WORD)
 			{
+				new_token = ft_lstnew(gc, tmp->str, 1);
+				if (!new_token)
+				return (printf("Error in token creation new_token_tmp"), 1);
+				ft_lstadd_back(tokens, new_token);
 				tmp = tmp->next;
 				continue ;
 			}
@@ -232,6 +241,23 @@ int	add_command_element(t_gc *gc, char *str, t_token **tokens, t_env *env)
 				new_str = handle_expand_generale(gc, tmp->str, detect_quotes(tmp->str, 0), env);
 				if (!new_str)
 					return (printf("Error in handle_expand"), 1);
+				////////////////////////////
+				char_tmp = ft_split(gc, new_str, ' ');
+				if (!char_tmp)
+					return (printf("Error in ft_split tokens_tmp"), 1);
+				i = 0;
+				while (char_tmp[i])
+				{
+					new_token = ft_lstnew(gc, char_tmp[i], 1);
+					if (!new_token)
+						return (printf("Error in token creation new_token_tmp"), 1);
+					ft_lstadd_back(tokens, new_token);
+					new_token->str = handle_double_single_quotes(gc, new_token->str);
+					if (!new_token->str)
+						return (printf("Error in handle_double_single_quotes"), 1);
+					i++;
+				}
+				//////////////////////
 				tmp->str = handle_double_single_quotes(gc, new_str);
 				if (!tmp->str)
 					return (printf("Error in handle_double_single_quotes"), 1);
@@ -239,11 +265,112 @@ int	add_command_element(t_gc *gc, char *str, t_token **tokens, t_env *env)
 			else
 			{
 				tmp->str = handle_double_single_quotes(gc, tmp->str);
+				
 				if (!tmp->str)
 					return (printf("Error in handle_double_single_quotes"), 1);
+				new_token = ft_lstnew(gc, tmp->str, 1);
+				ft_lstadd_back(tokens, new_token);
 			}
+		}
+		else 
+		{
+			new_token = ft_lstnew(gc, tmp->str, 1);
+			if (!tmp->str)
+				return (printf("Error in handle_double_single_quotes"), 1);
+			ft_lstadd_back(tokens, new_token);
 		}
 		tmp = tmp->next;
 	}
+	gc_clear(gc, 4);
+	tokens_tmp = NULL;
 	return (0);
 }
+
+// int	add_command_element(t_gc *gc, char *str, t_token **tokens, t_token **tokens_tmp, t_env *env)
+// {
+// 	t_token	*new_token;
+// 	char	**res;
+// 	int		i;
+// 	char	*new_str;
+// 	t_token	*tmp;
+
+// 	char **char_tmp;
+// 	t_token *new_token_tmp;
+
+// 	if (!str || !tokens)
+// 		return (1);
+// 	str = add_space_inputs(gc, str);
+// 	if (!str)
+// 		return (printf("Error in add_space_inputs"), 1);
+// 	res = ft_split(gc, str, ' ');
+// 	if (!res)
+// 		return (printf("Error in ft_split"), 1);
+// 	i = 0;
+// 	while (res[i])
+// 	{
+// 		new_token = ft_lstnew(gc, res[i], 1);
+// 		if (!new_token)
+// 			return (printf("Error in token creation"), 1);
+// 		ft_lstadd_back(tokens, new_token);
+// 		i++;
+// 	}
+// 	tmp = *tokens;
+// 	while (tmp)
+// 	{
+// 		if (tmp->type == WORD)
+// 		{
+// 			if (tmp->prev && tmp->prev->type == HEREDOC && tmp->type == WORD)
+// 			{
+// 				tmp = tmp->next;
+// 				new_token_tmp = ft_lstnew(gc, tmp->str, 4);
+// 				if (!new_token_tmp)
+// 					return (printf("Error in token creation new_token_tmp"), 1);
+// 				ft_lstadd_back(tokens_tmp, new_token_tmp);
+// 				continue ;
+// 			}
+// 			else if (its_have_dollar_signe(tmp->str))
+// 			{
+// 				new_str = handle_expand_generale(gc, tmp->str, detect_quotes(tmp->str, 0), env);
+// 				printf("new_str = %s\n", new_str);
+// 				if (!new_str)
+// 					return (printf("Error in handle_expand"), 1);
+// 				////////////////////////////
+// 				char_tmp = ft_split(gc, new_str, ' ');
+// 				if (!char_tmp)
+// 					return (printf("Error in ft_split tokens_tmp"), 1);
+// 				i = 0;
+// 				while (char_tmp[i])
+// 				{
+// 					new_token_tmp = ft_lstnew(gc, char_tmp[i], 4);
+// 					if (!new_token_tmp)
+// 						return (printf("Error in token creation new_token_tmp"), 1);
+// 					ft_lstadd_back(tokens_tmp, new_token_tmp);
+// 					new_token_tmp->str = handle_double_single_quotes(gc, new_token_tmp->str);
+// 					if (!new_token_tmp->str)
+// 						return (printf("Error in handle_double_single_quotes"), 1);
+// 					i++;
+// 				}
+// 				//////////////////////
+// 				tmp->str = handle_double_single_quotes(gc, new_str);
+// 				if (!tmp->str)
+// 					return (printf("Error in handle_double_single_quotes"), 1);
+// 			}
+// 			else
+// 			{
+// 				tmp->str = handle_double_single_quotes(gc, tmp->str);
+				
+// 				if (!tmp->str)
+// 					return (printf("Error in handle_double_single_quotes"), 1);
+// 				new_token_tmp = ft_lstnew(gc, tmp->str, 4);
+// 				ft_lstadd_back(tokens_tmp, new_token_tmp);
+// 			}
+// 		}
+// 		tmp = tmp->next;
+// 	}
+
+// 	///////////
+// 	printf("tokens_tmp\n");
+// 	print_list(*tokens_tmp);
+// 	///////////
+// 	return (0);
+// }

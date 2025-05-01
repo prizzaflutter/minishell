@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:56:35 by aykassim          #+#    #+#             */
-/*   Updated: 2025/04/29 14:40:04 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/01 10:25:13 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ int	define_token_type(char *str)
 		return (WORD);
 }
 
-t_token	*ft_lstnew(t_gc *gc, char *content)
+t_token	*ft_lstnew(t_gc *gc, char *content, int flag)
 {
 	t_token	*nvtlist;
 
-	nvtlist = (t_token *)gc_malloc(gc, sizeof(t_token), 1);
+	nvtlist = (t_token *)gc_malloc(gc, sizeof(t_token), flag);
 	if (!nvtlist)
 	{
 		printf("Error in malloc");
@@ -53,8 +53,8 @@ t_token	*ft_lstlast(t_token *lst)
 	if (!lst)
 		return (NULL);
 	current = lst;
-	while (current -> next != NULL)
-		current = current -> next;
+	while (current->next != NULL)
+		current = current->next;
 	return (current);
 }
 
