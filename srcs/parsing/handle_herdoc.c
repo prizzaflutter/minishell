@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 19:10:16 by aykassim          #+#    #+#             */
-/*   Updated: 2025/04/30 17:55:03 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/01 16:55:08 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	handle_herdoc_input(t_gc *gc, char *str, t_token *tokens, t_env *env)
 	while (1)
 	{
 		new_del = handle_delemitre(gc, str);
-		line = readline("herdoc> ");
+		line = readline("herdoc>");
 		if (!line || ft_strcmp(line, new_del) == 0)
 			break ;
 		new_str = handle_expand_generale(gc, line, detect_quotes(str, 1), env);
