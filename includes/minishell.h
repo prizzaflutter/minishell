@@ -112,7 +112,7 @@ void	restore_in_out(int *org_int, int *org_out);
 void	print_command_list(t_command *cmds);
 
 // PARSING FUNCTIONS
-t_token	*ft_lstnew(t_gc *gc, char *content);
+t_token	*ft_lstnew(t_gc *gc, char *content, int flag);
 void	ft_lstadd_back(t_token **lst, t_token *new);
 t_token	*ft_lstlast(t_token *lst);
 char	**ft_split(t_gc *gc, char const *str, char charset);
@@ -144,8 +144,8 @@ void	build_command_list(t_gc *gc, t_token *tokens, t_command **cmd_list);
 
 char	**get_inoutfile(t_gc *gc, t_token *tokens);
 char	**get_commands(t_gc *gc, t_token *tokens);
-int	get_herdoc_fd(t_token *tokens);
-
+int		get_herdoc_fd(t_token *tokens);
+void	close_herdoc_fd(t_token **tokens);
 
 // PRINTING FUNCTIONS
 void print_list(t_token *tokens);

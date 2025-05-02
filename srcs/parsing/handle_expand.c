@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:53:28 by aykassim          #+#    #+#             */
-/*   Updated: 2025/04/30 17:07:25 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/01 11:34:33 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,7 @@ int detetect_varenv_quotes(char *str)
 int	detect_quotes(char *str, int flag)
 {
 	int		i;
-	int		is_quote;
-	char	quote_char;
 
-	is_quote = 0;
-	quote_char = 0;
 	i = 0;
 	if (flag == 1)
 	{
@@ -82,7 +78,7 @@ char	*get_varenv_value(char *var, t_env *env)
 	current = env;
 	while (current)
 	{
-		if (ft_strncmp(current->key, var, ft_strlen(var)) == 0)
+		if (ft_strcmp(current->key, var) == 0)
 			return (current->value);
 		current = current->next;
 	}
@@ -215,6 +211,8 @@ char	*handle_expand_generale(t_gc *gc, char *str, int flag, t_env *env)
 						i++;
 					env_tmp = ft_substr(gc, str, j, i - j);
 					new_str = get_varenv_value(env_tmp, env);
+					if (!new_str)
+						new_str = gc_strdup(gc, "");
 					j = 0;
 					while (new_str && new_str[j])
 						res[k++] = new_str[j++];

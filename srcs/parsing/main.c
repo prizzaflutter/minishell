@@ -1,5 +1,6 @@
 #include "minishell.h"
 
+
 int add_tokens_elemnt(t_gc *gc,char *str, t_token **tokens, t_env *env)
 {
 	int fd;
@@ -70,10 +71,13 @@ int main(int ac, char **av, char **env)
             free(input);
             continue;
         }
-        // print_list(tokens);
-		build_command_list(gc, tokens, &cmds);
-		call_read_from_heredoc_fd(tokens);
-		execute_command(gc, cmds, env_struct);
+        if(tokens)
+		{
+			build_command_list(gc, tokens, &cmds);
+			print_list(tokens);
+			call_read_from_heredoc_fd(tokens);
+			execute_command(gc, cmds, env_struct);
+		}
         gc_clear(gc, 1);
 		gc_clear(gc, 3);
         tokens = NULL;

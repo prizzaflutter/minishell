@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 09:48:32 by aykassim          #+#    #+#             */
-/*   Updated: 2025/04/29 14:56:31 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/01 15:33:03 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_command	*ft_lstnew_command(t_gc *gc, t_token *tokens)
 	}
 	nvcommand->cmd = get_commands(gc, tokens);
 	nvcommand->inoutfile = get_inoutfile(gc, tokens);
+	close_herdoc_fd(&tokens);
 	nvcommand->fd_in = get_herdoc_fd(tokens);
 	nvcommand->next = NULL;
 	nvcommand->prev = NULL;

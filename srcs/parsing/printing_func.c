@@ -10,6 +10,8 @@ void print_list(t_token *tokens)
 		printf("  -str: %s\n", current->str);
 		printf("  -type: %d\n", current->type);
 		printf("  -fd_herdoc: %d\n", current->fd_herdoc);
+		if (current->type == HEREDOC)
+			printf("delimtre = %s\n", current->next->str);
 		current = current->next;
 	}
 }
