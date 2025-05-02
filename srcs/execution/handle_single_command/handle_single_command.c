@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_single_command.c                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/30 17:04:07 by iaskour           #+#    #+#             */
+/*   Updated: 2025/04/30 17:04:32 by iaskour          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	excute_single_command(t_gc *gc, t_command *cmd, t_env **env)
@@ -14,34 +26,43 @@ int	excute_single_command(t_gc *gc, t_command *cmd, t_env **env)
 		return (0);
 	env_array = convert_env_to_array(gc, *env);
 	if (!env_array)
-		return ( 0);
+		return (0);
 	if (execve(cmd_path, cmd_args, env_array) == -1)
-		return (printf("Error: EXECVE => (first child)"), exit_status(1, 127), 0);
+		return (printf("Error: EXECVE => (first child)"),
+			exit_status(1, 127), 0);
 	return (1);
 }
 
-void	save_int_out(int *org_int, int *org_out)
+void	handle_redirection_and_execute(char *build_in_f,
+	t_gc *gc, t_command *cmd, t_env *env)
 {
-	*org_int = dup(STDIN_FILENO);
-	*org_out = dup(STDOUT_FILENO);
-}
-
-void restore_in_out(int *org_int, int *org_out)
-{
-	dup2(*org_int, STDIN_FILENO);
-	dup2(*org_out, STDOUT_FILENO);
-	close(*org_int);
-	close(*org_out);
-}
-
-void handle_single_command(t_gc *gc, t_command *cmd, t_env *env)
-{
+	int		out_file;
 	pid_t	pid;
 	int		status;
+
+	pid = fork();
+	if (pid == 0)
+	{
+		out_file = handle_redirections_single(cmd);
+		if (out_file == -1)
+			exit(1);
+		if (is_on_child(build_in_f, cmd, env, gc) == 0)
+			if (excute_single_command(gc, cmd, &env) == -1)
+				return (perror("Excve Error :"), exit_status(1, 127), exit(1));
+	}
+	else
+	{
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status))
+			exit_status(1, WEXITSTATUS(status));
+	}
+}
+
+void	handle_single_command(t_gc *gc, t_command *cmd, t_env *env)
+{
 	char	*build_in_f;
-	int		out_file;
-	int	org_stdin ;
-	int org_stdout;
+	int		org_stdin ;
+	int		org_stdout;
 
 	save_int_out(&org_stdin, &org_stdout);
 	if ((cmd->cmd[0] == NULL && cmd->inoutfile[0] == NULL))
@@ -50,27 +71,6 @@ void handle_single_command(t_gc *gc, t_command *cmd, t_env *env)
 	build_in_f = is_builtin(*cmd->cmd);
 
 	if (is_on_parent(build_in_f, cmd, env, gc) == 0)
-	{
-		pid = fork();
-		if (pid == -1)
-			return (perror("For Error :"));
-		if (pid == 0)
-		{
-			out_file = handle_redirections_single(cmd);
-			if (out_file == -1)
-				exit(1);
-			if (is_on_child(build_in_f, cmd, env, gc) == 0)
-				if (excute_single_command(gc, cmd, &env) == -1)
-					return (perror("Excve Error :"), exit_status(1, 127), exit(1));
-		}
-		else
-		{
-			waitpid(pid, &status, 0);
-			if (WIFEXITED(status))
-				exit_status(1, WEXITSTATUS(status));
-		}
-	}
+		handle_redirection_and_execute(build_in_f, gc, cmd, env);
 	restore_in_out(&org_stdin, &org_stdout);
 }
-
-/// parent :  single command : cd | export with args | unset  | exit 

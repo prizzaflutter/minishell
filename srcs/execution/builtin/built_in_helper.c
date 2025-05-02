@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_helper.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 12:39:46 by iaskour           #+#    #+#             */
-/*   Updated: 2025/04/22 17:16:20 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/04/30 15:51:14 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	**split_key_value(t_gc *gc, char *str)
 	equal_pos = ft_strchr(str, '=');
 	result = gc_malloc(gc, sizeof(char *) * 3, 0);
 	if (!result)
-		return NULL;
+		return (NULL);
 	if (!equal_pos)
 	{
 		result[0] = gc_strdup(gc, str);
@@ -31,24 +31,23 @@ char	**split_key_value(t_gc *gc, char *str)
 		result[0] = gc_strndup(gc, str, equal_pos - str);
 		result[1] = gc_strdup(gc, equal_pos + 1);
 	}
-	
 	result[2] = NULL;
-	return result;
+	return (result);
 }
 
-int is_valid_identifier(const char *str)
+int	is_valid_identifier(const char *str)
 {
 	if (!str || !*str)
-		return 0;
+		return (0);
 	if (!ft_isalpha(*str) && *str != '_')
-		return 0;
+		return (0);
 	while (*str)
 	{
 		if (!ft_isalnum(*str) && *str != '_')
-			return 0;
+			return (0);
 		str++;
 	}
-	return 1;
+	return (1);
 }
 
 void	no_args(t_env **env)
@@ -68,7 +67,8 @@ void	no_args(t_env **env)
 
 void	add_new_env(char *key, char *value, t_gc *gc, t_env **env)
 {
-	t_env *new_env;
+	t_env	*new_env;
+	t_env	*last;
 
 	new_env = gc_malloc(gc, sizeof(t_env), 0);
 	if (!new_env)
@@ -76,25 +76,25 @@ void	add_new_env(char *key, char *value, t_gc *gc, t_env **env)
 	new_env->key = key;
 	if (value)
 		new_env->value = gc_strdup(gc, value);
-	else 
+	else
 		new_env->value = NULL;
 	new_env->next = NULL;
 	if (!*env)
 		*env = new_env;
 	else
 	{
-		t_env *last = *env;
+		last = *env;
 		while (last->next)
 			last = last->next;
 		last->next = new_env;
 	}
 }
 
-void update_value(char *key, char *value, t_env **env, t_gc *gc)
+void	update_value(char *key, char *value, t_env **env, t_gc *gc)
 {
 	t_env	*current;
 	t_env	*found;
-	
+
 	current = *env;
 	found = NULL;
 	while (current)
@@ -102,7 +102,7 @@ void update_value(char *key, char *value, t_env **env, t_gc *gc)
 		if (strcmp(current->key, key) == 0)
 		{
 			found = current;
-			break;
+			break ;
 		}
 		current = current->next;
 	}
