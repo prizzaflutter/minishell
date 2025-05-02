@@ -3,16 +3,14 @@
 void print_list(t_token *tokens)
 {
 	t_token *current = tokens;
-	int node_index = 0;
 
 	while (current != NULL)
 	{
-		printf("Node %d:\n", node_index);
-		printf("  str: %s\n", current->str);
-		printf("  type: %d\n", current->type);
-		printf("  fd_herdoc: %d\n", current->fd_herdoc);
+		printf("Token:\n");
+		printf("  -str: %s\n", current->str);
+		printf("  -type: %d\n", current->type);
+		printf("  -fd_herdoc: %d\n", current->fd_herdoc);
 		current = current->next;
-		node_index++;
 	}
 }
 
@@ -73,7 +71,7 @@ void call_read_from_heredoc_fd(t_token *tokens)
 		{
 			printf("fd_herdoc = %d\n", tokens->fd_herdoc);
 			read_from_heredoc_fd(tokens->fd_herdoc);
-			printf("****************\n");
+			printf("*****************************************\n");
 		}
 		tokens = tokens->next;
 	}

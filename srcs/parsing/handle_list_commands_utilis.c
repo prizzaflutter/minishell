@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:55:34 by aykassim          #+#    #+#             */
-/*   Updated: 2025/04/29 14:56:36 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/04/30 16:43:22 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ int	get_herdoc_fd(t_token *tokens)
 	fd = -2;
 	while (tokens)
 	{
-		if (tokens->type == HEREDOC && tokens->fd_herdoc != -1)
+		if (tokens->type == HEREDOC && tokens->fd_herdoc != -2)
 		{
 			fd = tokens->fd_herdoc;
 			break ;
