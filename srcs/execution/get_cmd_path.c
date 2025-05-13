@@ -6,7 +6,7 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 15:38:01 by iaskour           #+#    #+#             */
-/*   Updated: 2025/04/30 15:40:02 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/05/12 10:41:36 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,20 @@ char	*configure_path(t_gc *gc, char *cmd, t_env *env)
 	cmd_path = get_cmd_path(gc, cmd, env);
 	if (!cmd_path)
 	{
-		if ((!ft_strncmp(cmd, "./", 2) || !ft_strncmp(cmd, "/", 1))
+		if (ft_strchr(cmd, '/')
 			&& !access(cmd, F_OK) && !access(cmd, X_OK))
 			cmd_path = cmd;
 		else
-			return (ft_printf(2, "Error: Command not found : %s\n", cmd),
+		{
+			if (access(cmd, F_OK) && ft_strchr(cmd, '/'))
+				ft_printf(2, "minishell: %s: No such file or directory\n", cmd);
+			if (access(cmd, X_OK) && !access(cmd, F_OK))
+				return (ft_printf(2, "minishell: %s: Permission denied\n", cmd),
 				exit_status(1, 127), NULL);
+			else if (ft_strncmp(cmd, "./", 2))
+				return (ft_printf(2, "minishell: %s: Command not found\n", cmd),
+				exit_status(1, 127), NULL);
+		}
 	}
 	return (cmd_path);
 }

@@ -1,36 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   ft_lstadd_bak_copy.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/09 11:36:19 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/11 13:40:32 by iaskour          ###   ########.fr       */
+/*   Created: 2025/05/12 11:59:33 by iaskour           #+#    #+#             */
+/*   Updated: 2025/05/12 12:00:04 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	my_echo(char **cmd_args)
+void	ft_lstadd_back_copy(t_copy **copy, t_copy *new)
 {
-	int	i;
-	int	new_line;
+	t_copy	*ptr;
 
-	i = 1;
-	new_line = 1;
-	while (cmd_args[i] && !ft_strncmp(cmd_args[i], "-n", 2))
+	if (!copy || new == NULL)
+		return ;
+	if (*copy == NULL)
 	{
-		new_line = 0;
-		i++;
+		*copy = new;
 	}
-	while (cmd_args[i])
+	else
 	{
-		write(1, cmd_args[i], ft_strlen(cmd_args[i]));
-		if (cmd_args[i + 1])
-			write(1, " ", 1);
-		i++;
+		ptr = *copy;
+		while (ptr->next != NULL)
+			ptr = ptr->next;
+		ptr->next = new;
 	}
-	if (new_line == 1)
-		write(1, "\n", 1);
 }

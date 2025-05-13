@@ -1,0 +1,53 @@
+bash-5.2$ dfhgfhgfh/fghfghfg
+bash: dfhgfhgfh/fghfghfg: No such file or directory
+bash-5.2$ dfgdfgdf
+bash: dfgdfgdf: command not found
+bash-5.2$ ./x
+bash: ./x: Permission denied
+bash-5.2$ ./xxx
+bash: ./xxx: No such file or directory
+bash-5.2$ 
+
+
+
+
+bash-5.2$ cat < ghgjh
+bash: ghgjh: No such file or directory
+
+
+
+
+minishell:</>export h=h h h+=hh
+result -----> h=hhh
+
+
+
+minishell:</>export
+------> sorted env
+
+
+cd, export, ...  built-in ,  fail -----> set exit_status
+
+
+
+echo -n                 ---> no new line
+echo -nnnnnnn           ---> no new line
+echo -n -n -n -n        ---> no new line
+
+
+
+exit LONGMIN > x < LONGMAX
+% 256
+exit: too many arguments
+
+
+
+
+unset HEAD_of_env_linked_list
+------> remove only the first node
+
+
+
+
+
+

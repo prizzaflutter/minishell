@@ -1,36 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/09 11:36:19 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/11 13:40:32 by iaskour          ###   ########.fr       */
+/*   Created: 2024/10/26 15:17:00 by iaskour           #+#    #+#             */
+/*   Updated: 2025/05/11 09:41:54 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	my_echo(char **cmd_args)
+char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {
-	int	i;
-	int	new_line;
+	size_t	i;
+	size_t	j;
+	char	*str;
 
-	i = 1;
-	new_line = 1;
-	while (cmd_args[i] && !ft_strncmp(cmd_args[i], "-n", 2))
+	str = (char *)haystack;
+	if (needle[0] == '\0' || needle == NULL)
+		return (str);
+	i = 0;
+	while (str[i] != '\0' && i < len)
 	{
-		new_line = 0;
+		j = 0;
+		while (needle[j] != '\0' && (i + j) < len && str[i + j] == needle[j])
+			j++;
+		if (needle[j] == '\0')
+			return (&str[i]);
 		i++;
 	}
-	while (cmd_args[i])
-	{
-		write(1, cmd_args[i], ft_strlen(cmd_args[i]));
-		if (cmd_args[i + 1])
-			write(1, " ", 1);
-		i++;
-	}
-	if (new_line == 1)
-		write(1, "\n", 1);
+	return (NULL);
 }

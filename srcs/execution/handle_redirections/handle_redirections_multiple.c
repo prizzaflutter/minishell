@@ -6,7 +6,7 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 11:54:25 by iaskour           #+#    #+#             */
-/*   Updated: 2025/04/30 13:33:48 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/05/11 09:20:13 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int handle_redirections_multiple(t_command *cmd, int fd_array[])
 			in_file = open(cmd->inoutfile[i + 1], O_RDONLY);
 			if (in_file == -1)
 			{
-				printf("error in file descriptor single command 2\n");
+				perror("minishell");
 				return (-1);
 			}
 			dup2(in_file, STDIN_FILENO);

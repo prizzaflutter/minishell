@@ -1,36 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   add_to_path.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/09 11:36:19 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/11 13:40:32 by iaskour          ###   ########.fr       */
+/*   Created: 2025/05/12 10:15:43 by iaskour           #+#    #+#             */
+/*   Updated: 2025/05/12 10:20:29 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	my_echo(char **cmd_args)
+void	add_to_path(t_gc *gc, char *path, t_stack **stack)
 {
-	int	i;
-	int	new_line;
+	t_stack	*new;
 
-	i = 1;
-	new_line = 1;
-	while (cmd_args[i] && !ft_strncmp(cmd_args[i], "-n", 2))
-	{
-		new_line = 0;
-		i++;
-	}
-	while (cmd_args[i])
-	{
-		write(1, cmd_args[i], ft_strlen(cmd_args[i]));
-		if (cmd_args[i + 1])
-			write(1, " ", 1);
-		i++;
-	}
-	if (new_line == 1)
-		write(1, "\n", 1);
+	new = ft_lstnew_stack(gc, path);
+	if (!new)
+		return ;
+	ft_lstadd_back_stack(stack, new);
 }

@@ -6,7 +6,7 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 17:04:07 by iaskour           #+#    #+#             */
-/*   Updated: 2025/04/30 17:04:32 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/05/12 13:25:46 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	handle_redirection_and_execute(char *build_in_f,
 		if (out_file == -1)
 			exit(1);
 		if (is_on_child(build_in_f, cmd, env, gc) == 0)
-			if (excute_single_command(gc, cmd, &env) == -1)
+			if (excute_single_command(gc, cmd, &env) == 0)
 				return (perror("Excve Error :"), exit_status(1, 127), exit(1));
 	}
 	else
@@ -55,6 +55,8 @@ void	handle_redirection_and_execute(char *build_in_f,
 		waitpid(pid, &status, 0);
 		if (WIFEXITED(status))
 			exit_status(1, WEXITSTATUS(status));
+		else if (WIFSIGNALED(status))
+			exit_status(1, 128 + WTERMSIG(status));
 	}
 }
 
@@ -67,9 +69,7 @@ void	handle_single_command(t_gc *gc, t_command *cmd, t_env *env)
 	save_int_out(&org_stdin, &org_stdout);
 	if ((cmd->cmd[0] == NULL && cmd->inoutfile[0] == NULL))
 		return ;
-	printf("am over here \n");
 	build_in_f = is_builtin(*cmd->cmd);
-
 	if (is_on_parent(build_in_f, cmd, env, gc) == 0)
 		handle_redirection_and_execute(build_in_f, gc, cmd, env);
 	restore_in_out(&org_stdin, &org_stdout);

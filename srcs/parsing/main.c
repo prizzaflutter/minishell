@@ -59,13 +59,6 @@ int main(int ac, char **av, char **env)
 		}
 		if (*input)
 			add_history(input);
-
-		if (ft_strcmp(input, "exit") == 0)
-		{
-			printf("Exitinggg...\n");
-			free(input);
-			break;
-		}
 		fd = add_tokens_elemnt(gc, input, &tokens, env_struct);
 		if (fd == -1)
 		{
@@ -77,7 +70,6 @@ int main(int ac, char **av, char **env)
 		if(tokens)
 		{
 			build_command_list(gc, tokens, &cmds);
-			print_list(tokens);
 			call_read_from_heredoc_fd(tokens);
 			execute_command(gc, cmds, env_struct);
 		}
