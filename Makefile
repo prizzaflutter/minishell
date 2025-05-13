@@ -1,6 +1,6 @@
 CC = cc 
 
-CFLAGS = -Wall -Werror -Wextra -Iincludes -g #-fsanitize=address -g
+CFLAGS = -Wall -Werror -Wextra -Iincludes -fsanitize=address -g
 
 LDFLAGS = -lreadline 
 
@@ -11,6 +11,7 @@ HEADER = includes/minishell.h
 SRCPARS = srcs/parsing/main.c srcs/parsing/handle_input.c srcs/parsing/handle_list_tokens.c \
 	srcs/parsing/handle_syntax_error.c srcs/parsing/handle_herdoc.c srcs/parsing/handle_list_commands.c \
 	srcs/parsing/handle_list_commands_utilis.c srcs/parsing/handle_interactive_mode.c \
+	srcs/parsing/handle_list_commands_utilis_1.c\
 	srcs/parsing/printing_func.c \
 	lib/ft_isalnum.c srcs/parsing/handle_expand.c lib/ft_itoa.c lib/ft_split.c lib/ft_strlen.c lib/ft_strcmp.c \
 	lib/ft_memcpy.c lib/ft_substr.c lib/ft_strlcpy.c lib/ft_isdigit.c 

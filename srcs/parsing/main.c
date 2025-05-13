@@ -48,7 +48,6 @@ int main(int ac, char **av, char **env)
 	call_signals();
 	while (1)
 	{
-		printf("process pid %d\n",getpid());
 		input = readline("minishell:</>");
 		if (!input)
 			break;
@@ -69,6 +68,7 @@ int main(int ac, char **av, char **env)
 		}
 		if(tokens)
 		{
+			print_list(tokens);
 			build_command_list(gc, tokens, &cmds);
 			call_read_from_heredoc_fd(tokens);
 			execute_command(gc, cmds, env_struct);
