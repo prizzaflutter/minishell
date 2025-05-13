@@ -25,14 +25,15 @@ int add_tokens_elemnt(t_gc *gc,char *str, t_token **tokens, t_env *env)
 }
 
 
+
 int main(int ac, char **av, char **env)
 {
 	(void)ac;
 	(void)av;
-    t_gc *gc = malloc(sizeof(t_gc));
-    if (!gc)
-        return (1);
-    gc->head = NULL;
+	t_gc *gc = malloc(sizeof(t_gc));
+	if (!gc)
+		return (1);
+	gc->head = NULL;
 	t_env		*env_struct;
 	t_token		*tokens;
 	t_command	*cmds;
@@ -40,44 +41,46 @@ int main(int ac, char **av, char **env)
 	int			fd;
 
 	tokens = NULL;
-    env_struct = fill_env(gc, env);
+	env_struct = fill_env(gc, env);
 	input = NULL;
 	cmds = NULL;
 	fd = -1;
+	signal(SIGINT, handle_ctrl_c);
+	signal(SIGQUIT, SIG_IGN);
 	while (1)
-    {
-        input = readline("minishell:</>");
-        if (!input)
-            break;
-        if (ft_is_only_whitespace(input))
-        {
-            free(input);
-            continue;
-        }
-        if (*input)
-            add_history(input);
-        fd = add_tokens_elemnt(gc, input, &tokens, env_struct);
-        if (fd == -1)
-        {
-            gc_clear(gc, 1);
-            tokens = NULL;
-            free(input);
-            continue;
-        }
-        if(tokens)
+	{
+		input = readline("minishell:</>");
+		if (!input)
+			break;
+		if (ft_is_only_whitespace(input))
+		{
+			free(input);
+			continue;
+		}
+		if (*input)
+			add_history(input);
+		fd = add_tokens_elemnt(gc, input, &tokens, env_struct);
+		if (fd == -1)
+		{
+			gc_clear(gc, 1);
+			tokens = NULL;
+			free(input);
+			continue;
+		}
+		if(tokens)
 		{
 			build_command_list(gc, tokens, &cmds);
 			call_read_from_heredoc_fd(tokens);
 			execute_command(gc, cmds, env_struct);
 		}
-        gc_clear(gc, 1);
+		gc_clear(gc, 1);
 		gc_clear(gc, 3);
-        tokens = NULL;
+		tokens = NULL;
 		cmds = NULL;
-        free(input);
-    }
-    gc_clear(gc, 1);
-    gc_clear(gc, 0);
-    free(gc);
+		free(input);
+	}
+	gc_clear(gc, 1);
+	gc_clear(gc, 0);
+	free(gc);
 	return (0);
 }

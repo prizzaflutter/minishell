@@ -11,7 +11,8 @@
 # include <sys/wait.h>
 # include <limits.h>
 # include <stdarg.h>
-#include <stdint.h>
+# include <stdint.h>
+# include <signal.h>
 
 
 ///@brief  those struct for garbage collector
@@ -169,6 +170,8 @@ char	**get_inoutfile(t_gc *gc, t_token *tokens);
 char	**get_commands(t_gc *gc, t_token *tokens);
 int		get_herdoc_fd(t_token *tokens);
 void	close_herdoc_fd(t_token **tokens);
+//signals
+void handle_ctrl_c(int sig);
 
 // PRINTING FUNCTIONS
 void print_list(t_token *tokens);
