@@ -6,7 +6,7 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 17:04:07 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/12 13:25:46 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/05/13 11:35:23 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,12 @@ void	handle_redirection_and_execute(char *build_in_f,
 		if (out_file == -1)
 			exit(1);
 		if (is_on_child(build_in_f, cmd, env, gc) == 0)
+			
+		{
 			if (excute_single_command(gc, cmd, &env) == 0)
 				return (perror("Excve Error :"), exit_status(1, 127), exit(1));
+		}
+		exit(0);
 	}
 	else
 	{

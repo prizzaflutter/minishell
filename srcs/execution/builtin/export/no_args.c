@@ -6,7 +6,7 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:03:38 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/12 12:10:36 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/05/13 10:59:42 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,17 +68,10 @@ void	no_args(t_env *env, t_gc *gc)
 {
 	t_copy	*current;
 	t_copy	*copy;
-	t_copy	*test;
 
-	printf("the value is %s\n", env->value);
+
+
 	copy = create_copy(env, gc);
-	test = copy;
-	printf("askour askour\n");
-	while(test)
-	{
-		printf("key is : %s || value is : %s\n", test->key, test->value);
-		test = test->next;
-	}
 	current = copy;
 	sort_env(copy);
 	while (current)
