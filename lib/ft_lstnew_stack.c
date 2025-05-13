@@ -1,36 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   ft_lstnew_stack.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/09 11:36:19 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/11 13:40:32 by iaskour          ###   ########.fr       */
+/*   Created: 2024/11/01 11:06:33 by iaskour           #+#    #+#             */
+/*   Updated: 2025/05/09 21:39:38 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	my_echo(char **cmd_args)
+t_stack	*ft_lstnew_stack(t_gc *gc, void	*content)
 {
-	int	i;
-	int	new_line;
+	t_stack	*head;
 
-	i = 1;
-	new_line = 1;
-	while (cmd_args[i] && !ft_strncmp(cmd_args[i], "-n", 2))
-	{
-		new_line = 0;
-		i++;
-	}
-	while (cmd_args[i])
-	{
-		write(1, cmd_args[i], ft_strlen(cmd_args[i]));
-		if (cmd_args[i + 1])
-			write(1, " ", 1);
-		i++;
-	}
-	if (new_line == 1)
-		write(1, "\n", 1);
+	head = gc_malloc(gc, sizeof(t_stack), 0);
+	if (head == NULL)
+		return (NULL);
+	head->path = content;
+	head->next = NULL;
+	return (head);
 }

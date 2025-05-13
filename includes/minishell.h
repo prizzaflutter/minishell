@@ -28,6 +28,11 @@ typedef struct s_gc {
 } t_gc;
 //--------------------------------
 
+typedef struct s_stack {
+	char *path;
+	struct s_stack *next;
+}t_stack;
+
 typedef struct s_command {
 	char **cmd;
 	char **inoutfile;
@@ -41,6 +46,12 @@ typedef struct s_env{
 	char *value;
 	struct s_env *next;
 } t_env;
+
+typedef struct s_copy{
+	char *key;
+	char *value;
+	struct s_copy *next;
+}t_copy;
 
 enum token_type {
 	WORD, // normal word
@@ -62,7 +73,6 @@ typedef struct s_token {
 // EXEC FUNCTIONS
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 void	my_echo(char **argv);
-int		my_cd (char **argv);
 char	*make_path(t_gc *gc, char **paths, char **tmp);
 char	*get_cmd_path(t_gc *gc, char *cmd, t_env *env);
 void	ft_printf(int fd, const char *format, ...);
@@ -73,8 +83,8 @@ char	*configure_path(t_gc *gc, char *cmd, t_env *env);
 void	handle_single_command(t_gc *gc,t_command *cmd, t_env *env);
 int		handle_multiple_command(t_gc *gc, t_command *cmd, t_env *env);
 char	*is_builtin (char *cmd);
-int		my_cd (char **argv);
-void	my_pwd(void);
+int		my_cd(t_gc *gc, t_env *env, char *argv);
+void	my_pwd(t_env *env);
 void	my_env(t_env *env);
 void	my_unset(t_env **env, char **argv);
 void	ft_lstadd_front_env(t_env **env, t_env *new_env);
@@ -99,17 +109,30 @@ void	*ft_calloc(t_gc *gc, size_t count, size_t size);
 char	**gc_split(t_gc *gc, char const *s, char c);
 int		is_on_parent(char *build_in_f, t_command *cmd, t_env *env, t_gc *gc);
 int		is_on_child(char *build_in_f, t_command *cmd, t_env *env, t_gc *gc);
-char	**split_key_value(t_gc *gc, char *str);
+char	**split_key_value(t_gc *gc, char *str, int *is_append);
 int 	is_valid_identifier(const char *str);
-void	no_args(t_env **env);
+void	no_args(t_env *env, t_gc *gc);
 void	add_new_env(char *key, char *value, t_gc *gc, t_env **env);
-void	update_value(char *key, char *value, t_env **env, t_gc *gc);
+void	update_value(char **key_value, t_env **env, t_gc *gc, int is_append);
 int		is_builtin_excute(t_gc *gc, t_env **env, t_command *cmd);
 int		exit_status(int set, int new_status);
 void	execute_command(t_gc *gc, t_command *cmd, t_env *env);
 void	save_int_out(int *org_int, int *org_out);
 void	restore_in_out(int *org_int, int *org_out);
 void	print_command_list(t_command *cmds);
+void	ft_lstadd_back_stack(t_stack **stack, t_stack *new);
+t_stack	*ft_lstnew_stack(t_gc *gc, void	*content);
+char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
+void	ft_lstadd_front_copy(t_copy **copy, t_copy *new_copy);
+t_copy	*ft_lstnew_copy(t_gc *gc, void	*key, void *value);
+void	my_exit();
+char *normalize_path (t_env *env, t_gc *gc, char *path, int flag);
+void	go_up(t_stack **stack);
+void	add_to_path(t_gc *gc,char *path, t_stack **stack);
+void	update_oldpwd(t_gc *gc, t_env *env, char *oldpwd);
+void	no_args(t_env *env, t_gc *gc);
+void	ft_lstadd_back_copy(t_copy **copy, t_copy *new);
+
 
 // PARSING FUNCTIONS
 t_token	*ft_lstnew(t_gc *gc, char *content, int flag);

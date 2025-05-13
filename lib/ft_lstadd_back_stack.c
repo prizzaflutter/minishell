@@ -1,36 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   ft_lstadd_back_stack.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/09 11:36:19 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/11 13:40:32 by iaskour          ###   ########.fr       */
+/*   Created: 2024/11/02 11:26:37 by iaskour           #+#    #+#             */
+/*   Updated: 2025/05/09 20:56:40 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	my_echo(char **cmd_args)
+void	ft_lstadd_back_stack(t_stack **stack, t_stack *new)
 {
-	int	i;
-	int	new_line;
+	t_stack	*ptr;
 
-	i = 1;
-	new_line = 1;
-	while (cmd_args[i] && !ft_strncmp(cmd_args[i], "-n", 2))
+	if (!stack || new == NULL)
+		return ;
+	if (*stack == NULL)
 	{
-		new_line = 0;
-		i++;
+		*stack = new;
 	}
-	while (cmd_args[i])
+	else
 	{
-		write(1, cmd_args[i], ft_strlen(cmd_args[i]));
-		if (cmd_args[i + 1])
-			write(1, " ", 1);
-		i++;
+		ptr = *stack;
+		while (ptr->next != NULL)
+			ptr = ptr->next;
+		ptr->next = new;
 	}
-	if (new_line == 1)
-		write(1, "\n", 1);
 }
