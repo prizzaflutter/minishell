@@ -9,3 +9,10 @@ void handle_ctrl_c(int sig)
     rl_redisplay();
     exit_status(1, 130);
 }
+
+
+void call_signals()
+{
+	signal(SIGINT, handle_ctrl_c);
+	signal(SIGQUIT, SIG_IGN);
+}

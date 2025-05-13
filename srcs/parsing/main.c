@@ -45,10 +45,10 @@ int main(int ac, char **av, char **env)
 	input = NULL;
 	cmds = NULL;
 	fd = -1;
-	signal(SIGINT, handle_ctrl_c);
-	signal(SIGQUIT, SIG_IGN);
+	call_signals();
 	while (1)
 	{
+		printf("process pid %d\n",getpid());
 		input = readline("minishell:</>");
 		if (!input)
 			break;
