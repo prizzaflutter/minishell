@@ -6,20 +6,20 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 12:56:43 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/13 09:42:30 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/05/13 11:31:03 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_current_node(t_env	*node)
-{
-	// if (node->key)
-	// 	free(node->key);
-	// if (node->value)
-	// 	free(node->value);
-	free(node);
-}
+// void	free_current_node(t_env	*node)
+// {
+// 	// if (node->key)
+// 	// 	free(node->key);
+// 	// if (node->value)
+// 	// 	free(node->value);
+// 	free(node);
+// }
 
 void	remove_env(t_env **env, char *arg_key)
 {
@@ -27,7 +27,10 @@ void	remove_env(t_env **env, char *arg_key)
 	t_env	*prev;
 
 	if (!env || !*env)
+	{
+		printf("env is null in remove env unset\n");
 		return ;
+	}
 	current = *env;
 	prev = NULL;
 	while (current)
@@ -35,17 +38,24 @@ void	remove_env(t_env **env, char *arg_key)
 		if (current->key && !ft_strcmp(current->key, arg_key))
 		{
 			if (prev)
+			{
+				printf("prev != null\n");
 				prev->next = current->next;
+			}
 			else
-				*env = current->next;
-				// problem over here
-			free_current_node(current);
+			{
+				printf("removing head nod\n");
+				**env = *current->next;
+				printf("env %s\n", (*env)->value);
+			}
+			// free
 			break ;
 		}
 		prev = current;
 		current = current->next;
 	}
 }
+
 
 void	my_unset(t_env **env, char **argv)
 {
