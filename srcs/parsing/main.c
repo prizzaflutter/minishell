@@ -45,8 +45,7 @@ int main(int ac, char **av, char **env)
 	input = NULL;
 	cmds = NULL;
 	fd = -1;
-	signal(SIGINT, handle_ctrl_c);
-	signal(SIGQUIT, SIG_IGN);
+	call_signals();
 	while (1)
 	{
 		input = readline("minishell:</>");
@@ -69,6 +68,7 @@ int main(int ac, char **av, char **env)
 		}
 		if(tokens)
 		{
+			print_list(tokens);
 			build_command_list(gc, tokens, &cmds);
 			call_read_from_heredoc_fd(tokens);
 			execute_command(gc, cmds, env_struct);

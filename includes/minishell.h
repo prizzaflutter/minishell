@@ -172,6 +172,8 @@ int		get_herdoc_fd(t_token *tokens);
 void	close_herdoc_fd(t_token **tokens);
 //signals
 void handle_ctrl_c(int sig);
+void call_signals();
+void handle_ctrl_c_herdoc(int sig);
 
 // PRINTING FUNCTIONS
 void print_list(t_token *tokens);
