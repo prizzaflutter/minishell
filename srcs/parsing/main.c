@@ -68,8 +68,8 @@ int main(int ac, char **av, char **env)
 		}
 		if(tokens)
 		{
-			print_list(tokens);
 			build_command_list(gc, tokens, &cmds);
+			print_list(tokens);
 			call_read_from_heredoc_fd(tokens);
 			execute_command(gc, cmds, env_struct);
 		}

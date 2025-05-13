@@ -159,7 +159,7 @@ int		handle_unexpected_token(t_token *tokens);
 int		handle_unclosed_quotes(char *str);
 int		handle_herdocs(t_gc *gc, t_token *t_token, t_env *env);
 int		handle_herdoc_input(t_gc *gc, char *str, t_token *token, t_env *env);
-// char	*handle_expand(t_gc *gc, char *str, t_env *env);
+char	*handle_delemitre(t_gc *gc, char *str);
 char	*handle_expand_generale(t_gc *gc, char *str, int flag, t_env *env);
 int		detect_quotes(char *str, int flag);
 
