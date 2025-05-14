@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 21:30:44 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/14 14:41:32 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/14 14:52:09 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	handle_child_status( t_token *tokens, int status, int fd, int fd1)
 	close(fd);
 	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
 	{
-		close(fd1);
+		// close(fd1);
 		tokens->fd_herdoc = -2;
 		exit_status(1, 128 + WTERMSIG(status));
 		return (0);
