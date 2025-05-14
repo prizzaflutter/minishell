@@ -27,7 +27,7 @@ SRC =  srcs/execution/execute_command.c srcs/execution/builtin/echo.c lib/ft_str
 	srcs/execution/handle_single_command/built_in_check.c  srcs/execution/exit_status.c lib/ft_lstnew_stack.c lib/ft_lstadd_back_stack.c lib/ft_strnstr.c \
 	lib/ft_lstnew_copy.c lib/ft_lstadd_front_copy.c srcs/execution/builtin/exit.c srcs/execution/builtin/cd/add_to_path.c srcs/execution/builtin/cd/go_up.c srcs/execution/builtin/cd/normalize.c \
 	srcs/execution/builtin/cd/update_old_pwd.c srcs/execution/builtin/export/export.c srcs/execution/builtin/export/no_args.c  srcs/execution/builtin/export/export_utils.c \
-	lib/ft_lstadd_back_copy.c
+	lib/ft_lstadd_back_copy.c lib/ft_atoi.c
 
 
 OBJ = $(SRC:%.c=%.o)

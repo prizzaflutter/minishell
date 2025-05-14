@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_list_commands_utilis.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:55:34 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/13 18:21:05 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/14 11:32:55 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	**get_commands(t_gc *gc, t_token *tokens)
 		else if (tokens->type == PIPE)
 			return (commands[i] = NULL, commands);
 		else if (tokens->type == REDIR_IN || tokens->type == REDIR_OUT
-			|| tokens->type == APPEND)
+			|| tokens->type == APPEND || tokens->type == HEREDOC)
 			tokens = tokens->next;
 		tokens = tokens->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 15:53:37 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/13 11:06:28 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/05/13 12:51:28 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	is_builtin_excute(t_gc *gc, t_env **env, t_command *cmd)
 	else if (ft_strncmp(*cmd->cmd, "env", 3) == 0)
 		return (my_env(*env), 1);
 	else if (ft_strncmp(*cmd->cmd, "exit", 4) == 0)
-		return (my_exit(), 1);
+		return (my_exit(cmd->cmd), 1);
 	else
 		return (0);
 }

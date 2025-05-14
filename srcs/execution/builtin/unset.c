@@ -6,7 +6,7 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 12:56:43 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/13 11:31:03 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/05/13 11:46:26 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,7 @@ void	remove_env(t_env **env, char *arg_key)
 			{
 				printf("removing head nod\n");
 				**env = *current->next;
-				printf("env %s\n", (*env)->value);
 			}
-			// free
 			break ;
 		}
 		prev = current;

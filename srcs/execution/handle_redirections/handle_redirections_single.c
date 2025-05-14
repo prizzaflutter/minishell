@@ -6,7 +6,7 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:52:25 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/11 09:20:39 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/05/14 11:06:08 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,10 @@ int handle_redirections_single (t_command *cmd)
 		}
 		else if (!ft_strcmp(cmd->inoutfile[i], "<"))
 		{
-			in_file = open(cmd->inoutfile[1], O_RDONLY);
+			printf("am here : <<\n");
+			if (out_file != -1)
+				close(out_file);
+			in_file = open(cmd->inoutfile[i + 1], O_RDONLY);
 			if (in_file == -1)
 			{
 				perror("minishell");
@@ -50,6 +53,14 @@ int handle_redirections_single (t_command *cmd)
 			close(in_file);
 		}
 		i += 2;
+	}
+	if (cmd->fd_in != -2 && in_file == -1)
+	{
+		// printf("my heredoc fd is : %d\n", cmd->fd_in);
+		// printf("inoutfile 0 ==> %s\n", cmd->inoutfile[0]);
+		// printf("inoutfile 1 ==> %s\n", cmd->inoutfile[1]);
+		dup2(cmd->fd_in, STDIN_FILENO);
+		close(cmd->fd_in);
 	}
 	if (out_file != -1)
 	{
