@@ -48,6 +48,7 @@ int main(int ac, char **av, char **env)
 	call_signals();
 	while (1)
 	{
+		printf("main prc pid = %d\n",getpid());
 		input = readline("minishell:</>");
 		if (!input)
 			break;
