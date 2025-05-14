@@ -6,12 +6,11 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 21:30:44 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/14 11:36:36 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/05/14 15:59:43 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 typedef struct g_gc_env{
 	t_gc *gc;
@@ -39,7 +38,6 @@ int	all_child_process(t_gc *gc, char *str, t_env *env, int fd)
 {
 	char	*line;
 
-	signal(SIGINT, SIG_DFL);
 	while (1)
 	{
 		line = readline("herdoc>");
@@ -84,6 +82,8 @@ int	handle_herdoc_input(t_gc *gc, char *str, t_token *tokens, t_env *env)
 	pid = fork();
 	if (pid == 0)
 	{
+		printf("herdoc prc id %d\n",getpid());
+		calll_herdoc_signals();
 		if (!all_child_process(gc, str, env, fd))
 			exit (1);
 		exit (0);
@@ -91,8 +91,11 @@ int	handle_herdoc_input(t_gc *gc, char *str, t_token *tokens, t_env *env)
 	else
 	{
 		waitpid(pid, &status, 0);
+		call_signals();
 		if (!handle_child_status(tokens, status, fd, fd1))
-			return (fd);
+		{
+			return (-1);
+		}
 		return (fd1);
 	}
 }
