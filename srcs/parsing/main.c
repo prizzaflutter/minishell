@@ -18,7 +18,7 @@ int add_tokens_elemnt(t_gc *gc,char *str, t_token **tokens, t_env *env)
 	fd = handle_herdocs(gc, *tokens, env);
 	if (fd == -1)
 	{
-		printf("Error in handle_herdocs\n");
+		// printf("Error in handle_herdocs\n");
 		return (-1);
 	}
 	return (fd);
@@ -48,7 +48,7 @@ int main(int ac, char **av, char **env)
 	call_signals();
 	while (1)
 	{
-		printf("main prc pid = %d\n",getpid());
+		// printf("main prc id %d\n",getpid());
 		input = readline("minishell:</>");
 		if (!input)
 			break;
@@ -62,6 +62,7 @@ int main(int ac, char **av, char **env)
 		fd = add_tokens_elemnt(gc, input, &tokens, env_struct);
 		if (fd == -1)
 		{
+			printf("wa bghiit 3a nghawwaaaatttttttt\n");
 			gc_clear(gc, 1);
 			tokens = NULL;
 			free(input);

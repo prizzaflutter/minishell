@@ -94,7 +94,7 @@ t_env	*fill_env (t_gc *gc, char **envp);
 int		ft_isalpha(int a);
 int		is_valid_identifier(const char *str);
 char	**convert_env_to_array(t_gc *gc, t_env *env);
-int		handle_redirections_single(t_command *cmd);
+int handle_redirections_single (t_command *cmd);
 int		handle_redirections_multiple(t_command *current_cmd, int fd_array[]);
 void	*gc_malloc(t_gc *gc, size_t size, int is_token);
 void	gc_clear(t_gc *gc, int is_token);

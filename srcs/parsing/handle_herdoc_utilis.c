@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_herdoc_utilis.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 21:30:44 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/14 14:41:32 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/14 15:59:43 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	handle_herdoc_input(t_gc *gc, char *str, t_token *tokens, t_env *env)
 	pid = fork();
 	if (pid == 0)
 	{
-		printf("herdoc prc pid = %d\n",getpid());
+		printf("herdoc prc id %d\n",getpid());
 		calll_herdoc_signals();
 		if (!all_child_process(gc, str, env, fd))
 			exit (1);
@@ -91,11 +91,10 @@ int	handle_herdoc_input(t_gc *gc, char *str, t_token *tokens, t_env *env)
 	else
 	{
 		waitpid(pid, &status, 0);
-		// call_signals();
+		call_signals();
 		if (!handle_child_status(tokens, status, fd, fd1))
 		{
-			write(1, "\n", 1);
-			return (fd);
+			return (-1);
 		}
 		return (fd1);
 	}
