@@ -6,7 +6,7 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 11:54:25 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/11 09:20:13 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/05/14 12:51:12 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,13 @@ int handle_redirections_multiple(t_command *cmd, int fd_array[])
 	int	in_file;
 	int	i;
 	(void)fd_array;
+	int old_here;
 
     out_file = -1;
 	i = 0;
 	while (cmd->inoutfile && cmd->inoutfile[i])
 	{
+		printf("handle multiple redirection over her \n");
 		if (!ft_strcmp(cmd->inoutfile[i], ">>"))
 		{
 			if (out_file != -1)
@@ -43,14 +45,23 @@ int handle_redirections_multiple(t_command *cmd, int fd_array[])
 		}
 		else if (!ft_strcmp(cmd->inoutfile[i], "<"))
 		{
+			printf("am over here <\n");
+			if (in_file != -1)
+				close(in_file);
 			in_file = open(cmd->inoutfile[i + 1], O_RDONLY);
 			if (in_file == -1)
 			{
 				perror("minishell");
 				return (-1);
 			}
-			dup2(in_file, STDIN_FILENO);
-			close(in_file);
+		}
+		else if (cmd->fd_in != -2 && in_file == -1)
+		{
+			printf("am here on here doc brother\n");
+			close(old_here);
+			dup2(cmd->fd_in, STDIN_FILENO);
+			close(cmd->fd_in);
+			old_here = in_file;
 		}
 		i += 2;
 	}
@@ -59,6 +70,17 @@ int handle_redirections_multiple(t_command *cmd, int fd_array[])
 		close(fd_array[0]);
 		dup2(fd_array[1], STDOUT_FILENO);
 		close(fd_array[1]);
+	}
+	if (in_file == -1 && cmd->fd_in != -2)
+	{
+		printf("am over in here_doc\n");
+		dup2(cmd->fd_in, STDIN_FILENO);
+		close(cmd->fd_in);	
+	}
+	if (in_file != -1)
+	{
+		dup2(in_file, STDIN_FILENO);
+		close(in_file);
 	}
 	if (out_file != -1)
 	{
