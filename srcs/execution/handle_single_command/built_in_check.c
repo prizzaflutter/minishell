@@ -6,7 +6,7 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 13:28:10 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/13 12:51:43 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/05/15 11:46:00 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 int	is_on_parent(char *build_in_f, t_command *cmd, t_env *env, t_gc *gc)
 {
 	if (!ft_strcmp(build_in_f, "cd") || !ft_strcmp(build_in_f, "unset")
-		|| (!ft_strcmp(build_in_f, "export") && cmd->cmd[1] != NULL) || !ft_strcmp(build_in_f, "exit"))
+		|| (!ft_strcmp(build_in_f, "export") && cmd->cmd[1] != NULL)
+		|| !ft_strcmp(build_in_f, "exit"))
 	{
-		printf("============ run on parent proccess ==================\n");
 		if (!ft_strcmp(build_in_f, "cd"))
 			return (my_cd(gc, env, cmd->cmd[1]), 1);
 		else if (!ft_strcmp(build_in_f, "unset"))

@@ -6,7 +6,7 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:03:38 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/13 10:59:42 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/05/15 11:50:22 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,6 @@ void	no_args(t_env *env, t_gc *gc)
 {
 	t_copy	*current;
 	t_copy	*copy;
-
-
 
 	copy = create_copy(env, gc);
 	current = copy;
