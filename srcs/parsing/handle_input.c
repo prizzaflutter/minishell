@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 13:14:22 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/13 18:17:59 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/15 19:21:41 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,7 +209,7 @@ int	add_command_element(t_gc *gc, char *str, t_token **tokens, t_env *env)
 	str = add_space_inputs(gc, str);
 	if (!str)
 		return (printf("Error in add_space_inputs"), 1);
-	res = ft_split(gc, str, ' ');
+	res = ft_split(gc, str);
 	if (!res)
 		return (printf("Error in ft_split"), 1);
 	i = 0;
@@ -240,26 +240,38 @@ int	add_command_element(t_gc *gc, char *str, t_token **tokens, t_env *env)
 				new_str = handle_expand_generale(gc, tmp->str, detect_quotes(tmp->str, 0), env);
 				if (!new_str)
 					return (printf("Error in handle_expand"), 1);
-				char_tmp = ft_split(gc, new_str, ' ');
-				if (!char_tmp)
-					return (printf("Error in ft_split tokens_tmp"), 1);
-				i = 0;
-				while (char_tmp[i])
+				if (detect_quotes(new_str, 1) == 1)
 				{
-					new_token = ft_lstnew(gc, char_tmp[i], 1);
-					if (!new_token)
-						return (printf("Error in token creation new_token_tmp"), 1);
-					ft_lstadd_back(tokens, new_token);
-					new_token->str = handle_double_single_quotes(gc, new_token->str);
-					if (!new_token->str)
+					new_str = handle_double_single_quotes(gc, new_str);
+					if (!new_str)
 						return (printf("Error in handle_double_single_quotes"), 1);
-					i++;
+					new_token = ft_lstnew(gc, new_str, 1);
+					ft_lstadd_back(tokens, new_token);
 				}
-				tmp->str = handle_double_single_quotes(gc, new_str);
-				if (!tmp->str)
-					return (printf("Error in handle_double_single_quotes"), 1);
+				else
+				{
+					new_str = handle_double_single_quotes(gc, new_str);
+					if (!new_str)
+						return (printf("Error in handle_double_single_quotes"), 1);
+					char_tmp = ft_split(gc, new_str);
+					if (!char_tmp)
+						return (printf("Error in ft_split tokens_tmp"), 1);
+					i = 0;
+					while (char_tmp[i])
+					{
+						printf("char tmp = %s\n",char_tmp[i]);
+						new_token = ft_lstnew(gc, char_tmp[i], 1);
+						if (!new_token)
+							return (printf("Error in token creation new_token_tmp"), 1);
+						ft_lstadd_back(tokens, new_token);
+						i++;
+					}
+					tmp->str = handle_double_single_quotes(gc, new_str);
+					if (!tmp->str)
+						return (printf("Error in handle_double_single_quotes"), 1);
+				}
 			}
-			else
+			else if (tmp->prev && ft_strcmp(tmp->prev->str, "echo") == 0)
 			{
 				tmp->str = handle_double_single_quotes(gc, tmp->str);
 				if (!tmp->str)
@@ -267,10 +279,17 @@ int	add_command_element(t_gc *gc, char *str, t_token **tokens, t_env *env)
 				new_token = ft_lstnew(gc, tmp->str, 1);
 				ft_lstadd_back(tokens, new_token);
 			}
+			else
+			{
+				new_token = ft_lstnew(gc, tmp->str, 1);
+				ft_lstadd_back(tokens, new_token);
+			}
 		}
 		else
 		{
+			printf("tmp str = %s\n",tmp->str);
 			new_token = ft_lstnew(gc, tmp->str, 1);
+			printf("token str = %s\n",new_token->str);
 			if (!tmp->str)
 				return (printf("Error in handle_double_single_quotes"), 1);
 			ft_lstadd_back(tokens, new_token);
@@ -281,3 +300,21 @@ int	add_command_element(t_gc *gc, char *str, t_token **tokens, t_env *env)
 	tokens_tmp = NULL;
 	return (0);
 }
+
+
+// char_tmp = ft_split(gc, new_str, ' ');
+// 				if (!char_tmp)
+// 					return (printf("Error in ft_split tokens_tmp"), 1);
+// 				i = 0;
+// 				while (char_tmp[i])
+// 				{
+// 					printf("char tmp = %s\n",char_tmp[i]);
+// 					new_token = ft_lstnew(gc, char_tmp[i], 1);
+// 					if (!new_token)
+// 						return (printf("Error in token creation new_token_tmp"), 1);
+// 					ft_lstadd_back(tokens, new_token);
+// 					i++;
+// 				}
+// 				tmp->str = handle_double_single_quotes(gc, new_str);
+// 				if (!tmp->str)
+// 					return (printf("Error in handle_double_single_quotes"), 1);

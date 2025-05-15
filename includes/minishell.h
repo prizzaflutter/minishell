@@ -62,7 +62,7 @@ enum token_type {
 	HEREDOC, // <<
 	APPEND // >>
 };
-
+	
 typedef struct s_token {
 	char *str;
 	enum token_type type;
@@ -70,6 +70,18 @@ typedef struct s_token {
 	struct s_token *next;
 	struct s_token *prev;
 } t_token;
+
+typedef struct s_quote{
+	int		is_quote;
+	char	quote_char;
+}t_quote;
+
+typedef struct g_herdoc_h{
+	int		fd;
+	int		fd1;
+	int		status;
+	pid_t	pid;
+} t_herdoc_h;
 
 // EXEC FUNCTIONS
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
@@ -94,7 +106,7 @@ t_env	*fill_env (t_gc *gc, char **envp);
 int		ft_isalpha(int a);
 int		is_valid_identifier(const char *str);
 char	**convert_env_to_array(t_gc *gc, t_env *env);
-int		handle_redirections_single(t_command *cmd);
+int handle_redirections_single (t_command *cmd);
 int		handle_redirections_multiple(t_command *current_cmd, int fd_array[]);
 void	*gc_malloc(t_gc *gc, size_t size, int is_token);
 void	gc_clear(t_gc *gc, int is_token);
@@ -141,7 +153,8 @@ char	*is_overflow(int set, char	*new_status);
 t_token	*ft_lstnew(t_gc *gc, char *content, int flag);
 void	ft_lstadd_back(t_token **lst, t_token *new);
 t_token	*ft_lstlast(t_token *lst);
-char	**ft_split(t_gc *gc, char const *str, char charset);
+char	**ft_split(t_gc *gc, char const *str);
+int		count_words(char const *str);
 char	*ft_substr(t_gc *gc,char const *s, unsigned int start, size_t len);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
@@ -173,7 +186,6 @@ char	**get_commands(t_gc *gc, t_token *tokens);
 int		get_herdoc_fd(t_token *tokens);
 void	close_herdoc_fd(t_token **tokens);
 //signals
-
 void call_signals(void);
 void	calll_herdoc_signals(void);
 // PRINTING FUNCTIONS
