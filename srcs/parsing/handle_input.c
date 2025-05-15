@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 13:14:22 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/15 19:21:41 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/15 21:01:16 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,9 +287,7 @@ int	add_command_element(t_gc *gc, char *str, t_token **tokens, t_env *env)
 		}
 		else
 		{
-			printf("tmp str = %s\n",tmp->str);
 			new_token = ft_lstnew(gc, tmp->str, 1);
-			printf("token str = %s\n",new_token->str);
 			if (!tmp->str)
 				return (printf("Error in handle_double_single_quotes"), 1);
 			ft_lstadd_back(tokens, new_token);
@@ -300,21 +298,3 @@ int	add_command_element(t_gc *gc, char *str, t_token **tokens, t_env *env)
 	tokens_tmp = NULL;
 	return (0);
 }
-
-
-// char_tmp = ft_split(gc, new_str, ' ');
-// 				if (!char_tmp)
-// 					return (printf("Error in ft_split tokens_tmp"), 1);
-// 				i = 0;
-// 				while (char_tmp[i])
-// 				{
-// 					printf("char tmp = %s\n",char_tmp[i]);
-// 					new_token = ft_lstnew(gc, char_tmp[i], 1);
-// 					if (!new_token)
-// 						return (printf("Error in token creation new_token_tmp"), 1);
-// 					ft_lstadd_back(tokens, new_token);
-// 					i++;
-// 				}
-// 				tmp->str = handle_double_single_quotes(gc, new_str);
-// 				if (!tmp->str)
-// 					return (printf("Error in handle_double_single_quotes"), 1);
