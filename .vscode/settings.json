@@ -16,7 +16,8 @@
     "tuple": "c",
     "type_traits": "c",
     "utility": "c",
-    "readline.h": "c"
+    "readline.h": "c",
+    "sstream": "c"
   },
   "C_Cpp_Runner.cCompilerPath": "gcc",
   "C_Cpp_Runner.cppCompilerPath": "g++",

@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:53:28 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/13 17:48:08 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/15 17:10:13 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,7 @@ int	detect_quotes(char *str, int flag)
 		}
 	}
 	else
-	{
 		return (detetect_varenv_quotes(str));
-	}
 	return (0);
 }
 
@@ -196,6 +194,7 @@ char	*handle_expand_generale(t_gc *gc, char *str, int flag, t_env *env)
 					new_str = get_varenv_value(env_tmp, env);
 					if (!new_str)
 						new_str = gc_strdup(gc, "");
+					new_str = handle_double_single_quotes(gc, new_str);
 					j = 0;
 					while (new_str && new_str[j])
 						res[k++] = new_str[j++];
