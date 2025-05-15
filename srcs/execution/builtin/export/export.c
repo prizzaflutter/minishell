@@ -6,7 +6,7 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 11:04:38 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/13 10:59:27 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/05/15 11:50:10 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	fill_key_value(t_gc *gc, t_env **env, char *arg)
 		key = gc_strdup(gc, arg);
 		value = NULL;
 	}
-	if(!checker(key, value))
+	if (!checker(key, value))
 		return ;
 	if (!key_value)
 	{

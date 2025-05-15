@@ -127,7 +127,7 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 void	ft_lstadd_front_copy(t_copy **copy, t_copy *new_copy);
 t_copy	*ft_lstnew_copy(t_gc *gc, void	*key, void *value);
 void	my_exit(char **args);
-char *normalize_path (t_env *env, t_gc *gc, char *path, int flag);
+char	*normalize_path (t_env *env, t_gc *gc, char *path, int flag);
 void	go_up(t_stack **stack);
 void	add_to_path(t_gc *gc,char *path, t_stack **stack);
 void	update_oldpwd(t_gc *gc, t_env *env, char *oldpwd);
@@ -135,6 +135,9 @@ void	no_args(t_env *env, t_gc *gc);
 void	ft_lstadd_back_copy(t_copy **copy, t_copy *new);
 int		ft_atoi(const char *str);
 char	*is_overflow(int set, char	*new_status);
+int		redirection_checker(t_command *cmd, int *in, int *out, int i);
+int		child_precess(t_command *current_cmd, int *prev_fd, int *fd_array);
+void	parent_process(t_command *current_cmd, int *prev_fd, int *fd_array);
 
 
 // PARSING FUNCTIONS

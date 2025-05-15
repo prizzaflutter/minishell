@@ -1,103 +1,93 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_multiple_command.c                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/15 10:17:33 by iaskour           #+#    #+#             */
+/*   Updated: 2025/05/15 11:42:14 by iaskour          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-int execute_cmd(t_gc *gc,t_command *cmd, int *fd_array, t_env **env)
+int	execute_cmd(t_gc *gc, t_command *cmd, t_env **env)
 {
-	char **cmd_args;
-	char *cmd_path;
-	char **env_array;
-	(void)fd_array;
+	char	**cmd_args;
+	char	*cmd_path;
+	char	**env_array;
 
 	cmd_args = cmd->cmd;
-
 	if (!cmd_args)
 		return (0);
 	if (is_builtin_excute(gc, env, cmd) == 1)
 		return (1);
 	cmd_path = configure_path(gc, *cmd->cmd, *env);
 	if (!cmd_path)
-		return ( 0);
+		return (0);
 	env_array = convert_env_to_array(gc, *env);
 	if (!env_array)
 		return (0);
 	if (execve(cmd_path, cmd_args, env_array) == -1)
-		return (printf("Error: EXECVE => (first child)"), exit_status(1, 127), 1);
+		return (printf("Error: EXECVE => (first child)"),
+			exit_status(1, 127), 1);
 	return (1);
 }
 
-int handle_multiple_command(t_gc *gc, t_command *cmd, t_env *env)
+int	proccess(t_gc *gc, t_env *env, t_command *current_cmd, int *prev_fd)
 {
-	int fd_array[2];
-	int prev_fd = -1;
-	int out_file;
-	int status;
-	pid_t pid;
-	t_command *current_cmd = cmd;
-	int std_int; 
-	int std_out;
+	pid_t	pid;
+	int		fd_array[2];
 
-
-	save_int_out(&std_int, &std_out);
-	while(current_cmd)
+	if (current_cmd->next && pipe(fd_array) == -1)
+		return (perror("Error: pipe issue\n"), 0);
+	pid = fork();
+	if (pid == -1)
+		return (perror("Error: fork issue\n"), 0);
+	if (pid == 0)
 	{
-		if (current_cmd->next)
-		{
-			printf("pipe over here\n");
-			if (pipe(fd_array) == -1)
-			{
-				printf("Error: pipe issue\n");
-				return 0;
-			}
-		}
-		pid = fork();
-		if (pid == -1)
-		{
-			perror("fork");
-			return 0;
-		}
-		if (pid == 0)
-		{
-			if (prev_fd != -1)
-			{
-				dup2(prev_fd, STDIN_FILENO);
-				close(prev_fd);
-			}
-			out_file = handle_redirections_multiple(current_cmd, fd_array);
-			if (out_file == -1)
-			{
-				printf("the out file == -1\n");
-				exit(1);
-			}
-			if (!out_file && current_cmd->next)
-			{
-				close(fd_array[0]);
-				dup2(fd_array[1], STDOUT_FILENO);
-				close(fd_array[1]);
-			}
-			if (current_cmd->cmd[0] == NULL) 
-				return (0);
-			if (execute_cmd(gc, current_cmd,fd_array, &env) == 0)
-				exit(1);
-			exit(0);
-		}
-		else
-		{
-			if (prev_fd != -1)
-				close(prev_fd);
-			if (current_cmd->next)
-			{
-				close(fd_array[1]);
-				prev_fd = fd_array[0];
-			}
-		}
-		current_cmd = current_cmd->next;
+		if (!child_precess(current_cmd, prev_fd, fd_array))
+			return (0);
+		if (!execute_cmd(gc, current_cmd, &env))
+			exit(1);
+		exit(0);
 	}
-	while(wait(&status) > 0)
+	else
+		parent_process(current_cmd, prev_fd, fd_array);
+	return (1);
+}
+
+void	waiting(void)
+{
+	int	status;
+
+	while (wait(&status) > 0)
 	{
 		if (WIFEXITED(status))
 			exit_status(1, WEXITSTATUS(status));
 		else if (WIFSIGNALED(status))
 			exit_status(1, 128 + WTERMSIG(status));
 	}
+}
+
+int	handle_multiple_command(t_gc *gc, t_command *cmd, t_env *env)
+{
+	t_command	*current_cmd;
+	int			prev_fd;
+	int			std_int;
+	int			std_out;
+
+	current_cmd = cmd;
+	prev_fd = -1;
+	save_int_out(&std_int, &std_out);
+	while (current_cmd)
+	{
+		if (proccess(gc, env, current_cmd, &prev_fd) == 0)
+			return (0);
+		current_cmd = current_cmd->next;
+	}
+	waiting();
 	restore_in_out(&std_int, &std_out);
-	return 1;
+	return (1);
 }
