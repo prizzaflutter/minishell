@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:53:28 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/15 17:10:13 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/16 20:46:56 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,11 @@ char	*get_varenv_value(char *var, t_env *env)
 	return (NULL);
 }
 
+
+
+
+
+/// @brief echo aaaaa'$PATH'aaa$USER echo aaaaaa"a$USER"aaaa"$USER"aaaaa'$PATH' detect the first $ and keep the same detectquote for all the $val to expand 
 int	compute_expanded_length(t_gc *gc, char *str, int flag, t_env *env)
 {
 	int		i;

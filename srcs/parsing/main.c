@@ -23,6 +23,18 @@ int add_tokens_elemnt(t_gc *gc,char *str, t_token **tokens, t_env *env)
 
 
 
+
+
+
+
+
+
+////awesui handleeeeeeee
+// minishell:</>export x="a  b  c"
+// minishell:</>export c=$x
+// minishell:</>
+
+
 int main(int ac, char **av, char **env)
 {
 	(void)ac;
@@ -58,6 +70,7 @@ int main(int ac, char **av, char **env)
 		fd = add_tokens_elemnt(gc, input, &tokens, env_struct);
 		if (fd == -1)
 		{
+			printf("here\n");
 			gc_clear(gc, 1);
 			tokens = NULL;
 			free(input);
@@ -66,7 +79,7 @@ int main(int ac, char **av, char **env)
 		if(tokens)
 		{
 			build_command_list(gc, tokens, &cmds);
-			// print_command_list(cmds);
+			print_command_list(cmds);
 			execute_command(gc, cmds, env_struct);
 		}
 		gc_clear(gc, 1);
@@ -80,14 +93,3 @@ int main(int ac, char **av, char **env)
 	free(gc);
 	return (0);
 }
-// else if (tmp->prev && ft_strcmp(tmp->prev->str, "echo") == 0)
-// {
-// 	tmp->str = handle_double_single_quotes(gc, tmp->str);
-// 	if (!tmp->str)
-// 		return (printf("Error in handle_double_single_quotes"), 1);
-// 	tmp->str = handle_double_single_quotes(gc, tmp->str);
-// 	if (!tmp->str)
-// 		return (printf("Error in handle_double_single_quotes"), 1);
-// 	new_token = ft_lstnew(gc, tmp->str, 1);
-// 	ft_lstadd_back(tokens, new_token);
-// }

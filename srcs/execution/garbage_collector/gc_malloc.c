@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gc_malloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 14:52:26 by iaskour           #+#    #+#             */
-/*   Updated: 2025/04/30 16:07:59 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/05/16 15:01:26 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,22 @@ void	*gc_malloc(t_gc *gc, size_t size, int is_token)
 
 	ptr = malloc(size);
 	if (!ptr)
-		return (NULL);
+	{
+		gc_clear(gc, 1);
+		gc_clear(gc, 3);
+		gc_clear(gc, 0);
+		exit(1);
+	}
 	if (gc_exist(gc, ptr))
 		return (ptr);
 	new = malloc(sizeof(t_gc_node));
 	if (!new)
 	{
 		free(ptr);
-		return (NULL);
+		gc_clear(gc, 1);
+		gc_clear(gc, 3);
+		gc_clear(gc, 0);
+		exit(1);
 	}
 	new->ptr = ptr;
 	new->next = gc->head;
