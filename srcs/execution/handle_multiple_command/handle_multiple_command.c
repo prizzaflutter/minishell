@@ -6,7 +6,7 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 10:17:33 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/15 11:42:14 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/05/16 09:53:30 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	proccess(t_gc *gc, t_env *env, t_command *current_cmd, int *prev_fd)
 	if (pid == 0)
 	{
 		if (!child_precess(current_cmd, prev_fd, fd_array))
-			return (0);
+			exit(1);
 		if (!execute_cmd(gc, current_cmd, &env))
 			exit(1);
 		exit(0);

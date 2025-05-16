@@ -47,7 +47,4 @@ unset HEAD_of_env_linked_list
 ------> remove only the first node
 
 
-
-
-
-
+flatpak-spawn --host git push
