@@ -49,32 +49,32 @@ void print_command_list(t_command *cmds)
     }
 }
 
-void read_from_heredoc_fd(int fd)
-{
-	char buffer[1024];
-	ssize_t bytes_read;
+// void read_from_heredoc_fd(int fd)
+// {
+// 	char buffer[1024];
+// 	ssize_t bytes_read;
 
-	while ((bytes_read = read(fd, buffer, sizeof(buffer) - 1)) > 0)
-	{
-		buffer[bytes_read] = '\0';
-		printf("%s", buffer);
-	}
-	if (bytes_read == -1)
-	{
-		perror("read");
-	}
-}
+// 	while ((bytes_read = read(fd, buffer, sizeof(buffer) - 1)) > 0)
+// 	{
+// 		buffer[bytes_read] = '\0';
+// 		printf("%s", buffer);
+// 	}
+// 	if (bytes_read == -1)
+// 	{
+// 		perror("read");
+// 	}
+// }
 
-void call_read_from_heredoc_fd(t_token *tokens)
-{
-	while (tokens)
-	{
-		if (tokens->fd_herdoc != -2)
-		{
-			printf("fd_herdoc = %d\n", tokens->fd_herdoc);
-			read_from_heredoc_fd(tokens->fd_herdoc);
-			printf("*****************************************\n");
-		}
-		tokens = tokens->next;
-	}
-}
+// void call_read_from_heredoc_fd(t_token *tokens)
+// {
+// 	while (tokens)
+// 	{
+// 		if (tokens->fd_herdoc != -2)
+// 		{
+// 			printf("fd_herdoc = %d\n", tokens->fd_herdoc);
+// 			read_from_heredoc_fd(tokens->fd_herdoc);
+// 			printf("*****************************************\n");
+// 		}
+// 		tokens = tokens->next;
+// 	}
+// }
