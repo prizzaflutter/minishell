@@ -90,6 +90,23 @@ typedef struct g_add_space{
 	int		j;
 }	t_add_space;
 
+
+typedef struct g_compute_length
+{
+	int		i;
+	int		len;
+	int		is_sq;
+	int		is_dq;
+}	t_compute_length;
+
+typedef struct g_var_expand{
+	char	*res;
+	int		i;
+	int		k;
+	int		is_squote;
+	int		is_dquote;
+}	t_var_expand;
+
 // EXEC FUNCTIONS
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 void	my_echo(char **argv);
@@ -182,6 +199,9 @@ char	*add_space_inputs(t_gc *gc, char *str);
 int		add_command_element(t_gc *gc, char *str, t_token **tokens, t_env *env);
 char	*handle_double_single_quotes(t_gc *gc, char *str);
 int		its_have_dollar_signe(char *str);
+void	add_element_to_tokens(t_gc *gc, t_token **tokens, char *str);
+void	add_element_to_listcopy(t_gc *gc, char *str, t_token **tokens_tmp);
+void	handle_val_before_addtokens(t_gc *gc, t_token **tokens, char *str);
 
 char	*handle_double_single_quotes(t_gc *gc, char *str);
 int		define_token_type(char *str);
@@ -190,8 +210,20 @@ int		handle_unclosed_quotes(char *str);
 int		handle_herdocs(t_gc *gc, t_token *t_token, t_env *env);
 int		handle_herdoc_input(t_gc *gc, char *str, t_token *token, t_env *env);
 char	*handle_delemitre(t_gc *gc, char *str);
-char	*handle_expand_generale(t_gc *gc, char *str, int flag, t_env *env);
-int		detect_quotes(char *str, int flag);
+
+
+// char	*handle_expand_generale(t_gc *gc, char *str, int flag, t_env *env);
+char	*handle_expand(t_gc *gc, char *str, t_env *env);
+int		the_main_compute_lenght(t_gc *gc, char *str, int *i, t_env *env);
+int		compute_expanded_length(t_gc *gc, char *str, t_env *env);
+void	initial_struct_handle_expand(t_gc *gc, t_var_expand	**vx);
+void	the_main_expand(t_gc *gc, t_env *env, char *str, t_var_expand **vx);
+int		check_quote_expand(char *str, int *is_squote, int *is_dquote);
+
+char	*handle_expand_herdoc(t_gc *gc, char *str, int flag, t_env *env);
+
+int		detect_quotes(char *str);
+char	*get_varenv_value(char *var, t_env *env);
 
 char	*handle_double_single_quotes(t_gc *gc, char *str);
 void	build_command_list(t_gc *gc, t_token *tokens, t_command **cmd_list);

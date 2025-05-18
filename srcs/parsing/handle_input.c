@@ -6,37 +6,11 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 13:14:22 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/16 21:16:24 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/18 20:30:04 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	add_element_to_listcopy(t_gc *gc, char *str, t_token **tokens_tmp)
-{
-	char	**res;
-	t_token	*new_token_tmp;
-	int		i;
-
-	i = 0;
-	str = add_space_inputs(gc, str);
-	res = ft_split(gc, str);
-	i = 0;
-	while (res[i])
-	{
-		new_token_tmp = ft_lstnew(gc, res[i], 4);
-		ft_lstadd_back(tokens_tmp, new_token_tmp);
-		i++;
-	}
-}
-
-void	add_element_to_tokens(t_gc *gc, t_token **tokens, char *str)
-{
-	t_token	*new_token;
-
-	new_token = ft_lstnew(gc, str, 1);
-	ft_lstadd_back(tokens, new_token);
-}
 
 void	handle_expand_dollar_sign(t_gc *gc, t_token **tokens,
 	t_env *env, char *str)
@@ -46,8 +20,35 @@ void	handle_expand_dollar_sign(t_gc *gc, t_token **tokens,
 	int		i;
 
 	i = 0;
-	new_str = handle_expand_generale(gc, str, detect_quotes(str, 0), env);
-	if (detect_quotes(new_str, 1) == 1)
+	new_str = handle_expand(gc, str, env);
+	if (detect_quotes(new_str) == 1)
+	{
+		new_str = handle_double_single_quotes(gc, new_str);
+		add_element_to_tokens(gc, tokens, new_str);
+	}
+	else
+	{
+		new_str = handle_double_single_quotes(gc, new_str);
+		char_tmp = ft_split(gc, new_str);
+		i = 0;
+		while (char_tmp[i])
+		{
+			add_element_to_tokens(gc, tokens, char_tmp[i]);
+			i++;
+		}
+	}
+}
+
+void	handle_expand_dollar_sign_export(t_gc *gc, t_token **tokens,
+	t_env *env, char *str, char *prevstr)
+{
+	char	*new_str;
+	char	**char_tmp;
+	int		i;
+	//// shold in expand not remove quotes 
+	i = 0;
+	new_str = handle_expand(gc, str, env);
+	if (detect_quotes(prevstr) != 1)
 	{
 		new_str = handle_double_single_quotes(gc, new_str);
 		add_element_to_tokens(gc, tokens, new_str);
@@ -67,25 +68,24 @@ void	handle_expand_dollar_sign(t_gc *gc, t_token **tokens,
 
 void	all_the_work(t_gc *gc, t_token **tokens, t_env *env, t_token *tmp)
 {
-	if (its_have_dollar_signe(tmp->str))
+	char	*export;
+	char	*tmpstr;
+
+	tmpstr = handle_double_single_quotes(gc, tmp->str);
+	if (ft_strcmp(tmpstr, "export") == 0)
+		export = gc_strdup(gc, tmp->str);
+	if (tmp->prev && (ft_strcmp(tmp->prev->str, "export") == 0)
+		&& its_have_dollar_signe(tmp->str))
+		handle_expand_dollar_sign_export(gc, tokens, env, tmp->str, export);
+	else if (its_have_dollar_signe(tmp->str))
 		handle_expand_dollar_sign(gc, tokens, env, tmp->str);
 	else if (tmp->prev && ft_strcmp(tmp->prev->str, "echo") == 0)
-	{
-		tmp->str = handle_double_single_quotes(gc, tmp->str);
-		add_element_to_tokens(gc, tokens, tmp->str);
-	}
+		handle_val_before_addtokens(gc, tokens, tmp->str);
 	else if (tmp->prev && (tmp->prev->type == REDIR_IN
 			|| tmp->prev->type == REDIR_OUT || tmp->prev->type == APPEND))
-	{
-		tmp->str = handle_double_single_quotes(gc, tmp->str);
-		add_element_to_tokens(gc, tokens, tmp->str);
-	}
-	///////////////tmajnin hnaaaa
+		handle_val_before_addtokens(gc, tokens, tmp->str);
 	else
-	{
-		tmp->str = handle_double_single_quotes(gc, tmp->str);
-		add_element_to_tokens(gc, tokens, tmp->str);
-	}
+		handle_val_before_addtokens(gc, tokens, tmp->str);
 }
 
 int	add_command_element(t_gc *gc, char *str, t_token **tokens, t_env *env)
