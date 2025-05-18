@@ -1,9 +1,8 @@
 #include "minishell.h"
 
-
-int add_tokens_elemnt(t_gc *gc,char *str, t_token **tokens, t_env *env)
+int	add_tokens_elemnt(t_gc *gc, char *str, t_token **tokens, t_env *env)
 {
-	int fd;
+	int	fd;
 
 	fd = -2;
 	if (handle_unclosed_quotes(str))
@@ -21,34 +20,21 @@ int add_tokens_elemnt(t_gc *gc,char *str, t_token **tokens, t_env *env)
 	return (fd);
 }
 
-
-
-
-
-
-
-
-
-////awesui handleeeeeeee
-// minishell:</>export x="a  b  c"
-// minishell:</>export c=$x
-// minishell:</>
-
-
-int main(int ac, char **av, char **env)
+int	main(int ac, char **av, char **env)
 {
-	(void)ac;
-	(void)av;
-	t_gc *gc = malloc(sizeof(t_gc));
-	if (!gc)
-		return (1);
-	gc->head = NULL;
+	t_gc		*gc ;
 	t_env		*env_struct;
 	t_token		*tokens;
 	t_command	*cmds;
 	char		*input;
 	int			fd;
 
+	gc = malloc(sizeof(t_gc));
+	if (!gc)
+		return (1);
+	gc->head = NULL;
+	(void)ac;
+	(void)av;
 	tokens = NULL;
 	env_struct = fill_env(gc, env);
 	input = NULL;
@@ -59,27 +45,25 @@ int main(int ac, char **av, char **env)
 	{
 		input = readline("minishell:</>");
 		if (!input)
-			break;
+			break ;
 		if (ft_is_only_whitespace(input))
 		{
 			free(input);
-			continue;
+			continue ;
 		}
 		if (*input)
 			add_history(input);
 		fd = add_tokens_elemnt(gc, input, &tokens, env_struct);
 		if (fd == -1)
 		{
-			printf("here\n");
 			gc_clear(gc, 1);
 			tokens = NULL;
 			free(input);
 			continue ;
 		}
-		if(tokens)
+		if (tokens)
 		{
 			build_command_list(gc, tokens, &cmds);
-			print_command_list(cmds);
 			execute_command(gc, cmds, env_struct);
 		}
 		gc_clear(gc, 1);
