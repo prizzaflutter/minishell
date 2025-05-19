@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:20:58 by aykassim          #+#    #+#             */
-/*   Updated: 2025/04/29 14:52:32 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/19 11:46:26 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	handle_unclosed_quotes(char *str)
 	}
 	if (is_single_quote || is_double_quote)
 	{
-		printf("syntax error near unexpected token 1 `newline'\n");
+		printf("syntax error near unexpected token `newline'\n");
 		return (1);
 	}
 	return (0);
