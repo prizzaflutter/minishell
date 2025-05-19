@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:37:23 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/19 11:39:11 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/19 12:49:22 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void	free_element_in_end(t_main_var **mv)
 {
 	gc_clear((*mv)->gc, 1);
 	gc_clear((*mv)->gc, 0);
+	gc_clear((*mv)->gc, 9);
 	free((*mv)->gc);
 	free(*mv);
 }
