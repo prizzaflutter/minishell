@@ -6,7 +6,7 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 11:04:38 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/19 10:52:12 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/05/19 13:16:03 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	update_value(char **key_value,
 	if (found)
 	{
 		if (key_value[1] && is_append)
-			found->value = gc_strjoin(gc, found->value, key_value[1]);
+			found->value = gc_strjoin_1(gc, found->value, key_value[1]);
 		else if (key_value[1])
 			found->value = gc_strdup(gc, key_value[1]);
 	}

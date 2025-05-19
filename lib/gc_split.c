@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gc_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 09:46:30 by iaskour           #+#    #+#             */
-/*   Updated: 2025/04/22 11:48:23 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:27:37 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ static char	**fill_final_str(t_gc *gc, char **final_str, const char *s, char c)
 			while (*s && *s != c)
 				s++;
 			diff_length = (s - start);
-			final_str[i] = (char *)ft_calloc (gc, (diff_length + 1), sizeof(char));
+			final_str[i] = (char *)ft_calloc (gc, (diff_length + 1),
+					sizeof(char));
 			if (final_str[i] == NULL)
 				return (NULL);
 			fill_index(final_str[i], start, diff_length);

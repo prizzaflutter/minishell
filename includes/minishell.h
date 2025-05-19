@@ -6,7 +6,7 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:43:23 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/19 12:29:25 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/05/19 13:15:47 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,6 +199,7 @@ char	*is_overflow(int set, char	*new_status);
 int		redirection_checker(t_command *cmd, int *in, int *out, int i);
 int		child_precess(t_command *current_cmd, int *prev_fd, int *fd_array);
 void	parent_process(t_command *current_cmd, int *prev_fd, int *fd_array);
+char	*gc_strjoin_1(t_gc *gc, char const *s1, char const *s2);
 
 // PARSING FUNCTIONS
 t_token	*ft_lstnew(t_gc *gc, char *content, int flag);
