@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:43:23 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/19 11:43:39 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/19 12:29:25 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,13 @@
 # include <stdint.h>
 # include <signal.h>
 
-// static int v = 0;
-// #define malloc(x) (v++ == 4 ? NULL : (malloc(x)))
 
-typedef struct s_gc_node {
-	void				*ptr;
-	int					is_token;
-	struct s_gc_node	*next;
-}	t_gc_node;
+typedef struct  s_gc_node {
+	void *ptr;
+    int is_token;
+	struct s_gc_node *next;
+} t_gc_node;
+
 
 typedef struct s_gc {
 	t_gc_node	*head;
