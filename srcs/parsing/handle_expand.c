@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:53:28 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/18 20:37:02 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/19 10:10:26 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ char	*handle_expand(t_gc *gc, char *str, t_env *env)
 	{
 		if (check_quote_expand(&str[vx->i],
 				&vx->is_squote, &vx->is_dquote) == 1)
-			vx->i++;
+			vx->res[vx->k++] = str[vx->i++];
 		else if (str[vx->i] == '$' && !vx->is_squote)
 		{
 			vx->i++;
