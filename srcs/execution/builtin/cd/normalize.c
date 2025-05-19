@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   normalize.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 10:12:01 by iaskour           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/05/16 11:29:02 by iaskour          ###   ########.fr       */
+=======
+/*   Updated: 2025/05/18 14:49:10 by aykassim         ###   ########.fr       */
+>>>>>>> 2fa37c4e5b80c6d798fe369874d7f7d9862a6be9
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +66,9 @@ char	*convert_to_array(t_gc *gc, t_stack *stack)
 	my_string = gc_strdup(gc, "");
 	while (current)
 	{
-		if (!ft_strcmp(current->path, "..") != 0
-			|| ft_strcmp(current->path, ".") != 0
-			|| ft_strcmp(current->path, "") != 0)
+		if ((ft_strcmp(current->path, "..") != 0)
+			|| (ft_strcmp(current->path, ".") != 0)
+			|| (ft_strcmp(current->path, "") != 0))
 		{
 			my_string = gc_strjoin(gc, my_string, "/");
 			my_string = gc_strjoin(gc, my_string, current->path);

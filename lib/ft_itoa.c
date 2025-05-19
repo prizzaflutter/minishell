@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 14:48:03 by aykassim          #+#    #+#             */
-/*   Updated: 2025/04/22 17:15:11 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/16 16:41:43 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	lenstring(long n)
 	return (len);
 }
 
-char	*ft_itoa(t_gc *gc,int n)
+char	*ft_itoa(t_gc *gc, int n)
 {
 	long	nbr;
 	int		len;

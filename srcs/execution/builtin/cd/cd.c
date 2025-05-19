@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 12:36:09 by iaskour           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/05/19 10:22:23 by iaskour          ###   ########.fr       */
+=======
+/*   Updated: 2025/05/18 14:48:10 by aykassim         ###   ########.fr       */
+>>>>>>> 2fa37c4e5b80c6d798fe369874d7f7d9862a6be9
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +28,7 @@ void	update_pwd(char *path, t_env *env, t_gc *gc)
 	char	*oldpwd;
 	t_env	*curr;
 
+	oldpwd = NULL;
 	curr = env;
 	while (curr)
 	{
@@ -43,6 +48,7 @@ void	append_path_pwd(char *path, t_env *env, t_gc *gc, int flag)
 	char	*oldpwd;
 	t_env	*curr;
 
+	oldpwd = NULL;
 	curr = env;
 	while (curr)
 	{

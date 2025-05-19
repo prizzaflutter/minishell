@@ -1,80 +1,92 @@
-#include "minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   printing_func.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/17 11:36:37 by aykassim          #+#    #+#             */
+/*   Updated: 2025/05/18 19:48:17 by aykassim         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void print_list(t_token *tokens)
-{
-	t_token *current = tokens;
+// #include "minishell.h"
 
-	while (current != NULL)
-	{
-		printf("Token:\n");
-		printf("  -str: %s\n", current->str);
-		printf("  -type: %d\n", current->type);
-		printf("  -fd_herdoc: %d\n", current->fd_herdoc);
-		if (current->type == HEREDOC)
-			printf("delimtre = %s\n", current->next->str);
-		current = current->next;
-	}
-}
+// void print_list(t_token *tokens)
+// {
+// 	t_token *current = tokens;
 
-void print_command_list(t_command *cmds)
-{
-    t_command *current = cmds;
-    int node_index = 0;
+// 	while (current != NULL)
+// 	{
+// 		printf("Token:\n");
+// 		printf("  -str: %s\n", current->str);
+// 		printf("  -type: %d\n", current->type);
+// 		printf("  -fd_herdoc: %d\n", current->fd_herdoc);
+// 		if (current->type == HEREDOC)
+// 			printf("delimtre = %s\n", current->next->str);
+// 		current = current->next;
+// 	}
+// }
 
-    while (current != NULL)
-    {
-        printf("Node %d:\n", node_index);
-        printf("  Commands: ");
-        int i = 0;
-        while (current->cmd && current->cmd[i])
-        {
-            printf("[%d] %s ", i, current->cmd[i]);
-            i++;
-        }
-        printf("\n");
-        if (current->inoutfile)
-        {
-            printf("  In/Out files: ");
-            i = 0;
-            while (current->inoutfile && current->inoutfile[i])
-            {
-                printf("[%d] %s ", i, current->inoutfile[i]);
-                i++;
-            }
-            printf("\n");
-        }
-		printf("  fd_in: %d\n", current->fd_in);
-        current = current->next;
-        node_index++;
-    }
-}
+// void print_command_list(t_command *cmds)
+// {
+//     t_command *current = cmds;
+//     int node_index = 0;
 
-void read_from_heredoc_fd(int fd)
-{
-	char buffer[1024];
-	ssize_t bytes_read;
+//     while (current != NULL)
+//     {
+//         printf("Node %d:\n", node_index);
+//         printf("  Commands: ");
+//         int i = 0;
+//         while (current->cmd && current->cmd[i])
+//         {
+//             printf("[%d] %s ", i, current->cmd[i]);
+//             i++;
+//         }
+//         printf("\n");
+//         if (current->inoutfile)
+//         {
+//             printf("  In/Out files: ");
+//             i = 0;
+//             while (current->inoutfile && current->inoutfile[i])
+//             {
+//                 printf("[%d] %s ", i, current->inoutfile[i]);
+//                 i++;
+//             }
+//             printf("\n");
+//         }
+// 		printf("  fd_in: %d\n", current->fd_in);
+//         current = current->next;
+//         node_index++;
+//     }
+// }
 
-	while ((bytes_read = read(fd, buffer, sizeof(buffer) - 1)) > 0)
-	{
-		buffer[bytes_read] = '\0';
-		printf("%s", buffer);
-	}
-	if (bytes_read == -1)
-	{
-		perror("read");
-	}
-}
+// void read_from_heredoc_fd(int fd)
+// {
+// 	char buffer[1024];
+// 	ssize_t bytes_read;
 
-void call_read_from_heredoc_fd(t_token *tokens)
-{
-	while (tokens)
-	{
-		if (tokens->fd_herdoc != -2)
-		{
-			printf("fd_herdoc = %d\n", tokens->fd_herdoc);
-			read_from_heredoc_fd(tokens->fd_herdoc);
-			printf("*****************************************\n");
-		}
-		tokens = tokens->next;
-	}
-}
+// 	while ((bytes_read = read(fd, buffer, sizeof(buffer) - 1)) > 0)
+// 	{
+// 		buffer[bytes_read] = '\0';
+// 		printf("%s", buffer);
+// 	}
+// 	if (bytes_read == -1)
+// 	{
+// 		perror("read");
+// 	}
+// }
+
+// void call_read_from_heredoc_fd(t_token *tokens)
+// {
+// 	while (tokens)
+// 	{
+// 		if (tokens->fd_herdoc != -2)
+// 		{
+// 			printf("fd_herdoc = %d\n", tokens->fd_herdoc);
+// 			read_from_heredoc_fd(tokens->fd_herdoc);
+// 			printf("*****************************************\n");
+// 		}
+// 		tokens = tokens->next;
+// 	}
+// }
