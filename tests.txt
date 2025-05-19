@@ -48,3 +48,10 @@ unset HEAD_of_env_linked_list
 
 
 flatpak-spawn --host git push
+
+export a 
+export a+=d => expected : a=d : we get a
+
+minishell:</>export r++d
+export: `r++d(null)`: not a valid identifier
+

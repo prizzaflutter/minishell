@@ -16,9 +16,9 @@
 
 
 ///@brief  those struct for garbage collector
-static int __malloc_counter = 0;
-static int __malloc_fail_at = 4;
-#define malloc(x) (__malloc_counter++ == __malloc_fail_at ? NULL : malloc(x))
+// static int __malloc_counter = 0;
+// static int __malloc_fail_at = 4;
+// #define malloc(x) (__malloc_counter++ == __malloc_fail_at ? NULL : malloc(x))
 
 //---------------------------------
 typedef struct  s_gc_node {
