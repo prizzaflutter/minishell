@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 18:25:00 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/14 14:37:30 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/15 16:39:09 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	handle_ctrl_c(int sig)
 	rl_redisplay();
 	exit_status(1, 130);
 }
-
 
 void	call_signals(void)
 {

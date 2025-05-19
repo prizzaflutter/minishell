@@ -13,8 +13,8 @@ SRCPARS = srcs/parsing/main.c srcs/parsing/handle_input.c srcs/parsing/handle_li
 	srcs/parsing/handle_list_commands_utilis.c srcs/parsing/handle_interactive_mode.c \
 	srcs/parsing/handle_list_commands_utilis_1.c srcs/parsing/handle_herdoc_utilis.c \
 	srcs/parsing/printing_func.c \
-	lib/ft_isalnum.c srcs/parsing/handle_expand.c lib/ft_itoa.c lib/ft_split.c lib/ft_strlen.c lib/ft_strcmp.c \
-	lib/ft_memcpy.c lib/ft_substr.c lib/ft_strlcpy.c lib/ft_isdigit.c 
+	lib/ft_isalnum.c srcs/parsing/handle_expand.c lib/ft_itoa.c lib/ft_split.c lib/ft_split_utilis.c lib/ft_strcmp.c \
+	lib/ft_memcpy.c lib/ft_substr.c lib/ft_strlcpy.c lib/ft_isdigit.c lib/ft_strlen.c
 
 SRC = srcs/execution/execute_command.c srcs/execution/builtin/echo.c lib/ft_strncmp.c srcs/execution/builtin/cd/cd.c \
 	srcs/execution/get_cmd_path.c lib/ft_strjoin.c lib/ft_printf/ft_printf.c lib/ft_putchar_fd.c \

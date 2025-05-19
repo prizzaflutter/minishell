@@ -16,6 +16,9 @@
 
 
 ///@brief  those struct for garbage collector
+static int __malloc_counter = 0;
+static int __malloc_fail_at = 4;
+#define malloc(x) (__malloc_counter++ == __malloc_fail_at ? NULL : malloc(x))
 
 //---------------------------------
 typedef struct  s_gc_node {
@@ -62,7 +65,7 @@ enum token_type {
 	HEREDOC, // <<
 	APPEND // >>
 };
-
+	
 typedef struct s_token {
 	char *str;
 	enum token_type type;
@@ -70,6 +73,18 @@ typedef struct s_token {
 	struct s_token *next;
 	struct s_token *prev;
 } t_token;
+
+typedef struct s_quote{
+	int		is_quote;
+	char	quote_char;
+}t_quote;
+
+typedef struct g_herdoc_h{
+	int		fd;
+	int		fd1;
+	int		status;
+	pid_t	pid;
+} t_herdoc_h;
 
 // EXEC FUNCTIONS
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
@@ -144,7 +159,8 @@ void	parent_process(t_command *current_cmd, int *prev_fd, int *fd_array);
 t_token	*ft_lstnew(t_gc *gc, char *content, int flag);
 void	ft_lstadd_back(t_token **lst, t_token *new);
 t_token	*ft_lstlast(t_token *lst);
-char	**ft_split(t_gc *gc, char const *str, char charset);
+char	**ft_split(t_gc *gc, char const *str);
+int		count_words(char const *str);
 char	*ft_substr(t_gc *gc,char const *s, unsigned int start, size_t len);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
@@ -176,7 +192,6 @@ char	**get_commands(t_gc *gc, t_token *tokens);
 int		get_herdoc_fd(t_token *tokens);
 void	close_herdoc_fd(t_token **tokens);
 //signals
-
 void call_signals(void);
 void	calll_herdoc_signals(void);
 // PRINTING FUNCTIONS

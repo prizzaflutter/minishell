@@ -3,19 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   handle_herdoc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 19:10:16 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/14 15:54:35 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/05/15 16:33:21 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-typedef struct s_quote{
-	int		is_quote;
-	char	quote_char;
-}t_quote;
 
 int	count_len_delimeter(char *str)
 {

@@ -17,10 +17,7 @@ int add_tokens_elemnt(t_gc *gc,char *str, t_token **tokens, t_env *env)
 		return (exit_status(1, 2), -1);
 	fd = handle_herdocs(gc, *tokens, env);
 	if (fd == -1)
-	{
-		// printf("Error in handle_herdocs\n");
 		return (-1);
-	}
 	return (fd);
 }
 
@@ -48,7 +45,6 @@ int main(int ac, char **av, char **env)
 	call_signals();
 	while (1)
 	{
-		// printf("main prc id %d\n",getpid());
 		input = readline("minishell:</>");
 		if (!input)
 			break;
@@ -62,15 +58,15 @@ int main(int ac, char **av, char **env)
 		fd = add_tokens_elemnt(gc, input, &tokens, env_struct);
 		if (fd == -1)
 		{
-			printf("wa bghiit 3a nghawwaaaatttttttt\n");
 			gc_clear(gc, 1);
 			tokens = NULL;
 			free(input);
-			continue;
+			continue ;
 		}
 		if(tokens)
 		{
 			build_command_list(gc, tokens, &cmds);
+			// print_command_list(cmds);
 			execute_command(gc, cmds, env_struct);
 		}
 		gc_clear(gc, 1);
@@ -84,3 +80,14 @@ int main(int ac, char **av, char **env)
 	free(gc);
 	return (0);
 }
+// else if (tmp->prev && ft_strcmp(tmp->prev->str, "echo") == 0)
+// {
+// 	tmp->str = handle_double_single_quotes(gc, tmp->str);
+// 	if (!tmp->str)
+// 		return (printf("Error in handle_double_single_quotes"), 1);
+// 	tmp->str = handle_double_single_quotes(gc, tmp->str);
+// 	if (!tmp->str)
+// 		return (printf("Error in handle_double_single_quotes"), 1);
+// 	new_token = ft_lstnew(gc, tmp->str, 1);
+// 	ft_lstadd_back(tokens, new_token);
+// }
