@@ -6,7 +6,7 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 11:04:38 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/15 11:50:10 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/05/19 10:52:12 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,10 @@ int	checker(char *key, char *value)
 {
 	if (!is_valid_identifier(key))
 	{
-		printf("export: `%s%s`: not a valid identifier\n", key, value),
+		if (value)
+			printf("export: `%s%s`: not a valid identifier\n", key, value);
+		else
+			printf("export: `%s`: not a valid identifier\n", key);
 		exit_status(1, 1);
 		return (0);
 	}

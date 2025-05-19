@@ -6,7 +6,11 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 12:36:09 by iaskour           #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2025/05/19 10:22:23 by iaskour          ###   ########.fr       */
+=======
 /*   Updated: 2025/05/18 14:48:10 by aykassim         ###   ########.fr       */
+>>>>>>> 2fa37c4e5b80c6d798fe369874d7f7d9862a6be9
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,5 +102,6 @@ int	my_cd(t_gc *gc, t_env *env, char *argv)
 	else
 		append_path_pwd(argv, env, gc, 1);
 	exit_status(1, 0);
+	free(cwd);
 	return (0);
 }
