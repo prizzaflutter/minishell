@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 13:14:22 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/18 20:30:04 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/19 11:07:36 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,15 @@ void	handle_expand_dollar_sign(t_gc *gc, t_token **tokens,
 }
 
 void	handle_expand_dollar_sign_export(t_gc *gc, t_token **tokens,
-	t_env *env, char *str, char *prevstr)
+	t_env *env, t_str_inputs *ins)
 {
 	char	*new_str;
 	char	**char_tmp;
 	int		i;
-	//// shold in expand not remove quotes 
+
 	i = 0;
-	new_str = handle_expand(gc, str, env);
-	if (detect_quotes(prevstr) != 1)
+	new_str = handle_expand(gc, ins->str, env);
+	if (detect_quotes(ins->export) != 1)
 	{
 		new_str = handle_double_single_quotes(gc, new_str);
 		add_element_to_tokens(gc, tokens, new_str);
@@ -68,15 +68,16 @@ void	handle_expand_dollar_sign_export(t_gc *gc, t_token **tokens,
 
 void	all_the_work(t_gc *gc, t_token **tokens, t_env *env, t_token *tmp)
 {
-	char	*export;
-	char	*tmpstr;
+	t_str_inputs	*instr;
 
-	tmpstr = handle_double_single_quotes(gc, tmp->str);
-	if (ft_strcmp(tmpstr, "export") == 0)
-		export = gc_strdup(gc, tmp->str);
+	instr = gc_malloc(gc, sizeof(t_str_inputs), 0);
 	if (tmp->prev && (ft_strcmp(tmp->prev->str, "export") == 0)
 		&& its_have_dollar_signe(tmp->str))
-		handle_expand_dollar_sign_export(gc, tokens, env, tmp->str, export);
+	{
+		instr->export = gc_strdup(gc, tmp->prev->str);
+		instr->str = gc_strdup(gc, tmp->str);
+		handle_expand_dollar_sign_export(gc, tokens, env, instr);
+	}
 	else if (its_have_dollar_signe(tmp->str))
 		handle_expand_dollar_sign(gc, tokens, env, tmp->str);
 	else if (tmp->prev && ft_strcmp(tmp->prev->str, "echo") == 0)

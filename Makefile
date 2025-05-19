@@ -8,7 +8,7 @@ NAME = minishell
 
 HEADER = includes/minishell.h 
 
-SRCPARS = srcs/parsing/main.c srcs/parsing/handle_input.c srcs/parsing/handle_list_tokens.c \
+SRCPARS = srcs/parsing/main.c srcs/parsing/main_utilis.c srcs/parsing/handle_input.c srcs/parsing/handle_list_tokens.c \
 	srcs/parsing/handle_syntax_error.c srcs/parsing/handle_herdoc.c srcs/parsing/handle_list_commands.c \
 	srcs/parsing/handle_list_commands_utilis.c srcs/parsing/handle_interactive_mode.c \
 	srcs/parsing/handle_list_commands_utilis_1.c srcs/parsing/handle_herdoc_utilis.c \

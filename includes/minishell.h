@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/19 11:43:23 by aykassim          #+#    #+#             */
+/*   Updated: 2025/05/19 11:43:39 by aykassim         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # include <stdio.h>
@@ -62,11 +74,11 @@ enum e_token_type {
 };
 
 typedef struct s_token {
-	char			*str;
+	char				*str;
 	enum e_token_type	type;
-	int				fd_herdoc;
-	struct s_token	*next;
-	struct s_token	*prev;
+	int					fd_herdoc;
+	struct s_token		*next;
+	struct s_token		*prev;
 }	t_token;
 
 typedef struct s_quote{
@@ -90,7 +102,6 @@ typedef struct g_add_space{
 	int		j;
 }	t_add_space;
 
-
 typedef struct g_compute_length
 {
 	int		i;
@@ -106,6 +117,21 @@ typedef struct g_var_expand{
 	int		is_squote;
 	int		is_dquote;
 }	t_var_expand;
+
+typedef struct g_str_inputs{
+	char	*str;
+	char	*export;
+}	t_str_inputs;
+
+typedef struct g_main_var
+{
+	t_gc		*gc ;
+	t_env		*ens;
+	t_token		*tokens;
+	t_command	*cmds;
+	char		*input;
+	int			fd;
+}	t_main_var;
 
 // EXEC FUNCTIONS
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
@@ -211,7 +237,6 @@ int		handle_herdocs(t_gc *gc, t_token *t_token, t_env *env);
 int		handle_herdoc_input(t_gc *gc, char *str, t_token *token, t_env *env);
 char	*handle_delemitre(t_gc *gc, char *str);
 
-
 // char	*handle_expand_generale(t_gc *gc, char *str, int flag, t_env *env);
 char	*handle_expand(t_gc *gc, char *str, t_env *env);
 int		the_main_compute_lenght(t_gc *gc, char *str, int *i, t_env *env);
@@ -219,15 +244,11 @@ int		compute_expanded_length(t_gc *gc, char *str, t_env *env);
 void	initial_struct_handle_expand(t_gc *gc, t_var_expand	**vx);
 void	the_main_expand(t_gc *gc, t_env *env, char *str, t_var_expand **vx);
 int		check_quote_expand(char *str, int *is_squote, int *is_dquote);
-
 char	*handle_expand_herdoc(t_gc *gc, char *str, int flag, t_env *env);
-
 int		detect_quotes(char *str);
 char	*get_varenv_value(char *var, t_env *env);
-
 char	*handle_double_single_quotes(t_gc *gc, char *str);
 void	build_command_list(t_gc *gc, t_token *tokens, t_command **cmd_list);
-
 char	**get_inoutfile(t_gc *gc, t_token *tokens);
 char	**get_commands(t_gc *gc, t_token *tokens);
 int		get_herdoc_fd(t_token *tokens);
@@ -235,6 +256,14 @@ void	close_herdoc_fd(t_token **tokens);
 //signals
 void	call_signals(void);
 void	calll_herdoc_signals(void);
+//MAIN
+int		add_tokens_elemnt(t_gc *gc, char *str, t_token **tokens, t_env *env);
+void	build_execute_cmds_list(t_gc *gc, t_token *tokens,
+			t_command *cmds, t_env *ens);
+int		the_main_work(t_main_var	*mv);
+void	free_element_inside_while(t_main_var **mv);
+void	free_element_in_end(t_main_var **mv);
+
 // PRINTING FUNCTIONS
 void	print_list(t_token *tokens);
 void	call_read_from_heredoc_fd(t_token *tokens);
