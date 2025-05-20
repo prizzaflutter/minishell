@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 18:25:00 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/19 13:12:06 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/20 17:41:44 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	call_signals(void)
 	signal(SIGQUIT, SIG_IGN);
 }
 
-void	calll_herdoc_signals(void)
+void	call_herdoc_signals(void)
 {
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_IGN);

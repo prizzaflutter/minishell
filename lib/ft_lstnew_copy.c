@@ -6,7 +6,7 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 11:56:36 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/11 11:59:06 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/05/19 13:26:49 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_copy	*ft_lstnew_copy(t_gc *gc, void	*key, void *value)
 	if (head == NULL)
 		return (NULL);
 	head->key = key;
-    head->value = value;
+	head->value = value;
 	head->next = NULL;
 	return (head);
 }

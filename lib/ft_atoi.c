@@ -6,7 +6,7 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 10:38:48 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/13 13:34:54 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/05/19 13:30:34 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	ft_atoi(const char *str)
 	{
 		num = num * 10 + (*str - '0');
 		if (num < holder)
-			return (is_overflow(1, "overflow"), -(muns + 1)/ 2);
+			return (is_overflow(1, "overflow"), -(muns + 1) / 2);
 		holder = num;
 		str++;
 	}

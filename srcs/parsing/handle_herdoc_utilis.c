@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 16:18:04 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/18 20:47:45 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/20 15:47:34 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,24 @@ int	all_child_process(t_gc *gc, char *str, t_env *env, int fd)
 	{
 		line = readline("herdoc>");
 		if (!line || ft_strcmp(line, handle_delemitre(gc, str)) == 0)
-			break ;
+		{
+			close(fd);
+			free(line);
+			return (0);
+		}
 		new_str = handle_expand_herdoc(gc, line, detect_quotes(str), env);
 		if (!new_str)
 		{
-			free(line);
 			close(fd);
+			free(line);
 			return (0);
 		}
 		write(fd, new_str, ft_strlen(new_str));
 		write(fd, "\n", 1);
 		free(line);
 	}
-	free(line);
 	close(fd);
-	return (1);
+	return (free(line), 1);
 }
 
 int	handle_child_status( t_token *tokens, int status, int fd, int fd1)
@@ -44,8 +47,8 @@ int	handle_child_status( t_token *tokens, int status, int fd, int fd1)
 	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
 	{
 		close(fd1);
-		tokens->fd_herdoc = -2;
 		write(1, "\n", 1);
+		tokens->fd_herdoc = -2;
 		exit_status(1, 130);
 		return (0);
 	}
@@ -67,13 +70,14 @@ int	handle_herdoc_input(t_gc *gc, char *str, t_token *tokens, t_env *env)
 	herdoc.pid = fork();
 	if (herdoc.pid == 0)
 	{
-		calll_herdoc_signals();
+		call_herdoc_signals();
 		if (!all_child_process(gc, str, env, herdoc.fd))
 			exit (1);
 		exit (0);
 	}
 	else
 	{
+		signal(SIGINT, SIG_IGN);
 		waitpid(herdoc.pid, &herdoc.status, 0);
 		call_signals();
 		if (!handle_child_status(tokens, herdoc.status, herdoc.fd, herdoc.fd1))

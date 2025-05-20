@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:43:23 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/19 12:29:25 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/05/20 15:46:04 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,24 +26,26 @@
 # include <stdint.h>
 # include <signal.h>
 
+typedef struct s_gc_node
+{
+	void				*ptr;
+	int					is_token;
+	struct s_gc_node	*next;
+}	t_gc_node;
 
-typedef struct  s_gc_node {
-	void *ptr;
-    int is_token;
-	struct s_gc_node *next;
-} t_gc_node;
-
-
-typedef struct s_gc {
+typedef struct s_gc
+{
 	t_gc_node	*head;
 }	t_gc;
 
-typedef struct s_stack {
+typedef struct s_stack
+{
 	char			*path;
 	struct s_stack	*next;
 }	t_stack;
 
-typedef struct s_command {
+typedef struct s_command
+{
 	char	**cmd;
 	char	**inoutfile;
 	int		fd_in;
@@ -51,19 +53,22 @@ typedef struct s_command {
 	void	*prev;
 }	t_command;
 
-typedef struct s_env{
+typedef struct s_env
+{
 	char			*key;
 	char			*value;
 	struct s_env	*next;
 }	t_env;
 
-typedef struct s_copy{
+typedef struct s_copy
+{
 	char			*key;
 	char			*value;
 	struct s_copy	*next;
 }	t_copy;
 
-enum e_token_type {
+enum e_token_type
+{
 	WORD,
 	PIPE,
 	REDIR_IN,
@@ -72,7 +77,8 @@ enum e_token_type {
 	APPEND
 };
 
-typedef struct s_token {
+typedef struct s_token
+{
 	char				*str;
 	enum e_token_type	type;
 	int					fd_herdoc;
@@ -80,19 +86,22 @@ typedef struct s_token {
 	struct s_token		*prev;
 }	t_token;
 
-typedef struct s_quote{
+typedef struct s_quote
+{
 	int		is_quote;
 	char	quote_char;
 }	t_quote;
 
-typedef struct g_herdoc_h{
+typedef struct g_herdoc_h
+{
 	int		fd;
 	int		fd1;
 	int		status;
 	pid_t	pid;
 }	t_herdoc_h;
 
-typedef struct g_add_space{
+typedef struct g_add_space
+{
 	int		isq;
 	char	quote_char;
 	int		len;
@@ -109,7 +118,8 @@ typedef struct g_compute_length
 	int		is_dq;
 }	t_compute_length;
 
-typedef struct g_var_expand{
+typedef struct g_var_expand
+{
 	char	*res;
 	int		i;
 	int		k;
@@ -117,7 +127,8 @@ typedef struct g_var_expand{
 	int		is_dquote;
 }	t_var_expand;
 
-typedef struct g_str_inputs{
+typedef struct g_str_inputs
+{
 	char	*str;
 	char	*export;
 }	t_str_inputs;
@@ -199,6 +210,7 @@ char	*is_overflow(int set, char	*new_status);
 int		redirection_checker(t_command *cmd, int *in, int *out, int i);
 int		child_precess(t_command *current_cmd, int *prev_fd, int *fd_array);
 void	parent_process(t_command *current_cmd, int *prev_fd, int *fd_array);
+char	*gc_strjoin_1(t_gc *gc, char const *s1, char const *s2);
 
 // PARSING FUNCTIONS
 t_token	*ft_lstnew(t_gc *gc, char *content, int flag);
@@ -217,17 +229,14 @@ int		ft_strcmp(const char *s1, const char *s2);
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
 int		ft_is_only_whitespace(char *str);
-
 int		check_quote(char *str, int *is_quote, char *quote_char);
 char	*add_space_inputs(t_gc *gc, char *str);
-
 int		add_command_element(t_gc *gc, char *str, t_token **tokens, t_env *env);
 char	*handle_double_single_quotes(t_gc *gc, char *str);
 int		its_have_dollar_signe(char *str);
 void	add_element_to_tokens(t_gc *gc, t_token **tokens, char *str);
 void	add_element_to_listcopy(t_gc *gc, char *str, t_token **tokens_tmp);
 void	handle_val_before_addtokens(t_gc *gc, t_token **tokens, char *str);
-
 char	*handle_double_single_quotes(t_gc *gc, char *str);
 int		define_token_type(char *str);
 int		handle_unexpected_token(t_token *tokens);
@@ -235,7 +244,6 @@ int		handle_unclosed_quotes(char *str);
 int		handle_herdocs(t_gc *gc, t_token *t_token, t_env *env);
 int		handle_herdoc_input(t_gc *gc, char *str, t_token *token, t_env *env);
 char	*handle_delemitre(t_gc *gc, char *str);
-
 // char	*handle_expand_generale(t_gc *gc, char *str, int flag, t_env *env);
 char	*handle_expand(t_gc *gc, char *str, t_env *env);
 int		the_main_compute_lenght(t_gc *gc, char *str, int *i, t_env *env);
@@ -254,7 +262,7 @@ int		get_herdoc_fd(t_token *tokens);
 void	close_herdoc_fd(t_token **tokens);
 //signals
 void	call_signals(void);
-void	calll_herdoc_signals(void);
+void	call_herdoc_signals(void);
 //MAIN
 int		add_tokens_elemnt(t_gc *gc, char *str, t_token **tokens, t_env *env);
 void	build_execute_cmds_list(t_gc *gc, t_token *tokens,
@@ -262,10 +270,10 @@ void	build_execute_cmds_list(t_gc *gc, t_token *tokens,
 int		the_main_work(t_main_var	*mv);
 void	free_element_inside_while(t_main_var **mv);
 void	free_element_in_end(t_main_var **mv);
-
 // PRINTING FUNCTIONS
 void	print_list(t_token *tokens);
 void	call_read_from_heredoc_fd(t_token *tokens);
 void	print_command_list(t_command *cmds);
-
+//FD CLEAN
+void	clean_fd_herdoc(t_token *tokens);
 #endif

@@ -1,6 +1,6 @@
 CC = cc
 
-CFLAGS = -Wall -Werror -Wextra -Iincludes -g#-fsanitize=address -g
+CFLAGS = -Wall -Werror -Wextra -Iincludes #-g #-fsanitize=address -g
 
 LDFLAGS = -lreadline 
 
@@ -26,7 +26,7 @@ SRC = srcs/execution/execute_command.c srcs/execution/builtin/echo.c lib/ft_strn
 	srcs/execution/handle_redirections/handle_redirections_multiple.c srcs/execution/garbage_collector/gc_clear.c \
 	srcs/execution/garbage_collector/gc_malloc.c srcs/execution/garbage_collector/gc_strdup.c \
 	srcs/execution/garbage_collector/gc_strndup.c srcs/execution/garbage_collector/gc_exist.c lib/gc_strcat.c lib/gc_split.c \
-	lib/ft_bzero.c lib/ft_calloc.c  lib/gc_strjoin.c lib/gc_strcpy.c lib/ft_strchr.c srcs/execution/handle_single_command/built_in_check.c \
+	lib/ft_bzero.c lib/ft_calloc.c  lib/gc_strjoin.c  lib/ft_strchr.c srcs/execution/handle_single_command/built_in_check.c \
 	srcs/execution/exit_status.c lib/ft_lstnew_stack.c lib/ft_lstadd_back_stack.c lib/ft_strnstr.c lib/ft_lstnew_copy.c lib/ft_lstadd_front_copy.c\
 	srcs/execution/builtin/exit.c srcs/execution/builtin/cd/add_to_path.c srcs/execution/builtin/cd/go_up.c srcs/execution/builtin/cd/normalize.c \
 	srcs/execution/builtin/cd/update_old_pwd.c srcs/execution/builtin/export/export.c srcs/execution/builtin/export/no_args.c  srcs/execution/builtin/export/export_utils.c \
@@ -39,7 +39,9 @@ OBJPARS = $(SRCPARS:%.c=%.o)
 all: $(NAME)
 
 valgrind: $(NAME)
-	valgrind --leak-check=full --track-origins=yes ./$(NAME)
+	valgrind --leak-check=full --track-origins=yes ./$(NAME) 
+fdvalgrind: $(NAME)
+	valgrind --leak-check=full --track-fds=yes ./$(NAME) 
 
 $(NAME): $(OBJ) $(OBJPARS) $(HEADER)
 	$(CC) $(CFLAGS) $(OBJ) $(OBJPARS) $(LDFLAGS) -o $(NAME)
