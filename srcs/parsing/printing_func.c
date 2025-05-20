@@ -6,27 +6,58 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 11:36:37 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/18 19:48:17 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/20 15:50:31 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "minishell.h"
+#include "minishell.h"
 
-// void print_list(t_token *tokens)
-// {
-// 	t_token *current = tokens;
+void	print_list(t_token *tokens)
+{
+	t_token	*current;
 
-// 	while (current != NULL)
-// 	{
-// 		printf("Token:\n");
-// 		printf("  -str: %s\n", current->str);
-// 		printf("  -type: %d\n", current->type);
-// 		printf("  -fd_herdoc: %d\n", current->fd_herdoc);
-// 		if (current->type == HEREDOC)
-// 			printf("delimtre = %s\n", current->next->str);
-// 		current = current->next;
-// 	}
-// }
+	current = tokens;
+	while (current != NULL)
+	{
+		printf("Token:\n");
+		printf("  -str: %s\n", current->str);
+		printf("  -type: %d\n", current->type);
+		printf("  -fd_herdoc: %d\n", current->fd_herdoc);
+		if (current->type == HEREDOC)
+			printf("delimtre = %s\n", current->next->str);
+		current = current->next;
+	}
+}
+
+void	read_from_heredoc_fd(int fd)
+{
+	char	buffer[1024];
+	ssize_t	bytes_read;
+
+	while ((bytes_read = read(fd, buffer, sizeof(buffer) - 1)) > 0)
+	{
+		buffer[bytes_read] = '\0';
+		printf("%s", buffer);
+	}
+	if (bytes_read == -1)
+	{
+		perror("read");
+	}
+}
+
+void	call_read_from_heredoc_fd(t_token *tokens)
+{
+	while (tokens)
+	{
+		if (tokens->fd_herdoc != -2)
+		{
+			printf("fd_herdoc = %d\n", tokens->fd_herdoc);
+			read_from_heredoc_fd(tokens->fd_herdoc);
+			printf("*****************************************\n");
+		}
+		tokens = tokens->next;
+	}
+}
 
 // void print_command_list(t_command *cmds)
 // {

@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:37:23 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/19 12:49:22 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/20 15:53:03 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,26 @@ int	add_tokens_elemnt(t_gc *gc, char *str, t_token **tokens, t_env *env)
 	return (fd);
 }
 
-void	build_execute_cmds_list(t_gc *gc, t_token *tokens,
-	t_command *cmds, t_env *ens)
+void	clean_fd_herdoc(t_token *tokens)
 {
-	build_command_list(gc, tokens, &cmds);
-	execute_command(gc, cmds, ens);
+	while (tokens)
+	{
+		if (tokens->type == HEREDOC && tokens->fd_herdoc != -2)
+		{
+			close(tokens->fd_herdoc);
+			tokens->fd_herdoc = -2;
+		}
+		tokens = tokens->next;
+	}
 }
 
 int	the_main_work(t_main_var	*mv)
 {
 	if (!mv->input)
+	{
+		printf("exit\n");
 		return (2);
+	}
 	if (ft_is_only_whitespace(mv->input))
 	{
 		free(mv->input);
@@ -63,6 +72,7 @@ int	the_main_work(t_main_var	*mv)
 
 void	free_element_inside_while(t_main_var **mv)
 {
+	clean_fd_herdoc((*mv)->tokens);
 	gc_clear((*mv)->gc, 1);
 	gc_clear((*mv)->gc, 3);
 	(*mv)->tokens = NULL;
@@ -72,9 +82,9 @@ void	free_element_inside_while(t_main_var **mv)
 
 void	free_element_in_end(t_main_var **mv)
 {
+	clean_fd_herdoc((*mv)->tokens);
 	gc_clear((*mv)->gc, 1);
 	gc_clear((*mv)->gc, 0);
-	gc_clear((*mv)->gc, 9);
 	free((*mv)->gc);
 	free(*mv);
 }

@@ -6,11 +6,19 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:40:05 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/19 11:49:01 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/20 17:42:17 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	build_execute_cmds_list(t_gc *gc, t_token *tokens,
+	t_command *cmds, t_env *ens)
+{
+	build_command_list(gc, tokens, &cmds);
+	execute_command(gc, cmds, ens);
+	clean_fd_herdoc(tokens);
+}
 
 int	initial_main_struct(t_main_var **mvar, char **env)
 {

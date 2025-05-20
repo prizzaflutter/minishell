@@ -1,6 +1,6 @@
 CC = cc
 
-CFLAGS = -Wall -Werror -Wextra -Iincludes -g #-fsanitize=address -g
+CFLAGS = -Wall -Werror -Wextra -Iincludes #-g #-fsanitize=address -g
 
 LDFLAGS = -lreadline 
 
@@ -39,7 +39,9 @@ OBJPARS = $(SRCPARS:%.c=%.o)
 all: $(NAME)
 
 valgrind: $(NAME)
-	valgrind --leak-check=full --track-origins=yes ./$(NAME)
+	valgrind --leak-check=full --track-origins=yes ./$(NAME) 
+fdvalgrind: $(NAME)
+	valgrind --leak-check=full --track-fds=yes ./$(NAME) 
 
 $(NAME): $(OBJ) $(OBJPARS) $(HEADER)
 	$(CC) $(CFLAGS) $(OBJ) $(OBJPARS) $(LDFLAGS) -o $(NAME)
