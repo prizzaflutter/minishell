@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:40:05 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/20 17:42:17 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/22 19:56:18 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,16 @@ int	main(int ac, char **av, char **env)
 	if (!mv || initial_main_struct(&mv, env) == 1)
 		return (1);
 	call_signals();
+	rl_catch_signals = 0;
 	while (1)
 	{
 		mv->input = readline("minishell:</>");
 		check = the_main_work(mv);
 		if (check == 2)
+		{
+			printf("here\n");
 			break ;
+		}
 		if (check == 3 || check == 4)
 			continue ;
 		if (mv->tokens)
@@ -60,3 +64,4 @@ int	main(int ac, char **av, char **env)
 	free_element_in_end(&mv);
 	return (0);
 }
+ 
