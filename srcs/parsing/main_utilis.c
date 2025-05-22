@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:37:23 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/20 15:53:03 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/22 19:52:01 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,7 @@ int	add_tokens_elemnt(t_gc *gc, char *str, t_token **tokens, t_env *env)
 	if (handle_unclosed_quotes(str))
 		return (exit_status(1, 2), -1);
 	if (add_command_element(gc, str, tokens, env))
-	{
-		printf("Error in add_command_element\n");
 		return (-1);
-	}
 	if (handle_unexpected_token(*tokens))
 		return (exit_status(1, 2), -1);
 	fd = handle_herdocs(gc, *tokens, env);
