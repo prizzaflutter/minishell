@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 16:18:04 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/21 14:52:13 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/23 10:18:28 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	handle_child_status( t_token *tokens, int status, int fd, int fd1)
 int	handle_herdoc_input(t_gc *gc, char *str, t_token *tokens, t_env *env)
 {
 	t_herdoc_h	herdoc;
-	
+
 	unlink("/tmp/.heredoc_tmp");
 	herdoc.fd = open("/tmp/.heredoc_tmp", O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	herdoc.fd1 = open("/tmp/.heredoc_tmp", O_CREAT | O_RDONLY, 0644);

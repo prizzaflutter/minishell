@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/19 11:40:05 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/22 19:56:18 by aykassim         ###   ########.fr       */
+/*   Created: 2025/05/23 10:06:47 by aykassim          #+#    #+#             */
+/*   Updated: 2025/05/23 10:18:38 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,7 @@ int	main(int ac, char **av, char **env)
 		mv->input = readline("minishell:</>");
 		check = the_main_work(mv);
 		if (check == 2)
-		{
-			printf("here\n");
 			break ;
-		}
 		if (check == 3 || check == 4)
 			continue ;
 		if (mv->tokens)
@@ -64,4 +61,3 @@ int	main(int ac, char **av, char **env)
 	free_element_in_end(&mv);
 	return (0);
 }
- 

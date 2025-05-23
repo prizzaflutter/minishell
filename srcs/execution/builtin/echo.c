@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 11:36:19 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/11 13:40:32 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/05/23 11:59:18 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,13 @@ void	my_echo(char **cmd_args)
 	int	new_line;
 
 	i = 1;
-	new_line = 1;
+	new_line = 0;
 	while (cmd_args[i] && !ft_strncmp(cmd_args[i], "-n", 2))
 	{
-		new_line = 0;
+		new_line = 1;
 		i++;
 	}
+	i = 1;
 	while (cmd_args[i])
 	{
 		write(1, cmd_args[i], ft_strlen(cmd_args[i]));

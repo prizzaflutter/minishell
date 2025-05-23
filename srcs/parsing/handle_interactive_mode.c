@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/13 18:25:00 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/22 19:54:26 by aykassim         ###   ########.fr       */
+/*   Created: 2025/05/23 10:06:37 by aykassim          #+#    #+#             */
+/*   Updated: 2025/05/23 12:04:06 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,13 @@
 void	handle_ctrl_c(int sig)
 {
 	(void)sig;
+	write(1, "\n", 1);
 	if (wait(NULL) >= 0)
-	{
 		return ;
-	}
-	else
-	{
-		write(1, "\n", 1);
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
-		exit_status(1, 130);
-	}
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
+	exit_status(1, 130);
 }
 
 void	call_signals(void)
