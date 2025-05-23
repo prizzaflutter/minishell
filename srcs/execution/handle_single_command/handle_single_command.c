@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 17:04:07 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/23 11:47:10 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/23 17:12:10 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,25 +43,28 @@ void	handle_redirection_and_execute(char *build_in_f,
 	pid = fork();
 	if (pid == 0)
 	{
-		signal(SIGQUIT, SIG_DFL);
-		signal(SIGINT, SIG_DFL);
+		child_default_signal();
 		out_file = handle_redirections_single(cmd);
 		if (out_file == -1)
-			exit(1);
+		exit(1);
 		if (is_on_child(build_in_f, cmd, env, gc) == 0)
-			if (excute_single_command(gc, cmd, &env) == 0)
-				return (perror("Excve Error :"), exit_status(1, 127), exit(1));
+		if (excute_single_command(gc, cmd, &env) == 0)
+		return (perror("Excve Error :"), exit_status(1, 127), exit(1));
 		exit(0);
 	}
 	else
 	{
+		signal(SIGINT, SIG_IGN);
 		waitpid(pid, &status, 0);
+		call_main_signals();
 		if (WIFEXITED(status))
 			exit_status(1, WEXITSTATUS(status));
 		else if (WIFSIGNALED(status))
 			exit_status(1, 128 + WTERMSIG(status));
-		if (exit_status(0, 0) == 131)
+		if (WIFSIGNALED(status) && WTERMSIG(status) == SIGQUIT)
 			printf("Quit: 3\n");
+		if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+			printf("\n");
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:43:23 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/23 11:48:17 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/23 16:30:05 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,9 +264,9 @@ char	**get_commands(t_gc *gc, t_token *tokens);
 int		get_herdoc_fd(t_token *tokens);
 void	close_herdoc_fd(t_token **tokens);
 //signals
-void	call_signals(void);
+void	call_main_signals(void);
 void	call_herdoc_signals(void);
-
+void	child_default_signal(void);
 //MAIN
 int		add_tokens_elemnt(t_gc *gc, char *str, t_token **tokens, t_env *env);
 void	build_execute_cmds_list(t_gc *gc, t_token *tokens,
