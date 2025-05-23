@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 10:06:47 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/23 10:18:38 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/23 18:10:03 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	main(int ac, char **av, char **env)
 	mv = malloc(sizeof(t_main_var));
 	if (!mv || initial_main_struct(&mv, env) == 1)
 		return (1);
-	call_signals();
+	call_main_signals();
 	rl_catch_signals = 0;
 	while (1)
 	{
