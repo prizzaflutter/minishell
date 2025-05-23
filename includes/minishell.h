@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:43:23 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/23 10:16:33 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/23 11:48:17 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # include <signal.h>
 
 // static int n = 0;
-// #define malloc(x) (n++ == 5 ? NULL : (malloc(x)))
+// #define malloc(x) (n++ == 100000 ? NULL : (malloc(x)))
 
 typedef struct s_gc_node
 {
@@ -266,6 +266,7 @@ void	close_herdoc_fd(t_token **tokens);
 //signals
 void	call_signals(void);
 void	call_herdoc_signals(void);
+
 //MAIN
 int		add_tokens_elemnt(t_gc *gc, char *str, t_token **tokens, t_env *env);
 void	build_execute_cmds_list(t_gc *gc, t_token *tokens,

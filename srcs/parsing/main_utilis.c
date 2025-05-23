@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:37:23 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/23 10:14:22 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/23 11:06:38 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,10 @@ void	clean_fd_herdoc(t_token *tokens)
 int	the_main_work(t_main_var	*mv)
 {
 	if (!mv->input)
+	{
+		printf("exit\n");
 		return (2);
+	}
 	if (ft_is_only_whitespace(mv->input))
 	{
 		free(mv->input);

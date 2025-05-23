@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 10:06:37 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/23 10:07:45 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/23 12:04:06 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 void	handle_ctrl_c(int sig)
 {
 	(void)sig;
+	write(1, "\n", 1);
 	if (wait(NULL) >= 0)
 		return ;
-	write(1, "\n", 1);
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
