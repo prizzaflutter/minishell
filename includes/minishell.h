@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:43:23 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/20 15:46:04 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/22 13:07:01 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@
 # include <stdarg.h>
 # include <stdint.h>
 # include <signal.h>
+
+// static int n = -1;
+// #define malloc(x) (n++ == -1 ? NULL : (malloc(x)))
 
 typedef struct s_gc_node
 {
