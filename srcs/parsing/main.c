@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/19 11:40:05 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/22 13:15:34 by aykassim         ###   ########.fr       */
+/*   Created: 2025/05/23 10:06:47 by aykassim          #+#    #+#             */
+/*   Updated: 2025/05/23 10:18:38 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	main(int ac, char **av, char **env)
 	if (!mv || initial_main_struct(&mv, env) == 1)
 		return (1);
 	call_signals();
+	rl_catch_signals = 0;
 	while (1)
 	{
 		mv->input = readline("minishell:</>");
