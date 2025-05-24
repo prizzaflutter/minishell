@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:52:25 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/20 15:45:05 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/24 16:16:25 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	handle_redirections_single(t_command *cmd)
 	while (cmd->inoutfile && cmd->inoutfile[i])
 	{
 		if (redirection_checker(cmd, &in_file, &out_file, i) == -1)
-			return (-1);
+			return (perror("minishell"), -1);
 		i += 2;
 	}
 	handle_dup_single(cmd, in_file, out_file);

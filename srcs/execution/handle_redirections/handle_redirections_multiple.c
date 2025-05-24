@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redirections_multiple.c                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 11:54:25 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/15 09:42:56 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/05/24 16:14:27 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	handle_redirections_multiple(t_command *cmd, int fd_array[])
 	while (cmd->inoutfile && cmd->inoutfile[i])
 	{
 		if (redirection_checker(cmd, &in_file, &out_file, i) == -1)
-			return (-1);
+			return (perror("minishell"), -1);
 		i += 2;
 	}
 	handle_dup(cmd, in_file, out_file, fd_array);
