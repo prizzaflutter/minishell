@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_multiple_command.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 10:17:33 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/23 10:31:51 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/05/24 16:25:50 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	proccess(t_gc *gc, t_env *env, t_command *current_cmd, int *prev_fd)
 		return (perror("Error: fork issue\n"), 0);
 	if (pid == 0)
 	{
+		child_default_signal();
 		if (!child_precess(current_cmd, prev_fd, fd_array))
 			exit(1);
 		if (!execute_cmd(gc, current_cmd, &env))
@@ -58,16 +59,28 @@ int	proccess(t_gc *gc, t_env *env, t_command *current_cmd, int *prev_fd)
 	return (1);
 }
 
-void	waiting(void)
+void	waiting(int *flag_squit, int *flag_sint)
 {
 	int	status;
 
+	signal(SIGINT, SIG_IGN);
 	while (wait(&status) > 0)
 	{
+		call_main_signals();
 		if (WIFEXITED(status))
 			exit_status(1, WEXITSTATUS(status));
 		else if (WIFSIGNALED(status))
 			exit_status(1, 128 + WTERMSIG(status));
+		if (WIFSIGNALED(status) && WTERMSIG(status) == SIGQUIT && *flag_squit == 0)
+		{
+			printf("Quit: 3\n");
+			*flag_squit += 1;
+		}
+		if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT  && *flag_sint == 0)
+		{
+			printf("\n");
+			*flag_sint += 1;
+		}
 	}
 }
 
@@ -77,6 +90,8 @@ int	handle_multiple_command(t_gc *gc, t_command *cmd, t_env *env)
 	int			prev_fd;
 	int			std_int;
 	int			std_out;
+	int			flag_sint = 0;
+	int			flag_squit = 0;
 
 	current_cmd = cmd;
 	prev_fd = -1;
@@ -87,7 +102,7 @@ int	handle_multiple_command(t_gc *gc, t_command *cmd, t_env *env)
 			return (0);
 		current_cmd = current_cmd->next;
 	}
-	waiting();
+	waiting(&flag_sint, &flag_squit);
 	restore_in_out(&std_int, &std_out);
 	return (1);
 }
