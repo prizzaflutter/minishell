@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 17:04:07 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/23 17:12:10 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/24 18:05:29 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ void	handle_redirection_and_execute(char *build_in_f,
 	}
 	else
 	{
-		signal(SIGINT, SIG_IGN);
+		if (signal(SIGINT, SIG_IGN) == SIG_ERR)
+			perror("signal failed");
 		waitpid(pid, &status, 0);
 		call_main_signals();
 		if (WIFEXITED(status))

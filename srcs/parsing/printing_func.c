@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 11:36:37 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/20 15:50:31 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/24 17:49:40 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,38 +59,41 @@ void	call_read_from_heredoc_fd(t_token *tokens)
 	}
 }
 
-// void print_command_list(t_command *cmds)
-// {
-//     t_command *current = cmds;
-//     int node_index = 0;
+void	print_command_list(t_command *cmds)
+{
+	t_command	*current;
+	int			node_index;
+	int			i;
 
-//     while (current != NULL)
-//     {
-//         printf("Node %d:\n", node_index);
-//         printf("  Commands: ");
-//         int i = 0;
-//         while (current->cmd && current->cmd[i])
-//         {
-//             printf("[%d] %s ", i, current->cmd[i]);
-//             i++;
-//         }
-//         printf("\n");
-//         if (current->inoutfile)
-//         {
-//             printf("  In/Out files: ");
-//             i = 0;
-//             while (current->inoutfile && current->inoutfile[i])
-//             {
-//                 printf("[%d] %s ", i, current->inoutfile[i]);
-//                 i++;
-//             }
-//             printf("\n");
-//         }
-// 		printf("  fd_in: %d\n", current->fd_in);
-//         current = current->next;
-//         node_index++;
-//     }
-// }
+	current = cmds;
+	node_index = 0;
+	while (current != NULL)
+	{
+		printf("Node %d:\n", node_index);
+		printf("  Commands: ");
+		i = 0;
+		while (current->cmd && current->cmd[i])
+		{
+			printf("[%d] %s ", i, current->cmd[i]);
+			i++;
+		}
+		printf("\n");
+		if (current->inoutfile)
+		{
+			printf("  In/Out files: ");
+			i = 0;
+			while (current->inoutfile && current->inoutfile[i])
+			{
+				printf("[%d] %s ", i, current->inoutfile[i]);
+				i++;
+			}
+			printf("\n");
+		}
+		printf("  fd_in: %d\n", current->fd_in);
+		current = current->next;
+		node_index++;
+	}
+}
 
 // void read_from_heredoc_fd(int fd)
 // {
