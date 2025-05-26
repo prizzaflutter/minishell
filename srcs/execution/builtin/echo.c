@@ -6,7 +6,7 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 11:36:19 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/24 08:35:39 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/05/26 09:44:24 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,17 @@ void	my_echo(char **cmd_args)
 	int	j;
 
 	i = 1;
-	new_line = 0;
-	while (cmd_args[i] && !ft_strncmp(cmd_args[i], "-n", 2))
+	new_line = 1;
+	while (cmd_args[i] && cmd_args[i][0] == '-' &&  cmd_args[i][1] == 'n')
 	{
-		j = 1;
-		while (cmd_args[i][j])
-		{
-			if (cmd_args[i][j] == 'n')
-				j++;
-			else 
-			{
-				new_line = 1;
-				break;
-			}
-		}
+		j = 2;
+		while (cmd_args[i][j] == 'n')
+			j++;
+		if (cmd_args[i][j] != '\0')
+			break;
+		new_line = 0;
 		i++;
 	}
-	if (new_line == 1)
-		i = 1;
 	while (cmd_args[i])
 	{
 		write(1, cmd_args[i], ft_strlen(cmd_args[i]));
@@ -44,6 +37,6 @@ void	my_echo(char **cmd_args)
 			write(1, " ", 1);
 		i++;
 	}
-	if (new_line == 1)
+	if (new_line)
 		write(1, "\n", 1);
 }
