@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 10:06:47 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/27 11:49:41 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/27 12:03:46 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,5 @@ int	main(int ac, char **av, char **env)
 		free_element_inside_while(&mv);
 	}
 	free_element_in_end(&mv);
-	return (0);
+	return (exit_status(1, exit_status(0, 0)));
 }
