@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_env_struct.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 12:37:33 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/13 11:17:41 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/05/27 11:54:52 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ t_env	*creat_env_node(t_gc *gc, char *env)
 	new_node->key = gc_strndup(gc, env, key_len);
 	new_node->value = gc_strdup(gc, equal_pos + 1);
 	new_node->next = NULL;
+	if (!ft_strcmp(new_node->value , ""))
+		return (NULL);
 	return (new_node);
 }
 
