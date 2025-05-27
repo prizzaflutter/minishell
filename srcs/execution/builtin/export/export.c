@@ -3,23 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 11:04:38 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/19 13:16:03 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/05/27 11:50:34 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// todo : the problem is here : in  head
 void	add_new_env(char *key, char *value, t_gc *gc, t_env **env)
 {
 	t_env	*new_env;
 	t_env	*last;
 
 	new_env = gc_malloc(gc, sizeof(t_env), 0);
-	if (!new_env)
-		return ;
 	new_env->key = key;
 	if (value)
 		new_env->value = gc_strdup(gc, value);
@@ -27,7 +26,7 @@ void	add_new_env(char *key, char *value, t_gc *gc, t_env **env)
 		new_env->value = NULL;
 	new_env->next = NULL;
 	if (!*env)
-		*env = new_env;
+		*env = ft_lstnew_env(gc, key, value);
 	else
 	{
 		last = *env;

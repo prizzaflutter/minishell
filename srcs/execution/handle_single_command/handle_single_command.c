@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 17:04:07 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/24 18:05:29 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/27 11:47:59 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	handle_redirection_and_execute(char *build_in_f,
 	}
 }
 
-void	handle_single_command(t_gc *gc, t_command *cmd, t_env *env)
+void	handle_single_command(t_gc *gc, t_command *cmd, t_env **env)
 {
 	char	*build_in_f;
 	int		org_stdin ;
@@ -80,6 +80,6 @@ void	handle_single_command(t_gc *gc, t_command *cmd, t_env *env)
 		return ;
 	build_in_f = is_builtin(*cmd->cmd);
 	if (is_on_parent(build_in_f, cmd, env, gc) == 0)
-		handle_redirection_and_execute(build_in_f, gc, cmd, env);
+		handle_redirection_and_execute(build_in_f, gc, cmd, *env);
 	restore_in_out(&org_stdin, &org_stdout);
 }

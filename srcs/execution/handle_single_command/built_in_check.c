@@ -3,27 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_check.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 13:28:10 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/15 11:46:00 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/05/27 11:48:32 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_on_parent(char *build_in_f, t_command *cmd, t_env *env, t_gc *gc)
+int	is_on_parent(char *build_in_f, t_command *cmd, t_env **env, t_gc *gc)
 {
 	if (!ft_strcmp(build_in_f, "cd") || !ft_strcmp(build_in_f, "unset")
 		|| (!ft_strcmp(build_in_f, "export") && cmd->cmd[1] != NULL)
 		|| !ft_strcmp(build_in_f, "exit"))
 	{
 		if (!ft_strcmp(build_in_f, "cd"))
-			return (my_cd(gc, env, cmd->cmd[1]), 1);
+			return (my_cd(gc, *env, cmd->cmd[1]), 1);
 		else if (!ft_strcmp(build_in_f, "unset"))
-			return (my_unset(&env, cmd->cmd), 1);
+			return (my_unset(env, cmd->cmd), 1);
 		else if (!ft_strcmp(build_in_f, "export"))
-			return (my_export(gc, &env, cmd->cmd), 1);
+			return (my_export(gc, env, cmd->cmd), 1);
 		else if (!ft_strcmp(build_in_f, "exit"))
 			return (my_exit(cmd->cmd), 1);
 	}
