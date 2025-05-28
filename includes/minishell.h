@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/19 11:43:23 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/27 10:04:53 by aykassim         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -156,7 +145,7 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 int		ft_cmdsize(t_command *cmd);
 char	*configure_path(t_gc *gc, char *cmd, t_env *env);
-void	handle_single_command(t_gc *gc, t_command *cmd, t_env *env);
+void	handle_single_command(t_gc *gc, t_command *cmd, t_env **env);
 int		handle_multiple_command(t_gc *gc, t_command *cmd, t_env *env);
 char	*is_builtin(char *cmd);
 int		my_cd(t_gc *gc, t_env *env, char *argv);
@@ -183,7 +172,7 @@ int		gc_exist(t_gc *gc, void *ptr);
 void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(t_gc *gc, size_t count, size_t size);
 char	**gc_split(t_gc *gc, char const *s, char c);
-int		is_on_parent(char *build_in_f, t_command *cmd, t_env *env, t_gc *gc);
+int		is_on_parent(char *build_in_f, t_command *cmd, t_env **env, t_gc *gc);
 int		is_on_child(char *build_in_f, t_command *cmd, t_env *env, t_gc *gc);
 char	**split_key_value(t_gc *gc, char *str, int *is_append);
 int		is_valid_identifier(const char *str);
@@ -192,7 +181,7 @@ void	add_new_env(char *key, char *value, t_gc *gc, t_env **env);
 void	update_value(char **key_value, t_env **env, t_gc *gc, int is_append);
 int		is_builtin_excute(t_gc *gc, t_env **env, t_command *cmd);
 int		exit_status(int set, int new_status);
-void	execute_command(t_gc *gc, t_command *cmd, t_env *env);
+void	execute_command(t_gc *gc, t_command *cmd, t_env **env);
 void	save_int_out(int *org_int, int *org_out);
 void	restore_in_out(int *org_int, int *org_out);
 void	print_command_list(t_command *cmds);
@@ -214,6 +203,7 @@ int		redirection_checker(t_command *cmd, int *in, int *out, int i);
 int		child_precess(t_command *current_cmd, int *prev_fd, int *fd_array);
 void	parent_process(t_command *current_cmd, int *prev_fd, int *fd_array);
 char	*gc_strjoin_1(t_gc *gc, char const *s1, char const *s2);
+t_env	*ft_lstnew_env(t_gc *gc, void	*key, void *value);
 
 // PARSING FUNCTIONS
 t_token	*ft_lstnew(t_gc *gc, char *content, int flag);
@@ -263,6 +253,7 @@ char	**get_inoutfile(t_gc *gc, t_token *tokens);
 char	**get_commands(t_gc *gc, t_token *tokens);
 int		get_herdoc_fd(t_token *tokens);
 void	close_herdoc_fd(t_token **tokens);
+int		count_dollarsign_between_egall(char *str);
 //signals
 void	call_main_signals(void);
 void	call_herdoc_signals(void);
@@ -270,8 +261,8 @@ void	child_default_signal(void);
 //MAIN
 int		add_tokens_elemnt(t_gc *gc, char *str, t_token **tokens, t_env *env);
 void	build_execute_cmds_list(t_gc *gc, t_token *tokens,
-			t_command *cmds, t_env *ens);
-int		the_main_work(t_main_var *mv);
+			t_command *cmds, t_env **ens);
+int		the_main_work(t_main_var	*mv);
 void	free_element_inside_while(t_main_var **mv);
 void	free_element_in_end(t_main_var **mv);
 // PRINTING FUNCTIONS
