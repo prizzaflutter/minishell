@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 19:49:41 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/28 13:33:15 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/28 15:52:35 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,32 +79,4 @@ void	handle_val_before_addtokens(t_gc *gc, t_token **tokens, char *str)
 
 	new_str = handle_double_single_quotes(gc, str);
 	add_element_to_tokens(gc, tokens, new_str);
-}
-
-int	count_dollarsign_between_egall(char *str)
-{
-	int	cm_dr;
-	int	cm_df;
-	int	i;
-
-	i = 0;
-	cm_df = 0;
-	cm_dr = 0;
-	while (str[i])
-	{
-		if (str[i] == '$')
-			cm_dr++;
-		if (str[i] == '=')
-			break ;
-		i++;
-	}
-	while (str[i])
-	{
-		if (str[i] == '$')
-			cm_df++;
-		i++;
-	}
-	if (cm_dr > 0 && cm_df > 0)
-		return (1);
-	return (0);
 }

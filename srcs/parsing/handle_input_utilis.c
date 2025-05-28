@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 21:03:55 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/28 13:21:14 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/28 16:02:42 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,58 @@ char	*handle_double_single_quotes(t_gc *gc, char *str)
 	}
 	new_str[j] = '\0';
 	return (new_str);
+}
+
+int	count_dollarsign_between_egall(char *str)
+{
+	int	cm_dr;
+	int	cm_df;
+	int	i;
+
+	i = 0;
+	cm_df = 0;
+	cm_dr = 0;
+	while (str[i])
+	{
+		if (str[i] == '$')
+			cm_dr++;
+		if (str[i] == '=')
+			break ;
+		i++;
+	}
+	while (str[i])
+	{
+		if (str[i] == '$')
+			cm_df++;
+		i++;
+	}
+	if (cm_dr > 0 && cm_df > 0)
+		return (1);
+	return (0);
+}
+
+void	handle_expand_dollar_sign_echo(t_gc *gc, t_token **tokens,
+	t_env *env, char *str)
+{
+	char	*new_str;
+	char	**char_tmp;
+	int		i;
+
+	i = 0;
+	new_str = handle_expand(gc, str, env);
+	if (detect_quotes(str) == 1)
+	{
+		new_str = handle_double_single_quotes(gc, new_str);
+		add_element_to_tokens(gc, tokens, new_str);
+	}
+	else
+	{
+		char_tmp = ft_split(gc, new_str);
+		i = 0;
+		while (char_tmp[i])
+		{
+			add_element_to_tokens(gc, tokens, char_tmp[i]);
+			i++;
+		}
+	}
 }

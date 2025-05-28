@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 19:47:32 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/28 15:24:10 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/28 16:00:11 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	the_main_compute_lenght(t_gc *gc, char *str, int *i, t_env *env)
 		len += count_expand_env_var(gc, str, i, env);
 	else
 	{
-		len++;
+		len += 2;
 		(*i)++;
 	}
 	return (len);
@@ -78,11 +78,21 @@ int	compute_expanded_length_herdoc(t_gc *gc, char *str, int flag, t_env *env)
 	return (len);
 }
 
+void	initial_struct_handle_expand(t_gc *gc, t_var_expand	**vx, int is_her)
+{
+	*vx = gc_malloc(gc, sizeof(t_var_expand), 0);
+	(*vx)->i = 0;
+	(*vx)->k = 0;
+	(*vx)->is_squote = 0;
+	(*vx)->is_dquote = 0;
+	(*vx)->is_her = is_her;
+}
+
 char	*handle_expand_herdoc(t_gc *gc, char *str, int flag, t_env *env)
 {
 	t_var_expand	*vx;
 
-	initial_struct_handle_expand(gc, &vx);
+	initial_struct_handle_expand(gc, &vx, 1);
 	vx->res = gc_malloc(gc, sizeof(char)
 			* (compute_expanded_length_herdoc(gc, str, flag, env) + 1), 0);
 	if (flag == 0)
