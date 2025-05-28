@@ -6,11 +6,32 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 19:49:41 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/28 09:57:45 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/28 13:33:15 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	detect_dollar_sign_insquote(char *str)
+{
+	int		i;
+	int		is_quote;
+	char	quote_char;
+
+	i = 0;
+	is_quote = 0;
+	quote_char = 0;
+	while (str[i])
+	{
+		if (check_quote(&str[i], &is_quote, &quote_char) != 0)
+			i++;
+		else if (str[i] == '$' && is_quote == 1)
+			return (1);
+		else
+			i++;
+	}
+	return (0);
+}
 
 int	detect_quotes(char *str)
 {
