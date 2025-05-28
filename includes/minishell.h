@@ -117,6 +117,7 @@ typedef struct g_var_expand
 	int		k;
 	int		is_squote;
 	int		is_dquote;
+	int		is_her;
 }	t_var_expand;
 
 typedef struct g_str_inputs
@@ -241,7 +242,7 @@ char	*handle_delemitre(t_gc *gc, char *str);
 char	*handle_expand(t_gc *gc, char *str, t_env *env);
 int		the_main_compute_lenght(t_gc *gc, char *str, int *i, t_env *env);
 int		compute_expanded_length(t_gc *gc, char *str, t_env *env);
-void	initial_struct_handle_expand(t_gc *gc, t_var_expand	**vx);
+void	initial_struct_handle_expand(t_gc *gc, t_var_expand	**vx, int is_her);
 void	the_main_expand(t_gc *gc, t_env *env, char *str, t_var_expand **vx);
 int		check_quote_expand(char *str, int *is_squote, int *is_dquote);
 char	*handle_expand_herdoc(t_gc *gc, char *str, int flag, t_env *env);
@@ -255,6 +256,8 @@ int		get_herdoc_fd(t_token *tokens);
 void	close_herdoc_fd(t_token **tokens);
 int		count_dollarsign_between_egall(char *str);
 int		detect_dollar_sign_insquote(char *str);
+void	handle_expand_dollar_sign_echo(t_gc *gc, t_token **tokens,
+	t_env *env, char *str);
 //signals
 void	call_main_signals(void);
 void	call_herdoc_signals(void);
