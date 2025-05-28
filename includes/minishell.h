@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:43:23 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/23 16:30:05 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/27 10:04:53 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ typedef struct g_str_inputs
 
 typedef struct g_main_var
 {
-	t_gc		*gc ;
+	t_gc		*gc;
 	t_env		*ens;
 	t_token		*tokens;
 	t_command	*cmds;
@@ -271,7 +271,7 @@ void	child_default_signal(void);
 int		add_tokens_elemnt(t_gc *gc, char *str, t_token **tokens, t_env *env);
 void	build_execute_cmds_list(t_gc *gc, t_token *tokens,
 			t_command *cmds, t_env *ens);
-int		the_main_work(t_main_var	*mv);
+int		the_main_work(t_main_var *mv);
 void	free_element_inside_while(t_main_var **mv);
 void	free_element_in_end(t_main_var **mv);
 // PRINTING FUNCTIONS
