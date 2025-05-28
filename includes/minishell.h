@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/19 11:43:23 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/27 11:47:14 by aykassim         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -138,7 +127,7 @@ typedef struct g_str_inputs
 
 typedef struct g_main_var
 {
-	t_gc		*gc ;
+	t_gc		*gc;
 	t_env		*ens;
 	t_token		*tokens;
 	t_command	*cmds;
@@ -264,6 +253,7 @@ char	**get_inoutfile(t_gc *gc, t_token *tokens);
 char	**get_commands(t_gc *gc, t_token *tokens);
 int		get_herdoc_fd(t_token *tokens);
 void	close_herdoc_fd(t_token **tokens);
+int		count_dollarsign_between_egall(char *str);
 //signals
 void	call_main_signals(void);
 void	call_herdoc_signals(void);

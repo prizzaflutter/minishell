@@ -6,39 +6,11 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 13:14:22 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/24 17:53:48 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/28 09:57:38 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	count_dollarsign_between_egall(char *str)
-{
-	int	cm_dr;
-	int	cm_df;
-	int	i;
-
-	i = 0;
-	cm_df = 0;
-	cm_dr = 0;
-	while (str[i])
-	{
-		if (str[i] == '$')
-			cm_dr++;
-		if (str[i] == '=')
-			break ;
-		i++;
-	}
-	while (str[i])
-	{
-		if (str[i] == '$')
-			cm_df++;
-		i++;
-	}
-	if (cm_dr > 0 && cm_df > 0)
-		return (1);
-	return (0);
-}
 
 void	handle_expand_dollar_sign(t_gc *gc, t_token **tokens,
 	t_env *env, char *str)
@@ -95,12 +67,35 @@ void	handle_expand_dollar_sign_export(t_gc *gc, t_token **tokens,
 	}
 }
 
+void	split_when_dollarsign_bf_exp(t_gc *gc, t_token **tokens,
+		char *str, t_env *env)
+{
+	char	*new_str;
+	char	**char_tmp;
+	int		i;
+
+	new_str = handle_expand(gc, str, env);
+	new_str = handle_double_single_quotes(gc, new_str);
+	char_tmp = ft_split(gc, new_str);
+	i = 0;
+	while (char_tmp[i])
+	{
+		add_element_to_tokens(gc, tokens, char_tmp[i]);
+		i++;
+	}
+}
+
 void	all_the_work(t_gc *gc, t_token **tokens, t_env *env, t_token *tmp)
 {
 	t_str_inputs	*instr;
 
 	instr = gc_malloc(gc, sizeof(t_str_inputs), 0);
-	if (tmp->prev && (ft_strcmp(tmp->prev->str, "export") == 0)
+	if (tmp->prev && tmp->prev->prev
+		&& (ft_strcmp(tmp->prev->str, "export") == 0)
+		&& its_have_dollar_signe(tmp->str)
+		&& its_have_dollar_signe(tmp->prev->prev->str))
+		split_when_dollarsign_bf_exp(gc, tokens, tmp->str, env);
+	else if (tmp->prev && (ft_strcmp(tmp->prev->str, "export") == 0)
 		&& its_have_dollar_signe(tmp->str))
 	{
 		instr->export = gc_strdup(gc, tmp->prev->str);

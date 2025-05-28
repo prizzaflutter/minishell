@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 16:18:04 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/24 18:15:10 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/28 10:02:19 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,18 @@ int	handle_child_status( t_token *tokens, int status, int fd, int fd1)
 	return (1);
 }
 
+void	initial_fd_herdoc(int *fd,	int *fd1)
+{
+	*fd = open("/tmp/.heredoc_tmp", O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	*fd1 = open("/tmp/.heredoc_tmp", O_CREAT | O_RDONLY, 0644);
+}
+
 int	handle_herdoc_input(t_gc *gc, char *str, t_token *tokens, t_env *env)
 {
 	t_herdoc_h	herdoc;
 
 	unlink("/tmp/.heredoc_tmp");
-	herdoc.fd = open("/tmp/.heredoc_tmp", O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	herdoc.fd1 = open("/tmp/.heredoc_tmp", O_CREAT | O_RDONLY, 0644);
+	initial_fd_herdoc(&herdoc.fd, &herdoc.fd1);
 	unlink("/tmp/.heredoc_tmp");
 	if (herdoc.fd < 0 || herdoc.fd1 < 0)
 		return (close(herdoc.fd), close(herdoc.fd1), -1);

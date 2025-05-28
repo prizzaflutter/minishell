@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 10:06:47 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/27 11:49:41 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/28 09:38:25 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	build_execute_cmds_list(t_gc *gc, t_token *tokens,
 	t_command *cmds, t_env **ens)
 {
 	build_command_list(gc, tokens, &cmds);
-	// print_command_list(cmds);
 	execute_command(gc, cmds, ens);
 	clean_fd_herdoc(tokens);
 }
@@ -60,5 +59,5 @@ int	main(int ac, char **av, char **env)
 		free_element_inside_while(&mv);
 	}
 	free_element_in_end(&mv);
-	return (0);
+	return (exit_status(1, exit_status(0, 0)));
 }
