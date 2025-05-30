@@ -124,6 +124,7 @@ typedef struct g_str_inputs
 {
 	char	*str;
 	char	*export;
+	char	*echo_str;
 }	t_str_inputs;
 
 typedef struct g_main_var
@@ -207,7 +208,7 @@ char	*gc_strjoin_1(t_gc *gc, char const *s1, char const *s2);
 t_env	*ft_lstnew_env(t_gc *gc, void	*key, void *value);
 
 // PARSING FUNCTIONS
-t_token	*ft_lstnew(t_gc *gc, char *content, int flag);
+t_token	*ft_lstnew(t_gc *gc, char *content, int flag, int quote);
 void	ft_lstadd_back(t_token **lst, t_token *new);
 t_token	*ft_lstlast(t_token *lst);
 char	**ft_split(t_gc *gc, char const *str);
@@ -223,7 +224,7 @@ int		ft_strcmp(const char *s1, const char *s2);
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
 int		ft_is_only_whitespace(char *str);
-int		check_quote(char *str, int *is_quote, char *quote_char);
+int		check_quote(char str, int *is_quote, char *quote_char);
 char	*add_space_inputs(t_gc *gc, char *str);
 int		add_command_element(t_gc *gc, char *str, t_token **tokens, t_env *env);
 char	*handle_double_single_quotes(t_gc *gc, char *str);
@@ -232,7 +233,7 @@ void	add_element_to_tokens(t_gc *gc, t_token **tokens, char *str);
 void	add_element_to_listcopy(t_gc *gc, char *str, t_token **tokens_tmp);
 void	handle_val_before_addtokens(t_gc *gc, t_token **tokens, char *str);
 char	*handle_double_single_quotes(t_gc *gc, char *str);
-int		define_token_type(char *str);
+int		define_token_type(char *str, int quote);
 int		handle_unexpected_token(t_token *tokens);
 int		handle_unclosed_quotes(char *str);
 int		handle_herdocs(t_gc *gc, t_token *t_token, t_env *env);

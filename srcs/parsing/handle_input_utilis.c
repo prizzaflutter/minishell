@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 21:03:55 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/28 16:02:42 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/30 11:34:40 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	count_length_without_quotes(char *str)
 	quote_char = 0;
 	while (str[i])
 	{
-		if (check_quote(&str[i], &is_quote, &quote_char) != 0)
+		if (check_quote(str[i], &is_quote, &quote_char) != 0)
 		{
 			i++;
 			continue ;
@@ -67,7 +67,7 @@ char	*handle_double_single_quotes(t_gc *gc, char *str)
 			* (count_length_without_quotes(str) + 1), 0);
 	while (str[i])
 	{
-		if (check_quote(&str[i], &is_quote, &quote_char) != 0)
+		if (check_quote(str[i], &is_quote, &quote_char) != 0)
 		{
 			i++;
 			continue ;
@@ -115,12 +115,10 @@ void	handle_expand_dollar_sign_echo(t_gc *gc, t_token **tokens,
 	int		i;
 
 	i = 0;
-	new_str = handle_expand(gc, str, env);
+	new_str = handle_double_single_quotes(gc, str);
+	new_str = handle_expand(gc, new_str, env);
 	if (detect_quotes(str) == 1)
-	{
-		new_str = handle_double_single_quotes(gc, new_str);
 		add_element_to_tokens(gc, tokens, new_str);
-	}
 	else
 	{
 		char_tmp = ft_split(gc, new_str);
