@@ -276,4 +276,10 @@ void	call_read_from_heredoc_fd(t_token *tokens);
 void	print_command_list(t_command *cmds);
 //FD CLEAN
 void	clean_fd_herdoc(t_token *tokens);
+
+
+
+
+int	count_words_expand(char const *str);
+char	**ft_split_expand(t_gc *gc, char const *s);
 #endif

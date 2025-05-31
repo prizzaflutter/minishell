@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 13:14:22 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/30 15:59:33 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/31 14:38:46 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,9 @@ void	handle_expand_dollar_sign(t_gc *gc, t_token **tokens,
 	int		i;
 
 	i = 0;
-	printf("here1\n");
 	new_str = handle_expand(gc, str, env);
-	if ((detect_dollar_sign_insquote(str) == 1) || (detect_token_type_indolarsign(new_str) == 1))
+	if ((detect_dollar_sign_insquote(str) == 1) 
+		|| (detect_token_type_indolarsign(new_str) == 1))
 	{
 		new_str = handle_double_single_quotes(gc, new_str);
 		add_element_to_tokens(gc, tokens, new_str);
@@ -106,7 +106,8 @@ void	handle_expand_dollar_sign_export(t_gc *gc, t_token **tokens,
 	i = 0;
 	new_str = handle_expand(gc, ins->str, env);
 	printf("HERE\n");
-	if ((detect_quotes(ins->export) == 1) || (count_dollarsign_between_egall(ins->str) == 1))
+	if ((detect_quotes(ins->export) == 1) 
+		|| (count_dollarsign_between_egall(ins->str) == 1))
 	{
 		new_str = handle_double_single_quotes(gc, new_str);
 		char_tmp = ft_split(gc, new_str);
