@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 21:03:55 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/31 15:15:40 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/31 18:56:18 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,20 +113,20 @@ void	handle_expand_dollar_sign_echo(t_gc *gc, t_token **tokens,
 	char	*new_str;
 	char	**char_tmp;
 	int		i;
-	char	**sp;
+	// char	**sp;
 
 	i =0;
-	sp = ft_split_expand(gc, str);
-	while (sp[i])
-	{
-		printf("res=> %s\n",sp[i]);
-		i++;
-	}
-	printf("**************************************************\n");
-	i = 0;
-	new_str = handle_expand(gc, str, env);
-	printf("new_str => %s\n",new_str);
+	// sp = ft_split_expand(gc, str);
+	// while (sp[i])
+	// {
+	// 	printf("res=> %s\n",sp[i]);
+	// 	i++;
+	// }
+	// printf("**************************************************\n");
+	// i = 0;
+	// printf("new_str => %s\n",new_str);
 	new_str = handle_double_single_quotes(gc, str);
+	new_str = handle_expand(gc, new_str, env);
 	if (detect_quotes(str) == 1)
 		add_element_to_tokens(gc, tokens, new_str);
 	else
