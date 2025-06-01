@@ -10,14 +10,14 @@ HEADER = includes/minishell.h
 
 SRCPARS = srcs/parsing/main.c srcs/parsing/main_utilis.c srcs/parsing/handle_input.c srcs/parsing/handle_list_tokens.c \
 	srcs/parsing/handle_syntax_error.c srcs/parsing/handle_herdoc.c srcs/parsing/handle_list_commands.c \
-	srcs/parsing/handle_list_commands_utilis.c srcs/parsing/handle_signals.c \
-	srcs/parsing/handle_list_commands_utilis_1.c srcs/parsing/handle_herdoc_utilis.c \
-	srcs/parsing/add_space_to_inputs.c srcs/parsing/handle_input_utilis.c srcs/parsing/handle_herdoc_expand.c \
-	srcs/parsing/handle_expand_utilis.c srcs/parsing/handle_input_utilis_one.c \
-	lib/ft_split_expand.c lib/ft_split_expand_utilis.c\
+	srcs/parsing/handle_list_commands_utilis.c srcs/parsing/handle_signals.c srcs/parsing/add_space_to_inputs.c \
+	srcs/parsing/handle_list_commands_utilis_1.c srcs/parsing/handle_herdoc_utilis.c srcs/parsing/handle_input_utilis.c\
+	srcs/parsing/handle_herdoc_expand.c srcs/parsing/handle_expand_utilis.c srcs/parsing/handle_input_utilis_one.c \
+	srcs/parsing/handle_input_utilis_two.c srcs/parsing/handle_input_utilis_three.c \
 	srcs/parsing/printing_func.c \
-	lib/ft_isalnum.c srcs/parsing/handle_expand.c lib/ft_itoa.c lib/ft_split.c lib/ft_split_utilis.c  \
-	lib/ft_memcpy.c lib/ft_substr.c lib/ft_strlcpy.c lib/ft_isdigit.c lib/ft_strlen.c lib/ft_strcmp.c
+	lib/ft_split_expand.c lib/ft_split_expand_utilis.c lib/ft_isalnum.c srcs/parsing/handle_expand.c lib/ft_itoa.c \
+	lib/ft_split.c lib/ft_split_utilis.c lib/ft_memcpy.c lib/ft_substr.c lib/ft_strlcpy.c lib/ft_isdigit.c \
+	lib/ft_strlen.c lib/ft_strcmp.c
 
 SRC = srcs/execution/execute_command.c srcs/execution/builtin/echo.c lib/ft_strncmp.c srcs/execution/builtin/cd/cd.c \
 	srcs/execution/get_cmd_path.c lib/ft_strjoin.c lib/ft_printf/ft_printf.c lib/ft_putchar_fd.c \

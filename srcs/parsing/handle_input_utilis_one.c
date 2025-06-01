@@ -6,46 +6,11 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 19:49:41 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/29 17:14:49 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/06/01 15:57:48 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	detect_dollar_sign_insquote(char *str)
-{
-	int		i;
-	int		is_quote;
-	char	quote_char;
-
-	i = 0;
-	is_quote = 0;
-	quote_char = 0;
-	while (str[i])
-	{
-		if (check_quote(str[i], &is_quote, &quote_char) != 0)
-			i++;
-		else if (str[i] == '$' && is_quote == 1)
-			return (1);
-		else
-			i++;
-	}
-	return (0);
-}
-
-int	detect_quotes(char *str)
-{
-	int		i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '"' || str[i] == '\'')
-			return (1);
-		i++;
-	}
-	return (0);
-}
 
 void	add_element_to_listcopy(t_gc *gc, char *str, t_token **tokens_tmp)
 {

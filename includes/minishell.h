@@ -278,8 +278,14 @@ void	print_command_list(t_command *cmds);
 void	clean_fd_herdoc(t_token *tokens);
 
 
-
-
+void	initia_str_value(t_gc *gc, t_str_inputs **instr,
+	char *str, char *export);
+void	handle_expand_dollar_sign(t_gc *gc, t_token **tokens,
+	t_env *env, char *str);
+void	handle_expand_dollar_sign_export(t_gc *gc, t_token **tokens,
+	t_env *env, t_str_inputs *ins);
+int	detect_token_type_insquote(char *str);
+int	detect_token_type_indolarsign(char *str);
 int	count_words_expand(char const *str);
 char	**ft_split_expand(t_gc *gc, char const *s);
 #endif
