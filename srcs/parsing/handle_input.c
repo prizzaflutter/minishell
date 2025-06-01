@@ -6,124 +6,11 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 13:14:22 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/31 14:38:46 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/06/01 15:50:43 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	detect_token_type_insquote(char *str)
-{
-	int		i;
-	int		is_quote;
-	char	quote_char;
-
-	i = 0;
-	is_quote = 0;
-	quote_char = 0;
-	while (str[i])
-	{
-		if (check_quote(str[i], &is_quote, &quote_char) != 0)
-			i++;
-		else if (((ft_strncmp(&str[i], "<", 1) == 0) || (ft_strncmp(&str[i], ">", 1) == 0)
-				|| (ft_strncmp(&str[i], ">>", 2) == 0) || (ft_strncmp(&str[i], "<<", 2) == 0))
-				&& is_quote == 1)
-			return (1);
-		else
-			i++;
-	}
-	return (0);
-}
-
-int	detect_token_type_indolarsign(char *str)
-{
-	int		i;
-
-	i = 0;
-	while (str[i])
-	{
-		if ((ft_strncmp(&str[i], "<", 1) == 0) || (ft_strncmp(&str[i], ">", 1) == 0)
-				|| (ft_strncmp(&str[i], ">>", 2) == 0) || (ft_strncmp(&str[i], "<<", 2) == 0))
-			return (1);
-		else
-			i++;
-	}
-	return (0);
-}
-
-//  void	detect_str_contain_tokns(char *str)
-//  {
-// 	int		i;
-// 	int		is_quote;
-// 	char	quote_char;
-
-// 	i = 0;
-// 	is_quote = 0;
-// 	quote_char = 0;
-// 	while (str[i])
-// 	{
-// 		if (check_quote(&str[i], &is_quote, &quote_char) != 0)
-// 			i++;
-// 		else if 
-// 	}
-//  }
-
-void	handle_expand_dollar_sign(t_gc *gc, t_token **tokens,
-	t_env *env, char *str)
-{
-	char	*new_str;
-	char	**char_tmp;
-	int		i;
-
-	i = 0;
-	new_str = handle_expand(gc, str, env);
-	if ((detect_dollar_sign_insquote(str) == 1) 
-		|| (detect_token_type_indolarsign(new_str) == 1))
-	{
-		new_str = handle_double_single_quotes(gc, new_str);
-		add_element_to_tokens(gc, tokens, new_str);
-	}
-	else
-	{
-		new_str = handle_double_single_quotes(gc, new_str);
-		char_tmp = ft_split(gc, new_str);
-		i = 0;
-		while (char_tmp[i])
-		{
-			add_element_to_tokens(gc, tokens, char_tmp[i]);
-			i++;
-		}
-	}
-}
-
-void	handle_expand_dollar_sign_export(t_gc *gc, t_token **tokens,
-	t_env *env, t_str_inputs *ins)
-{
-	char	*new_str;
-	char	**char_tmp;
-	int		i;
-
-	i = 0;
-	new_str = handle_expand(gc, ins->str, env);
-	printf("HERE\n");
-	if ((detect_quotes(ins->export) == 1) 
-		|| (count_dollarsign_between_egall(ins->str) == 1))
-	{
-		new_str = handle_double_single_quotes(gc, new_str);
-		char_tmp = ft_split(gc, new_str);
-		i = 0;
-		while (char_tmp[i])
-		{
-			add_element_to_tokens(gc, tokens, char_tmp[i]);
-			i++;
-		}
-	}
-	else
-	{
-		new_str = handle_double_single_quotes(gc, new_str);
-		add_element_to_tokens(gc, tokens, new_str);
-	}
-}
 
 void	split_when_dollarsign_bf_exp(t_gc *gc, t_token **tokens,
 		char *str, t_env *env)
@@ -141,13 +28,6 @@ void	split_when_dollarsign_bf_exp(t_gc *gc, t_token **tokens,
 		add_element_to_tokens(gc, tokens, char_tmp[i]);
 		i++;
 	}
-}
-
-void	initia_str_value(t_gc *gc, t_str_inputs **instr,
-	char *str, char *export)
-{
-	(*instr)->export = gc_strdup(gc, export);
-	(*instr)->str = gc_strdup(gc, str);
 }
 
 void	handle_echo_expand_element(t_gc *gc, t_token **tokens, t_env *env,
@@ -179,9 +59,12 @@ void	all_the_work(t_gc *gc, t_token **tokens, t_env *env, t_token *tmp)
 		initia_str_value(gc, &instr, tmp->str, tmp->prev->str);
 		handle_expand_dollar_sign_export(gc, tokens, env, instr);
 	}
-	else if (( (ft_strncmp(new_str, "<", 1) == 0) || (ft_strncmp(new_str, ">", 1) == 0)
-	|| (ft_strncmp(new_str, ">>", 2) == 0) || (ft_strncmp(new_str, "<<", 2) == 0)
-	|| (ft_strncmp(new_str, "|", 1) == 0)) && instr->echo_str)
+	else if (((ft_strncmp(new_str, "<", 1) == 0)
+			|| (ft_strncmp(new_str, ">", 1) == 0)
+			|| (ft_strncmp(new_str, ">>", 2) == 0)
+			|| (ft_strncmp(new_str, "<<", 2) == 0)
+			|| (ft_strncmp(new_str, "|", 1) == 0))
+		&& instr->echo_str)
 	{
 		new_token = ft_lstnew(gc, new_str, 1, 1);
 		ft_lstadd_back(tokens, new_token);

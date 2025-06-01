@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 14:56:39 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/31 16:06:20 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/06/01 15:09:08 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ void	assistant_func_cw_expand(char const *str, int *i, int *word, char *quote_ch
 
 int	count_words_expand(const char *s)
 {
-	int i = 0, count = 0;
+	int i = 0;
+	int cm = 0;
 	char quote = 0;
 
 	while (s[i])
@@ -67,7 +68,7 @@ int	count_words_expand(const char *s)
 			i++;
 		if (!s[i])
 			break;
-		count++;
+		cm++;
 		if (s[i] == '\'' || s[i] == '"')
 		{
 			quote = s[i++];
@@ -82,5 +83,5 @@ int	count_words_expand(const char *s)
 				i++;
 		}
 	}
-	return (count);
+	return (cm);
 }
