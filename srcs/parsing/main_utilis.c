@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:35:00 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/30 11:14:32 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/06/02 14:59:42 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	add_tokens_elemnt(t_gc *gc, char *str, t_token **tokens, t_env *env)
 		return (exit_status(1, 2), -1);
 	if (add_command_element(gc, str, tokens, env))
 		return (-1);
+	print_list(*tokens);
 	if (handle_unexpected_token(*tokens))
 		return (exit_status(1, 2), -1);
 	fd = handle_herdocs(gc, *tokens, env);
