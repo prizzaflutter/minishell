@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 21:03:55 by aykassim          #+#    #+#             */
-/*   Updated: 2025/06/02 10:51:40 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/06/02 15:04:56 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,9 @@ void	handle_expand_dollar_sign(t_gc *gc, t_token **tokens,
 
 	i = 0;
 	new_str = handle_expand(gc, str, env);
+	printf("str => %s\n", new_str);
 	if ((detect_dollar_sign_insquote(str) == 1)
-		|| (detect_token_type_indolarsign(new_str) == 1))
+		|| (detect_token_type_indolarsign(new_str) == 1) || new_str[i] == '\0')
 	{
 		new_str = handle_double_single_quotes(gc, new_str);
 		add_element_to_tokens(gc, tokens, new_str);
