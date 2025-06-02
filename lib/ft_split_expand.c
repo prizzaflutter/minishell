@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 14:55:46 by aykassim          #+#    #+#             */
-/*   Updated: 2025/06/01 15:08:23 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/06/02 10:17:37 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	the_new_len_expand(char const *s)
 
 	i = 0;
 	quote_char = 0;
-	
 	if (s[i] == '"' || s[i] == '\'')
 	{
 		quote_char = s[i++];
@@ -87,7 +86,8 @@ char	**ft_split_expand(t_gc *gc, char const *s)
 
 	if (!s)
 		return (NULL);
-	strings = (char **)gc_malloc(gc, (count_words_expand(s) + 1) * sizeof(char *), 0);
+	strings = (char **)gc_malloc(gc, (count_words_expand(s) + 1)
+			* sizeof(char *), 0);
 	if (!strings)
 		return (NULL);
 	strings = allwork_expand(gc, strings, s);

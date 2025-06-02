@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 11:06:33 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/27 11:29:07 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/06/02 10:19:35 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_env	*ft_lstnew_env(t_gc *gc, void	*key, void *value)
 	head = gc_malloc(gc, sizeof(t_env), 0);
 	if (head == NULL)
 		return (NULL);
-	head->key= key;
+	head->key = key;
 	head->value = value;
 	head->next = NULL;
 	return (head);

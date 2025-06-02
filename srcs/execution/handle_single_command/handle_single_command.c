@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 17:04:07 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/27 12:02:21 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/06/02 10:54:42 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ void	handle_redirection_and_execute(char *build_in_f,
 		child_default_signal();
 		out_file = handle_redirections_single(cmd);
 		if (out_file == -1)
-		exit(1);
+			exit(1);
 		if (is_on_child(build_in_f, cmd, env, gc) == 0)
-		if (excute_single_command(gc, cmd, &env) == 0)
-		return (perror("Excve Error :"), exit_status(1, 127), exit(1));
+			if (excute_single_command(gc, cmd, &env) == 0)
+				return (perror("Excve Error :"), exit_status(1, 127), exit(1));
 		exit(0);
 	}
 	else
