@@ -1,4 +1,3 @@
-
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # include <stdio.h>
@@ -137,6 +136,13 @@ typedef struct g_main_var
 	int			fd;
 }	t_main_var;
 
+typedef struct g_count_w_expand
+{
+	int		i;
+	int		cm;
+	char	quote_char;
+}	t_count_w_expand;
+
 // EXEC FUNCTIONS
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 void	my_echo(char **argv);
@@ -258,7 +264,7 @@ void	close_herdoc_fd(t_token **tokens);
 int		count_dollarsign_between_egall(char *str);
 int		detect_dollar_sign_insquote(char *str);
 void	handle_expand_dollar_sign_echo(t_gc *gc, t_token **tokens,
-	t_env *env, char *str);
+			t_env *env, char *str);
 //signals
 void	call_main_signals(void);
 void	call_herdoc_signals(void);
@@ -277,15 +283,16 @@ void	print_command_list(t_command *cmds);
 //FD CLEAN
 void	clean_fd_herdoc(t_token *tokens);
 
-
 void	initia_str_value(t_gc *gc, t_str_inputs **instr,
-	char *str, char *export);
+			char *str, char *export);
 void	handle_expand_dollar_sign(t_gc *gc, t_token **tokens,
-	t_env *env, char *str);
+			t_env *env, char *str);
 void	handle_expand_dollar_sign_export(t_gc *gc, t_token **tokens,
-	t_env *env, t_str_inputs *ins);
-int	detect_token_type_insquote(char *str);
-int	detect_token_type_indolarsign(char *str);
-int	count_words_expand(char const *str);
+			t_env *env, t_str_inputs *ins);
+void	handle_echo_expand_element(t_gc *gc, t_token **tokens, t_env *env,
+			char *str);
+int		detect_token_type_insquote(char *str);
+int		detect_token_type_indolarsign(char *str);
+int		count_words_expand(char const *str);
 char	**ft_split_expand(t_gc *gc, char const *s);
 #endif

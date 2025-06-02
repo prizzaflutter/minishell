@@ -6,82 +6,44 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 14:56:39 by aykassim          #+#    #+#             */
-/*   Updated: 2025/06/01 15:09:08 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/06/02 10:54:06 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	assistant_func_cw_expand(char const *str, int *i, int *word, char *quote_char)
+void	inistiall_struct_count_w_expand(t_count_w_expand *cw)
 {
-	if (*word && (str[*i] == '"' || str[*i] == '\''))
-	{
-		if (!*quote_char)
-			*quote_char = str[*i];
-		else if (quote_char[0] == str[*i])
-			*quote_char = 0;
-		(*i)++;
-	}
-	else if (*word && *quote_char)
-		(*i)++;
-	else if (*word && (str[*i] == '"' || str[*i] == '\''))
-	{
-		*word = 0;
-		(*i)++;
-	}
-	else
-		(*i)++;
+	(*cw).i = 0;
+	(*cw).cm = 0;
+	(*cw).quote_char = 0;
 }
-
-// int	count_words_expand(char const *str)
-// {
-// 	int		cm;
-// 	int		word;
-// 	char	quote_char;
-// 	int		i;
-
-// 	cm = 0;
-// 	word = 0;
-// 	quote_char = 0;
-// 	i = 0;
-// 	while (str[i])
-// 	{
-// 		if (!word && str[i] != '"' && str[i] != '\'')
-// 		{
-// 			cm++;
-// 			word = 1;
-// 		}
-// 		assistant_func_cw_expand(str, &i, &word, &quote_char);
-// 	}
-// 	return (cm);
-// }
 
 int	count_words_expand(const char *s)
 {
-	int i = 0;
-	int cm = 0;
-	char quote = 0;
+	t_count_w_expand	t;
 
-	while (s[i])
+	inistiall_struct_count_w_expand(&t);
+	while (s[t.i])
 	{
-		while (s[i] == ' ')
-			i++;
-		if (!s[i])
-			break;
-		cm++;
-		if (s[i] == '\'' || s[i] == '"')
+		while (s[t.i] == ' ')
+			t.i++;
+		if (!s[t.i])
+			break ;
+		t.cm++;
+		if (s[t.i] == '\'' || s[t.i] == '"')
 		{
-			quote = s[i++];
-			while (s[i] && s[i] != quote)
-				i++;
-			if (s[i] == quote)
-				i++;
+			t.quote_char = s[t.i++];
+			while (s[t.i] && s[t.i] != t.quote_char)
+				t.i++;
+			if (s[t.i] == t.quote_char)
+				t.i++;
 		}
 		else
 		{
-			while (s[i] && s[i] != ' ' && s[i] != '\'' && s[i] != '"')
-				i++;
+			while (s[t.i] && s[t.i] != ' ' && s[t.i] != '\'' && s[t.i] != '"')
+				t.i++;
 		}
 	}
-	return (cm);
+	return (t.cm);
 }

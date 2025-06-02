@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 13:14:22 by aykassim          #+#    #+#             */
-/*   Updated: 2025/06/01 15:50:43 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/06/02 10:51:28 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,29 @@ void	split_when_dollarsign_bf_exp(t_gc *gc, t_token **tokens,
 	}
 }
 
-void	handle_echo_expand_element(t_gc *gc, t_token **tokens, t_env *env,
-	t_str_inputs *str)
+void	assistant_all_the_work(t_gc *gc, t_token **tokens, t_env *env,
+	t_token *tmp)
 {
-	if (its_have_dollar_signe(str->str))
-		handle_expand_dollar_sign_echo(gc, tokens, env, str->str);
+	if (tmp->prev && ft_strcmp(tmp->prev->str, "echo") == 0)
+		handle_echo_expand_element(gc, tokens, env, tmp->str);
+	else if (its_have_dollar_signe(tmp->str))
+		handle_expand_dollar_sign(gc, tokens, env, tmp->str);
+	else if (tmp->prev && (tmp->prev->type == REDIR_IN
+			|| tmp->prev->type == REDIR_OUT || tmp->prev->type == APPEND))
+		handle_val_before_addtokens(gc, tokens, tmp->str);
 	else
-		handle_val_before_addtokens(gc, tokens, str->str);
+		handle_val_before_addtokens(gc, tokens, tmp->str);
+}
+
+int	compare_detect_condition(char *new_str)
+{
+	if ((ft_strncmp(new_str, "<", 1) == 0)
+		|| (ft_strncmp(new_str, ">", 1) == 0)
+		|| (ft_strncmp(new_str, ">>", 2) == 0)
+		|| (ft_strncmp(new_str, "<<", 2) == 0)
+		|| (ft_strncmp(new_str, "|", 1) == 0))
+		return (1);
+	return (0);
 }
 
 void	all_the_work(t_gc *gc, t_token **tokens, t_env *env, t_token *tmp)
@@ -59,28 +75,13 @@ void	all_the_work(t_gc *gc, t_token **tokens, t_env *env, t_token *tmp)
 		initia_str_value(gc, &instr, tmp->str, tmp->prev->str);
 		handle_expand_dollar_sign_export(gc, tokens, env, instr);
 	}
-	else if (((ft_strncmp(new_str, "<", 1) == 0)
-			|| (ft_strncmp(new_str, ">", 1) == 0)
-			|| (ft_strncmp(new_str, ">>", 2) == 0)
-			|| (ft_strncmp(new_str, "<<", 2) == 0)
-			|| (ft_strncmp(new_str, "|", 1) == 0))
-		&& instr->echo_str)
+	else if (compare_detect_condition(new_str) && instr->echo_str)
 	{
 		new_token = ft_lstnew(gc, new_str, 1, 1);
 		ft_lstadd_back(tokens, new_token);
 	}
-	else if (tmp->prev && ft_strcmp(tmp->prev->str, "echo") == 0)
-	{
-		initia_str_value(gc, &instr, tmp->str, tmp->prev->str);
-		handle_echo_expand_element(gc, tokens, env, instr);
-	}
-	else if (its_have_dollar_signe(tmp->str))
-		handle_expand_dollar_sign(gc, tokens, env, tmp->str);
-	else if (tmp->prev && (tmp->prev->type == REDIR_IN
-			|| tmp->prev->type == REDIR_OUT || tmp->prev->type == APPEND))
-		handle_val_before_addtokens(gc, tokens, tmp->str);
 	else
-		handle_val_before_addtokens(gc, tokens, tmp->str);
+		assistant_all_the_work(gc, tokens, env, tmp);
 }
 
 int	add_command_element(t_gc *gc, char *str, t_token **tokens, t_env *env)

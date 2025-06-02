@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 21:03:55 by aykassim          #+#    #+#             */
-/*   Updated: 2025/06/01 15:50:25 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/06/02 10:51:40 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,4 +119,13 @@ void	handle_expand_dollar_sign_echo(t_gc *gc, t_token **tokens,
 			i++;
 		}
 	}
+}
+
+void	handle_echo_expand_element(t_gc *gc, t_token **tokens, t_env *env,
+	char *str)
+{
+	if (its_have_dollar_signe(str))
+		handle_expand_dollar_sign_echo(gc, tokens, env, str);
+	else
+		handle_val_before_addtokens(gc, tokens, str);
 }
