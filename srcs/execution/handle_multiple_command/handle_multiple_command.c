@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 10:17:33 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/24 18:05:08 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/06/02 14:31:52 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void	waiting(int *flag_squit, int *flag_sint)
 		perror("signal failed");
 	while (wait(&status) > 0)
 	{
-		call_main_signals();
 		if (WIFEXITED(status))
 			exit_status(1, WEXITSTATUS(status));
 		else if (WIFSIGNALED(status))
