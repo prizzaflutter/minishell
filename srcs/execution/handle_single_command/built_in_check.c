@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_check.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 13:28:10 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/27 11:48:32 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/30 09:40:36 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	is_on_parent(char *build_in_f, t_command *cmd, t_env **env, t_gc *gc)
 		|| !ft_strcmp(build_in_f, "exit"))
 	{
 		if (!ft_strcmp(build_in_f, "cd"))
-			return (my_cd(gc, *env, cmd->cmd[1]), 1);
+			return (my_cd(gc, *env, cmd->cmd), 1);
 		else if (!ft_strcmp(build_in_f, "unset"))
 			return (my_unset(env, cmd->cmd), 1);
 		else if (!ft_strcmp(build_in_f, "export"))

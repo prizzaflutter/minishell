@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_multiple_command.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 10:17:33 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/24 18:05:08 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/29 10:14:15 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ int	execute_cmd(t_gc *gc, t_command *cmd, t_env **env)
 	if (!env_array)
 		return (0);
 	if (execve(cmd_path, cmd_args, env_array) == -1)
-		return (printf("Error: EXECVE => (first child)"),
-			exit_status(1, 127), 1);
+		return (exit_status(1, 127), 1);
 	return (1);
 }
 

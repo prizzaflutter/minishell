@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redirections_multiple.c                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 11:54:25 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/24 16:14:27 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/29 13:55:32 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,12 @@ void	handle_dup(t_command *cmd, int in_file, int out_file, int fd_array[])
 		dup2(fd_array[1], STDOUT_FILENO);
 		close(fd_array[1]);
 	}
-	if (cmd->fd_in != -2 && in_file == -1)
+	if (cmd->fd_in != -2)
 	{
 		dup2(cmd->fd_in, STDIN_FILENO);
 		close(cmd->fd_in);
 	}
-	if (in_file != -1)
+	else if (cmd->fd_in == -2 && in_file != -1)
 	{
 		dup2(in_file, STDIN_FILENO);
 		close(in_file);

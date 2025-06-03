@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_single_command.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 17:04:07 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/27 12:02:21 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/29 16:50:17 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ int	excute_single_command(t_gc *gc, t_command *cmd, t_env **env)
 	if (!env_array)
 		return (0);
 	if (execve(cmd_path, cmd_args, env_array) == -1)
-		return (printf("Error: EXECVE => (first child)"),
-			exit_status(1, 127), 0);
+		return (printf("minishell: Command not found\n"), exit_status(1, 127), 0);
 	return (1);
 }
 
@@ -46,10 +45,10 @@ void	handle_redirection_and_execute(char *build_in_f,
 		child_default_signal();
 		out_file = handle_redirections_single(cmd);
 		if (out_file == -1)
-		exit(1);
+			exit(1);
 		if (is_on_child(build_in_f, cmd, env, gc) == 0)
 		if (excute_single_command(gc, cmd, &env) == 0)
-		return (perror("Excve Error :"), exit_status(1, 127), exit(1));
+			return (exit_status(1, 127), exit(1));
 		exit(0);
 	}
 	else
@@ -77,7 +76,10 @@ void	handle_single_command(t_gc *gc, t_command *cmd, t_env **env)
 
 	save_int_out(&org_stdin, &org_stdout);
 	if ((cmd->cmd[0] == NULL && cmd->inoutfile[0] == NULL))
-		return ;
+		{
+			printf("am over her\n");
+			return ;
+		}
 	build_in_f = is_builtin(*cmd->cmd);
 	if (is_on_parent(build_in_f, cmd, env, gc) == 0)
 		handle_redirection_and_execute(build_in_f, gc, cmd, *env);

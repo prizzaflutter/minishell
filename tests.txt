@@ -8,44 +8,27 @@ bash-5.2$ ./xxx
 bash: ./xxx: No such file or directory
 bash-5.2$ 
 
-
-
-
 bash-5.2$ cat < ghgjh
 bash: ghgjh: No such file or directory
-
-
-
 
 minishell:</>export h=h h h+=hh
 result -----> h=hhh
 
-
-
 minishell:</>export
 ------> sorted env
 
-
 cd, export, ...  built-in ,  fail -----> set exit_status
-
-
 
 echo -n                 ---> no new line
 echo -nnnnnnn           ---> no new line
 echo -n -n -n -n        ---> no new line
 
-
-
 exit LONGMIN > x < LONGMAX
 % 256
 exit: too many arguments
 
-
-
-
 unset HEAD_of_env_linked_list
 ------> remove only the first node
-
 
 flatpak-spawn --host git push
 
@@ -55,3 +38,61 @@ export a+=d => expected : a=d : we get a
 minishell:</>export r++d
 export: `r++d(null)`: not a valid identifier
 
+
+
+
+++++++++++++++++++++ momari is here ++++++++++++++++++++++++++++
+
+echo "<"
+
+
+export a="'"
+echo $a.$a."'"
+
+
+// problem solved
+"" 
+
+
+// problem solved
+unset SHELL SESSION_MANAGER __EGL_EXTERNAL_PLATFORM_CONFIG_DIRS QT_ACCESSIBILITY COLORTERM XDG_CONFIG_DIRS SSH_AGENT_LAUNCHER XDG_SESSION_PATH XDG_MENU_PREFIX TERM_PROGRAM_VERSION GNOME_DESKTOP_SESSION_ID GTK_IM_MODULE LANGUAGE SSH_AUTH_SOCK XDG_DATA_HOME XDG_CONFIG_HOME XCURSOR_PATH XMODIFIERS DESKTOP_SESSION ZYPAK_LIB FLATPAK_ID FT_HOOK_NAME GTK_MODULES FT_HOOK_PATHNAME PWD KRB5CCNAME ALSA_CONFIG_PATH XDG_SESSION_DESKTOP LOGNAME XDG_SESSION_TYPE GPG_AGENT_INFO SYSTEMD_EXEC_PID XAUTHORITY VSCODE_GIT_ASKPASS_NODE XDG_GREETER_DATA_DIR container GJS_DEBUG_TOPICS GDM_LANG GI_TYPELIB_PATH HOME IM_CONFIG_PHASE LANG XDG_CURRENT_DESKTOP SBX_CHROME_API_RQ AT_SPI_BUS_ADDRESS GIT_ASKPASS XDG_SEAT_PATH PULSE_CLIENTCONFIG INVOCATION_ID MANAGERPID CHROME_DESKTOP XDG_CACHE_HOME GJS_DEBUG_OUTPUT XDG_SESSION_CLASS TERM ZYPAK_ZYGOTE_STRATEGY_SPAWN LIBVIRT_DEFAULT_URI USER SANDBOX_LD_LIBRARY_PATH VSCODE_GIT_IPC_HANDLE NPM_CONFIG_GLOBALCONFIG DISPLAY SHLVL FLATPAK_SANDBOX_DIR QT_IM_MODULE ZYPAK_BIN LD_LIBRARY_PATH XDG_RUNTIME_DIR DBUS_SYSTEM_BUS_ADDRESS DOCKER_HOST GST_PLUGIN_SYSTEM_PATH VSCODE_GIT_ASKPASS_MAIN JOURNAL_STREAM XDG_DATA_DIRS GDK_BACKEND PATH GDMSESSION PYTHONUSERBASE ORIGINAL_XDG_CURRENT_DESKTOP DBUS_SESSION_BUS_ADDRESS ALSA_CONFIG_DIR PULSE_SERVER GIO_LAUNCHED_DESKTOP_FILE_PID GIO_LAUNCHED_DESKTOP_FILE TERM_PROGRAM _
+
+// proglem solved
+unset all variables and after that run the above command
+cd 
+
+// problem solved
+cd lib/ lib lib/
+
+minishell:</>export a="ls -la > out"
+minishell:</>$a
+minishell:</>
+
+minishell:</>exit "" 999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+9999999999999999999999999999999999999999999999999999999999999999999999999
+exit
+minishell: exit: too many arguments
+minishell:</>echo $?
+1
+
+
+minishell:</>ls | exit 10
+exit
+
+minishell:</>ls | exit 10 | ls
+''$'\254'         includes   Makefile   ''$'\340''Ȫ'$'\305''R'$'\347\310'   README.md   tests.txt
+ en.subject.pdf   lib        minishell   out                                srcs        �Ȫ�R��
+minishell:</>echo $?
+10
+minishell:</>
+
+minishell:</>echo '|'
+syntax error near unexpected token `|'
+
+minishell:</>cat |                       |  cat
+
+
+minishell:</>cd lib/
+declare -x _="./minishell"

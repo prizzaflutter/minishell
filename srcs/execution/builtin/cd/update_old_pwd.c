@@ -6,7 +6,7 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 10:37:54 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/16 11:28:20 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/05/30 11:50:47 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,24 @@ void	update_oldpwd(t_gc *gc, t_env *env, char *oldpwd)
 	t_env	*cur;
 
 	is_exist = 0;
-	key_value = gc_malloc(gc, 3 * sizeof(char *), 0);
 	cur = env;
 	while (cur)
 	{
 		if (!ft_strcmp(cur->key, "OLDPWD"))
 		{
-			cur->value = oldpwd;
-			is_exist = 1;
+			if (cur->value)
+			{
+				cur->value = oldpwd;
+				is_exist = 1;
+				printf("the old pwd is : %s\n", oldpwd);
+			}
 			break ;
 		}
 		cur = cur->next;
 	}
-	if (!is_exist)
+	if (!is_exist && oldpwd)
 	{
+		key_value = gc_malloc(gc, 3 * sizeof(char *), 0);
 		key_value[0] = gc_strdup(gc, "");
 		key_value[1] = gc_strjoin(gc, "OLDPWD=", oldpwd);
 		key_value[2] = NULL;

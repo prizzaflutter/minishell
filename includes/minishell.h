@@ -149,7 +149,7 @@ char	*configure_path(t_gc *gc, char *cmd, t_env *env);
 void	handle_single_command(t_gc *gc, t_command *cmd, t_env **env);
 int		handle_multiple_command(t_gc *gc, t_command *cmd, t_env *env);
 char	*is_builtin(char *cmd);
-int		my_cd(t_gc *gc, t_env *env, char *argv);
+int		my_cd(t_gc *gc, t_env *env, char **argv);
 void	my_pwd(t_env *env);
 void	my_env(t_env *env);
 void	my_unset(t_env **env, char **argv);
