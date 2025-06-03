@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 10:06:47 by aykassim          #+#    #+#             */
-/*   Updated: 2025/06/02 14:59:52 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/06/03 17:48:09 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	build_execute_cmds_list(t_gc *gc, t_token *tokens,
 	t_command *cmds, t_env **ens)
 {
 	build_command_list(gc, tokens, &cmds);
-	// print_command_list(cmds);
 	execute_command(gc, cmds, ens);
 	clean_fd_herdoc(tokens);
 }
