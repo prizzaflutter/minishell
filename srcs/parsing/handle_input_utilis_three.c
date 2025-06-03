@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 15:52:14 by aykassim          #+#    #+#             */
-/*   Updated: 2025/06/01 15:53:47 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/06/03 17:57:36 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,31 @@ int	its_have_dollar_signe(char *str)
 void	initia_str_value(t_gc *gc, t_str_inputs **instr,
 	char *str, char *export)
 {
-	(*instr)->export = gc_strdup(gc, export);
 	(*instr)->str = gc_strdup(gc, str);
+	(*instr)->export = gc_strdup(gc, export);
+}
+
+int	count_word_test(const char *s, char c)
+{
+	int	counter;
+	int	in_word;
+	int	i;
+
+	i = 0;
+	counter = 0;
+	in_word = 0;
+	while (s[i] != '\0')
+	{
+		if (s[i] != c && in_word == 0)
+		{
+			in_word = 1;
+			counter++;
+		}
+		else if (s[i] == c && in_word == 1)
+		{
+			in_word = 0;
+		}
+		i++;
+	}
+	return (counter);
 }

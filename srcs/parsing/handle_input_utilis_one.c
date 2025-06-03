@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 19:49:41 by aykassim          #+#    #+#             */
-/*   Updated: 2025/06/01 15:57:48 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/06/03 17:53:36 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,38 @@ void	handle_val_before_addtokens(t_gc *gc, t_token **tokens, char *str)
 
 	new_str = handle_double_single_quotes(gc, str);
 	add_element_to_tokens(gc, tokens, new_str);
+}
+
+int	compare_detect_condition(char *new_str)
+{
+	if ((ft_strncmp(new_str, "<", 1) == 0)
+		|| (ft_strncmp(new_str, ">", 1) == 0)
+		|| (ft_strncmp(new_str, ">>", 2) == 0)
+		|| (ft_strncmp(new_str, "<<", 2) == 0)
+		|| (ft_strncmp(new_str, "|", 1) == 0))
+		return (1);
+	return (0);
+}
+
+int	detect_nombre_export_value(t_token *tmp)
+{
+	int	i;
+	int	cm;
+
+	cm = 0;
+	while (tmp->next && tmp->next->type == WORD)
+	{
+		i = 0;
+		tmp = tmp->next;
+		while (tmp->str[i])
+		{
+			if (tmp->str[i] == '=')
+			{
+				cm++;
+				break ;
+			}
+			i++;
+		}
+	}
+	return (cm);
 }
