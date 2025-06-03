@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 11:36:19 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/28 09:30:40 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/06/02 10:32:49 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ void	my_echo(char **cmd_args)
 
 	i = 1;
 	new_line = 1;
-	while (cmd_args[i] && cmd_args[i][0] == '-' &&  cmd_args[i][1] == 'n')
+	while (cmd_args[i] && cmd_args[i][0] == '-' && cmd_args[i][1] == 'n')
 	{
 		j = 2;
 		while (cmd_args[i][j] == 'n')
 			j++;
 		if (cmd_args[i][j] != '\0')
-			break;
+			break ;
 		new_line = 0;
 		i++;
 	}

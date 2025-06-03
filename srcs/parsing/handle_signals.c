@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 10:06:37 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/24 18:08:09 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/06/02 14:30:08 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	call_herdoc_signals(void)
 		perror("signal failed");
 	if (signal(SIGQUIT, SIG_IGN) == SIG_ERR)
 		perror("signal failed");
-	rl_catch_signals = 1;
 }
 
 void	child_default_signal(void)

@@ -6,7 +6,7 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:25:43 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/30 11:45:56 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/06/03 14:03:04 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,31 +19,34 @@ int	is_absolute_path(char *path)
 	return (0);
 }
 
-char 	*remove_back_slash(t_gc *gc, char *path)
+char	*remove_back_slash(t_gc *gc, char *path)
 {
-	char **splited_path;
+	char	**splited_path;
 	char	*my_path;
 
+	printf("the path before remving back slash: %s\n", path);
 	splited_path = gc_split(gc, path, '/');
 	my_path = gc_strjoin(gc, "/", splited_path[0]);
-	printf("my path is : %s\n", my_path);
+	printf("the path after removing back slash: %s\n", my_path);
 	return my_path;
 }
 void	update_pwd(char *path, t_env *env, t_gc *gc)
 {
 	char	*oldpwd;
 	t_env	*curr;
-	char 	*my_new_path;
+	// char 	*my_new_path;
 
 	oldpwd = NULL;
 	curr = env;
 	while (curr)
 	{
+		// problem her
 		if (!ft_strcmp(curr->key, "PWD"))
 		{
 			oldpwd = curr->value;
-			my_new_path = remove_back_slash(gc, path);
-			curr->value = gc_strdup(gc, my_new_path);;
+			// my_new_path = remove_back_slash(gc, path);
+			// curr->value = gc_strdup(gc, my_new_path);
+			curr->value = gc_strdup(gc, path);
 			break ;
 		}
 		curr = curr->next;
@@ -115,9 +118,10 @@ int	my_cd(t_gc *gc, t_env *env, char **argv)
 {
 	char	*cwd;
 	t_env	*curr;
+	char	content[4096];
 	int		len;
 
-
+	
 	len = get_len(argv);
 	if (len > 2)
 		return (printf("minishell: too many argument\n"), exit_status(1, 1), 0);
@@ -133,16 +137,17 @@ int	my_cd(t_gc *gc, t_env *env, char **argv)
 	}
 	if (chdir(argv[1]) != 0)
 		return (perror("minishell: cd"), exit_status(1, 1), 0);
-	cwd = getcwd(NULL, 0);
+	cwd = getcwd(content, sizeof(content));
 	if (!cwd)
-		return (perror ("cd: error retrieving current directory"),
+		return (perror("cd: error retrieving current directory"),
 			ft_printf(2, "getcwd: cannot access parent directories\n"),
 			append_path_pwd(argv[1], env, gc, 0), 0);
-	if (is_absolute_path(argv[1]))
-		update_pwd(argv[1], env, gc);
-	else
-		append_path_pwd(argv[1], env, gc, 1);
+	update_pwd(content, env, gc);
+	// if (is_absolute_path(argv[1]))
+	// 	update_pwd(content, env, gc);
+	// else
+	// 	update_pwd(content, env, gc);
 	exit_status(1, 0);
-	free(cwd);
+	// free(cwd);
 	return (0);
 }

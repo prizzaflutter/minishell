@@ -6,7 +6,7 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 11:54:25 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/29 13:55:32 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/06/03 18:24:04 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	handle_redirections_multiple(t_command *cmd, int fd_array[])
 	while (cmd->inoutfile && cmd->inoutfile[i])
 	{
 		if (redirection_checker(cmd, &in_file, &out_file, i) == -1)
-			return (perror("minishell"), -1);
+			return (perror("minishell6"), -1);
 		i += 2;
 	}
 	handle_dup(cmd, in_file, out_file, fd_array);

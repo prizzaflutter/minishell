@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   handle_multiple_command.c                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/15 10:17:33 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/29 10:14:15 by iaskour          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -66,7 +55,6 @@ void	waiting(int *flag_squit, int *flag_sint)
 		perror("signal failed");
 	while (wait(&status) > 0)
 	{
-		call_main_signals();
 		if (WIFEXITED(status))
 			exit_status(1, WEXITSTATUS(status));
 		else if (WIFSIGNALED(status))
@@ -94,7 +82,7 @@ int	handle_multiple_command(t_gc *gc, t_command *cmd, t_env *env)
 	int			flag_squit = 0;
 
 	current_cmd = cmd;
-	prev_fd = -1;
+	prev_fd = -1; // hada kansavi fih sd in for next command
 	save_int_out(&std_int, &std_out);
 	while (current_cmd)
 	{

@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   handle_single_command.c                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/30 17:04:07 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/29 16:50:17 by iaskour          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -19,16 +8,19 @@ int	excute_single_command(t_gc *gc, t_command *cmd, t_env **env)
 	char	**env_array;
 
 	cmd_args = cmd->cmd;
-	if (!cmd_args)
-		return (0);
 	cmd_path = configure_path(gc, *cmd->cmd, *env);
-	if (!cmd_path)
-		return (0);
 	env_array = convert_env_to_array(gc, *env);
-	if (!env_array)
-		return (0);
 	if (execve(cmd_path, cmd_args, env_array) == -1)
-		return (printf("minishell: Command not found\n"), exit_status(1, 127), 0);
+	{
+		if (errno == EACCES)
+			return (printf("minishell: Permission denied\n"), exit_status(1, 126), exit(126), 0);
+		else if (errno == ENOENT)
+			return (printf("minishell: No such file or directory\n"), exit_status(1, 127), exit(127), 0);
+		else if (errno == EINVAL)
+			return (printf("minishell: Invalid executable format\n"), exit_status(1, 127), exit(127), 0) ;
+		else if (errno == ENOEXEC) 
+			return (exit_status(1, 0), exit(0), 0);
+	}
 	return (1);
 }
 
@@ -47,8 +39,7 @@ void	handle_redirection_and_execute(char *build_in_f,
 		if (out_file == -1)
 			exit(1);
 		if (is_on_child(build_in_f, cmd, env, gc) == 0)
-		if (excute_single_command(gc, cmd, &env) == 0)
-			return (exit_status(1, 127), exit(1));
+			excute_single_command(gc, cmd, &env);
 		exit(0);
 	}
 	else

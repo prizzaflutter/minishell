@@ -6,7 +6,7 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 09:04:19 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/14 09:46:48 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/06/03 13:23:20 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	is_valid_num(char *str)
 	int	i;
 
 	i = 0;
-	if (str[i] == '+' || str[i] == '-')
+	if ((str[i] == '+' || str[i] == '-') && str[i + 1])
 		i++;
 	while (str[i])
 	{

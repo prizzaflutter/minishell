@@ -1,4 +1,3 @@
-
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # include <stdio.h>
@@ -14,6 +13,8 @@
 # include <stdarg.h>
 # include <stdint.h>
 # include <signal.h>
+#include <sys/stat.h>
+#include <errno.h>
 
 // static int n = 0;
 // #define malloc(x) (n++ == 100000 ? NULL : (malloc(x)))
@@ -124,6 +125,7 @@ typedef struct g_str_inputs
 {
 	char	*str;
 	char	*export;
+	char	*echo_str;
 }	t_str_inputs;
 
 typedef struct g_main_var
@@ -135,6 +137,13 @@ typedef struct g_main_var
 	char		*input;
 	int			fd;
 }	t_main_var;
+
+typedef struct g_count_w_expand
+{
+	int		i;
+	int		cm;
+	char	quote_char;
+}	t_count_w_expand;
 
 // EXEC FUNCTIONS
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
@@ -207,7 +216,7 @@ char	*gc_strjoin_1(t_gc *gc, char const *s1, char const *s2);
 t_env	*ft_lstnew_env(t_gc *gc, void	*key, void *value);
 
 // PARSING FUNCTIONS
-t_token	*ft_lstnew(t_gc *gc, char *content, int flag);
+t_token	*ft_lstnew(t_gc *gc, char *content, int flag, int quote);
 void	ft_lstadd_back(t_token **lst, t_token *new);
 t_token	*ft_lstlast(t_token *lst);
 char	**ft_split(t_gc *gc, char const *str);
@@ -223,7 +232,7 @@ int		ft_strcmp(const char *s1, const char *s2);
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
 int		ft_is_only_whitespace(char *str);
-int		check_quote(char *str, int *is_quote, char *quote_char);
+int		check_quote(char str, int *is_quote, char *quote_char);
 char	*add_space_inputs(t_gc *gc, char *str);
 int		add_command_element(t_gc *gc, char *str, t_token **tokens, t_env *env);
 char	*handle_double_single_quotes(t_gc *gc, char *str);
@@ -232,7 +241,7 @@ void	add_element_to_tokens(t_gc *gc, t_token **tokens, char *str);
 void	add_element_to_listcopy(t_gc *gc, char *str, t_token **tokens_tmp);
 void	handle_val_before_addtokens(t_gc *gc, t_token **tokens, char *str);
 char	*handle_double_single_quotes(t_gc *gc, char *str);
-int		define_token_type(char *str);
+int		define_token_type(char *str, int quote);
 int		handle_unexpected_token(t_token *tokens);
 int		handle_unclosed_quotes(char *str);
 int		handle_herdocs(t_gc *gc, t_token *t_token, t_env *env);
@@ -257,7 +266,7 @@ void	close_herdoc_fd(t_token **tokens);
 int		count_dollarsign_between_egall(char *str);
 int		detect_dollar_sign_insquote(char *str);
 void	handle_expand_dollar_sign_echo(t_gc *gc, t_token **tokens,
-	t_env *env, char *str);
+			t_env *env, char *str);
 //signals
 void	call_main_signals(void);
 void	call_herdoc_signals(void);
@@ -275,4 +284,17 @@ void	call_read_from_heredoc_fd(t_token *tokens);
 void	print_command_list(t_command *cmds);
 //FD CLEAN
 void	clean_fd_herdoc(t_token *tokens);
+
+void	initia_str_value(t_gc *gc, t_str_inputs **instr,
+			char *str, char *export);
+void	handle_expand_dollar_sign(t_gc *gc, t_token **tokens,
+			t_env *env, char *str);
+void	handle_expand_dollar_sign_export(t_gc *gc, t_token **tokens,
+			t_env *env, t_str_inputs *ins);
+void	handle_echo_expand_element(t_gc *gc, t_token **tokens, t_env *env,
+			char *str);
+int		detect_token_type_insquote(char *str);
+int		detect_token_type_indolarsign(char *str);
+int		count_words_expand(char const *str);
+char	**ft_split_expand(t_gc *gc, char const *s);
 #endif

@@ -6,12 +6,11 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 15:38:01 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/29 16:22:04 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/06/03 17:48:18 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <sys/stat.h>
 
 char	*configure_path(t_gc *gc, char *cmd, t_env *env)
 {
@@ -21,26 +20,21 @@ char	*configure_path(t_gc *gc, char *cmd, t_env *env)
 	if (!cmd)
 		return (NULL);
 	cmd_path = get_cmd_path(gc, cmd, env);
+	stat(cmd_path, &sb);
 	if (!cmd_path)
 	{
 		if (ft_strchr(cmd, '/')
-			&& !access(cmd, F_OK) && !access(cmd, X_OK))
+			&& !access(cmd, F_OK) && !access(cmd, X_OK) && S_ISDIR(sb.st_mode) != 0)
 			cmd_path = cmd;
 		else
 		{
-			if (access(cmd, F_OK) && ft_strchr(cmd, '/'))
-				ft_printf(2, "minishell: %s: No such file or directory\n", cmd);
-			if (access(cmd, X_OK) && !access(cmd, F_OK))
-				return (ft_printf(2, "minishell: %s: Permission denied\n", cmd),
-					exit_status(1, 127), NULL);
-			else if (ft_strncmp(cmd, "./", 2))
-				return (ft_printf(2, "minishell: %s: Command not found\n", cmd),
-					exit_status(1, 127), NULL);
+			if (ft_strncmp(cmd, "./", 2))
+				return (ft_printf(2, "minishell3: %s: Command not found\n", cmd),
+					exit_status(1, 127), exit(127), NULL);
 		}
 	}
-	stat(cmd_path, &sb);
-	if (S_ISDIR(sb.st_mode) && ft_strcmp(cmd, ""))
-		return (printf("minishell: %s : Is a directory\n", cmd_path), NULL);
+	if (S_ISDIR(sb.st_mode))
+		return (printf("minishell:%s : Is a directory\n", cmd_path), exit(126), NULL);
 	return (cmd_path);
 }
 

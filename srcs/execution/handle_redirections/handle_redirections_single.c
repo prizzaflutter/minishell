@@ -6,7 +6,7 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:52:25 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/29 15:36:17 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/06/03 17:52:53 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,9 @@ int	handle_redirections_single(t_command *cmd)
 		if (!ft_strcmp(cmd->inoutfile[i], "<<") || !ft_strcmp(cmd->inoutfile[i], "<"))
 			last = i;
 		if (redirection_checker(cmd, &in_file, &out_file, i) == -1)
-			return (perror("minishell"), -1);
+			return (perror("minishell5"), -1);
 		i += 2;
 	}
-	// printf("the last is : %s\n", cmd->inoutfile[last]);
-	// printf("the std in file is : %d\n", in_file);
-	// printf("the stdout file is : %d\n", out_file);
-	// printf("the fd of heredoc is : %d\n", cmd->fd_in);
 	handle_dup_single(cmd, in_file, out_file, last);
 	return (0);
 }

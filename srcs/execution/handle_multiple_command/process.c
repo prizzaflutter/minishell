@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   precess.c                                          :+:      :+:    :+:   */
+/*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:39:37 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/15 11:39:48 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/06/03 18:02:07 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	child_precess(t_command *current_cmd, int *prev_fd, int *fd_array)
 {
 	int	out_file;
-
+	
 	if (*prev_fd != -1)
 	{
 		dup2(*prev_fd, STDIN_FILENO);
