@@ -126,6 +126,7 @@ typedef struct g_str_inputs
 	char	*str;
 	char	*export;
 	char	*echo_str;
+	char	*exp_str;
 }	t_str_inputs;
 
 typedef struct g_main_var
@@ -297,4 +298,8 @@ int		detect_token_type_insquote(char *str);
 int		detect_token_type_indolarsign(char *str);
 int		count_words_expand(char const *str);
 char	**ft_split_expand(t_gc *gc, char const *s);
+int		detect_nombre_export_value(t_token *tmp);
+int		compare_detect_condition(char *new_str);
+char	*expand_split_first_var(t_gc *gc, char *str, t_env *env);
+int		count_word_test(const char *s, char c);
 #endif

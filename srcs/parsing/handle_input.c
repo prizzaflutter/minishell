@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 13:14:22 by aykassim          #+#    #+#             */
-/*   Updated: 2025/06/02 15:30:23 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/06/03 17:48:51 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,36 +44,50 @@ void	assistant_all_the_work(t_gc *gc, t_token **tokens, t_env *env,
 		handle_val_before_addtokens(gc, tokens, tmp->str);
 }
 
-int	compare_detect_condition(char *new_str)
+void	handle_all_export_val(t_gc *gc, t_token **tokens,
+	t_env *env, t_token **tmp)
 {
-	if ((ft_strncmp(new_str, "<", 1) == 0)
-		|| (ft_strncmp(new_str, ">", 1) == 0)
-		|| (ft_strncmp(new_str, ">>", 2) == 0)
-		|| (ft_strncmp(new_str, "<<", 2) == 0)
-		|| (ft_strncmp(new_str, "|", 1) == 0))
-		return (1);
-	return (0);
+	t_token			*cur;
+	int				count;
+	int				i;
+	t_str_inputs	*ins;
+
+	count = detect_nombre_export_value(*tmp);
+	i = 0;
+	cur = *tmp;
+	while (i < count)
+	{
+		(*tmp) = (*tmp)->next;
+		if (cur->prev && its_have_dollar_signe((*tmp)->str)
+			&& its_have_dollar_signe(cur->prev->str))
+			split_when_dollarsign_bf_exp(gc, tokens, (*tmp)->str, env);
+		else if (its_have_dollar_signe((*tmp)->str))
+		{
+			initia_str_value(gc, &ins, (*tmp)->str, cur->str);
+			handle_expand_dollar_sign_export(gc, tokens, env, ins);
+		}
+		else
+			handle_val_before_addtokens(gc, tokens, (*tmp)->str);
+		i++;
+	}
 }
 
-void	all_the_work(t_gc *gc, t_token **tokens, t_env *env, t_token *tmp)
+void	all_the_work(t_gc *gc, t_token **tokens, t_env *env, t_token **tmp)
 {
 	t_str_inputs	*instr;
 	t_token			*new_token;
 	char			*new_str;
 
-	new_str = handle_double_single_quotes(gc, tmp->str);
+	new_str = handle_double_single_quotes(gc, (*tmp)->str);
 	instr = gc_malloc(gc, sizeof(t_str_inputs), 0);
-	if (tmp && (ft_strcmp(tmp->str, "echo") == 0))
-		instr->echo_str = gc_strdup(gc, tmp->str);
-	if (tmp->prev && tmp->prev->prev && its_have_dollar_signe(tmp->str)
-		&& (ft_strcmp(tmp->prev->str, "export") == 0)
-		&& its_have_dollar_signe(tmp->prev->prev->str))
-		split_when_dollarsign_bf_exp(gc, tokens, tmp->str, env);
-	else if (tmp->prev && (ft_strcmp(tmp->prev->str, "export") == 0)
-		&& its_have_dollar_signe(tmp->str))
+	if ((*tmp) && (ft_strcmp((*tmp)->str, "echo") == 0))
+		instr->echo_str = gc_strdup(gc, (*tmp)->str);
+	if ((*tmp) && (ft_strcmp(new_str, "export") == 0))
+		instr->exp_str = gc_strdup(gc, (*tmp)->str);
+	if ((*tmp)->next && instr->exp_str && (*tmp)->next->type == WORD)
 	{
-		initia_str_value(gc, &instr, tmp->str, tmp->prev->str);
-		handle_expand_dollar_sign_export(gc, tokens, env, instr);
+		handle_val_before_addtokens(gc, tokens, new_str);
+		handle_all_export_val(gc, tokens, env, tmp);
 	}
 	else if (compare_detect_condition(new_str) && instr->echo_str)
 	{
@@ -81,7 +95,7 @@ void	all_the_work(t_gc *gc, t_token **tokens, t_env *env, t_token *tmp)
 		ft_lstadd_back(tokens, new_token);
 	}
 	else
-		assistant_all_the_work(gc, tokens, env, tmp);
+		assistant_all_the_work(gc, tokens, env, *tmp);
 }
 
 int	add_command_element(t_gc *gc, char *str, t_token **tokens, t_env *env)
@@ -103,7 +117,7 @@ int	add_command_element(t_gc *gc, char *str, t_token **tokens, t_env *env)
 				continue ;
 			}
 			else
-				all_the_work(gc, tokens, env, tmp);
+				all_the_work(gc, tokens, env, &tmp);
 		}
 		else
 			add_element_to_tokens(gc, tokens, tmp->str);

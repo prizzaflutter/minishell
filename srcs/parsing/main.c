@@ -1,11 +1,9 @@
-
 #include "minishell.h"
 
 void	build_execute_cmds_list(t_gc *gc, t_token *tokens,
 	t_command *cmds, t_env **ens)
 {
 	build_command_list(gc, tokens, &cmds);
-	// print_command_list(cmds);
 	execute_command(gc, cmds, ens);
 	clean_fd_herdoc(tokens);
 }
