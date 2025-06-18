@@ -36,7 +36,6 @@ void	handle_redirection_and_execute(char *build_in_f,
 		out_file = handle_redirections_single(cmd);
 		if (out_file == -1)
 			exit(1);
-		
 		if (is_on_child(build_in_f, cmd, env, gc) == 0)
 			excute_single_command(gc, cmd, &env);
 		exit(0);

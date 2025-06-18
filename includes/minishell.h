@@ -210,7 +210,7 @@ void	no_args(t_env *env, t_gc *gc);
 void	ft_lstadd_back_copy(t_copy **copy, t_copy *new);
 int		ft_atoi(const char *str);
 char	*is_overflow(int set, char	*new_status);
-int		redirection_checker(t_command *cmd, int *in, int *out, int i);
+int		redirection_checker(t_command *cmd, int *out_file, int i);
 int		child_precess(t_command *current_cmd, int *prev_fd, int *fd_array);
 void	parent_process(t_command *current_cmd, int *prev_fd, int *fd_array);
 char	*gc_strjoin_1(t_gc *gc, char const *s1, char const *s2);
