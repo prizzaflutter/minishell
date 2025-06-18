@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/19 11:43:23 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/23 16:30:05 by aykassim         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # include <stdio.h>
@@ -25,6 +13,8 @@
 # include <stdarg.h>
 # include <stdint.h>
 # include <signal.h>
+#include <sys/stat.h>
+#include <errno.h>
 
 // static int n = 0;
 // #define malloc(x) (n++ == 100000 ? NULL : (malloc(x)))
@@ -128,23 +118,33 @@ typedef struct g_var_expand
 	int		k;
 	int		is_squote;
 	int		is_dquote;
+	int		is_her;
 }	t_var_expand;
 
 typedef struct g_str_inputs
 {
 	char	*str;
 	char	*export;
+	char	*echo_str;
+	char	*exp_str;
 }	t_str_inputs;
 
 typedef struct g_main_var
 {
-	t_gc		*gc ;
+	t_gc		*gc;
 	t_env		*ens;
 	t_token		*tokens;
 	t_command	*cmds;
 	char		*input;
 	int			fd;
 }	t_main_var;
+
+typedef struct g_count_w_expand
+{
+	int		i;
+	int		cm;
+	char	quote_char;
+}	t_count_w_expand;
 
 // EXEC FUNCTIONS
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
@@ -156,15 +156,15 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 int		ft_cmdsize(t_command *cmd);
 char	*configure_path(t_gc *gc, char *cmd, t_env *env);
-void	handle_single_command(t_gc *gc, t_command *cmd, t_env *env);
+void	handle_single_command(t_gc *gc, t_command *cmd, t_env **env);
 int		handle_multiple_command(t_gc *gc, t_command *cmd, t_env *env);
 char	*is_builtin(char *cmd);
-int		my_cd(t_gc *gc, t_env *env, char *argv);
+int		my_cd(t_gc *gc, t_env *env, char **argv, int is_pipe);
 void	my_pwd(t_env *env);
 void	my_env(t_env *env);
 void	my_unset(t_env **env, char **argv);
 void	ft_lstadd_front_env(t_env **env, t_env *new_env);
-void	my_export(t_gc *gc, t_env **env, char **cmd_args);
+void	my_export(t_gc *gc, t_env **env, char **cmd_args, int is_pipe);
 t_env	*fill_env(t_gc *gc, char **envp);
 int		ft_isalpha(int a);
 int		is_valid_identifier(const char *str);
@@ -183,7 +183,7 @@ int		gc_exist(t_gc *gc, void *ptr);
 void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(t_gc *gc, size_t count, size_t size);
 char	**gc_split(t_gc *gc, char const *s, char c);
-int		is_on_parent(char *build_in_f, t_command *cmd, t_env *env, t_gc *gc);
+int		is_on_parent(char *build_in_f, t_command *cmd, t_env **env, t_gc *gc);
 int		is_on_child(char *build_in_f, t_command *cmd, t_env *env, t_gc *gc);
 char	**split_key_value(t_gc *gc, char *str, int *is_append);
 int		is_valid_identifier(const char *str);
@@ -191,8 +191,8 @@ void	no_args(t_env *env, t_gc *gc);
 void	add_new_env(char *key, char *value, t_gc *gc, t_env **env);
 void	update_value(char **key_value, t_env **env, t_gc *gc, int is_append);
 int		is_builtin_excute(t_gc *gc, t_env **env, t_command *cmd);
-int		exit_status(int set, int new_status);
-void	execute_command(t_gc *gc, t_command *cmd, t_env *env);
+int		exit_status(int set, int new_status, const char *str);
+void	execute_command(t_gc *gc, t_command *cmd, t_env **env);
 void	save_int_out(int *org_int, int *org_out);
 void	restore_in_out(int *org_int, int *org_out);
 void	print_command_list(t_command *cmds);
@@ -201,7 +201,7 @@ t_stack	*ft_lstnew_stack(t_gc *gc, void	*content);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 void	ft_lstadd_front_copy(t_copy **copy, t_copy *new_copy);
 t_copy	*ft_lstnew_copy(t_gc *gc, void	*key, void *value);
-void	my_exit(char **args);
+void	my_exit(char **args, int is_pip);
 char	*normalize_path(t_env *env, t_gc *gc, char *path, int flag);
 void	go_up(t_stack **stack);
 void	add_to_path(t_gc *gc, char *path, t_stack **stack);
@@ -214,9 +214,10 @@ int		redirection_checker(t_command *cmd, int *in, int *out, int i);
 int		child_precess(t_command *current_cmd, int *prev_fd, int *fd_array);
 void	parent_process(t_command *current_cmd, int *prev_fd, int *fd_array);
 char	*gc_strjoin_1(t_gc *gc, char const *s1, char const *s2);
+t_env	*ft_lstnew_env(t_gc *gc, void	*key, void *value);
 
 // PARSING FUNCTIONS
-t_token	*ft_lstnew(t_gc *gc, char *content, int flag);
+t_token	*ft_lstnew(t_gc *gc, char *content, int flag, int quote);
 void	ft_lstadd_back(t_token **lst, t_token *new);
 t_token	*ft_lstlast(t_token *lst);
 char	**ft_split(t_gc *gc, char const *str);
@@ -232,7 +233,7 @@ int		ft_strcmp(const char *s1, const char *s2);
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
 int		ft_is_only_whitespace(char *str);
-int		check_quote(char *str, int *is_quote, char *quote_char);
+int		check_quote(char str, int *is_quote, char *quote_char);
 char	*add_space_inputs(t_gc *gc, char *str);
 int		add_command_element(t_gc *gc, char *str, t_token **tokens, t_env *env);
 char	*handle_double_single_quotes(t_gc *gc, char *str);
@@ -241,7 +242,7 @@ void	add_element_to_tokens(t_gc *gc, t_token **tokens, char *str);
 void	add_element_to_listcopy(t_gc *gc, char *str, t_token **tokens_tmp);
 void	handle_val_before_addtokens(t_gc *gc, t_token **tokens, char *str);
 char	*handle_double_single_quotes(t_gc *gc, char *str);
-int		define_token_type(char *str);
+int		define_token_type(char *str, int quote);
 int		handle_unexpected_token(t_token *tokens);
 int		handle_unclosed_quotes(char *str);
 int		handle_herdocs(t_gc *gc, t_token *t_token, t_env *env);
@@ -251,7 +252,7 @@ char	*handle_delemitre(t_gc *gc, char *str);
 char	*handle_expand(t_gc *gc, char *str, t_env *env);
 int		the_main_compute_lenght(t_gc *gc, char *str, int *i, t_env *env);
 int		compute_expanded_length(t_gc *gc, char *str, t_env *env);
-void	initial_struct_handle_expand(t_gc *gc, t_var_expand	**vx);
+void	initial_struct_handle_expand(t_gc *gc, t_var_expand	**vx, int is_her);
 void	the_main_expand(t_gc *gc, t_env *env, char *str, t_var_expand **vx);
 int		check_quote_expand(char *str, int *is_squote, int *is_dquote);
 char	*handle_expand_herdoc(t_gc *gc, char *str, int flag, t_env *env);
@@ -263,6 +264,10 @@ char	**get_inoutfile(t_gc *gc, t_token *tokens);
 char	**get_commands(t_gc *gc, t_token *tokens);
 int		get_herdoc_fd(t_token *tokens);
 void	close_herdoc_fd(t_token **tokens);
+int		count_dollarsign_between_egall(char *str);
+int		detect_dollar_sign_insquote(char *str);
+void	handle_expand_dollar_sign_echo(t_gc *gc, t_token **tokens,
+			t_env *env, char *str);
 //signals
 void	call_main_signals(void);
 void	call_herdoc_signals(void);
@@ -270,7 +275,7 @@ void	child_default_signal(void);
 //MAIN
 int		add_tokens_elemnt(t_gc *gc, char *str, t_token **tokens, t_env *env);
 void	build_execute_cmds_list(t_gc *gc, t_token *tokens,
-			t_command *cmds, t_env *ens);
+			t_command *cmds, t_env **ens);
 int		the_main_work(t_main_var	*mv);
 void	free_element_inside_while(t_main_var **mv);
 void	free_element_in_end(t_main_var **mv);
@@ -280,4 +285,21 @@ void	call_read_from_heredoc_fd(t_token *tokens);
 void	print_command_list(t_command *cmds);
 //FD CLEAN
 void	clean_fd_herdoc(t_token *tokens);
+
+void	initia_str_value(t_gc *gc, t_str_inputs **instr,
+			char *str, char *export);
+void	handle_expand_dollar_sign(t_gc *gc, t_token **tokens,
+			t_env *env, char *str);
+void	handle_expand_dollar_sign_export(t_gc *gc, t_token **tokens,
+			t_env *env, t_str_inputs *ins);
+void	handle_echo_expand_element(t_gc *gc, t_token **tokens, t_env *env,
+			char *str);
+int		detect_token_type_insquote(char *str);
+int		detect_token_type_indolarsign(char *str);
+int		count_words_expand(char const *str);
+char	**ft_split_expand(t_gc *gc, char const *s);
+int		detect_nombre_export_value(t_token *tmp);
+int		compare_detect_condition(char *new_str);
+char	*expand_split_first_var(t_gc *gc, char *str, t_env *env);
+int		count_word_test(const char *s, char c);
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_syntax_error.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:20:58 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/19 11:46:26 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/06/16 18:16:07 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	handle_unclosed_quotes(char *str)
 	}
 	if (is_single_quote || is_double_quote)
 	{
-		printf("syntax error near unexpected token `newline'\n");
+		ft_printf(2, "syntax error near unexpected token `newline'\n");
 		return (1);
 	}
 	return (0);
@@ -66,7 +66,7 @@ int	handle_some_of_unexpected_token(t_token *current)
 			|| current->type == HEREDOC || current->type == APPEND)
 		&& current->next && current->next->type != WORD)
 	{
-		ft_printf(2, "syntax error near unexpected token `%s'\n",
+		ft_printf(2, "1 - syntax error near unexpected token `%s'\n",
 			current->next->str);
 		return (1);
 	}
@@ -77,6 +77,9 @@ int	handle_some_of_unexpected_token(t_token *current)
 		ft_printf(2, "syntax error near unexpected token `newline'\n");
 		return (1);
 	}
+	if (current->type == PIPE && current->next && current->next->type == PIPE)
+		return (ft_printf(2,
+				"syntax error near unexpected token `|'\n"), 1);
 	return (0);
 }
 

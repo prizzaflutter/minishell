@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_expand.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:53:28 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/19 10:10:26 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/06/16 09:49:14 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,48 +44,45 @@ void	expand_env_var(t_gc *gc, t_env *env, char *str, t_var_expand **vx)
 		(*vx)->res[(*vx)->k++] = new_str[j++];
 }
 
-void	the_main_expand(t_gc *gc, t_env *env, char *str, t_var_expand **vx)
+void	expand_exit_status(t_gc *gc, t_var_expand **vx)
 {
 	char	*nbr;
 	int		j;
 
+	j = 0;
+	nbr = ft_itoa(gc, exit_status(0, 0, "expand exit status"));
+	while (nbr[j])
+		(*vx)->res[(*vx)->k++] = nbr[j++];
+	(*vx)->i++;
+}
+
+void	the_main_expand(t_gc *gc, t_env *env, char *str, t_var_expand **vx)
+{
 	if (str[(*vx)->i] && str[(*vx)->i] == '$')
 	{
 		(*vx)->res[(*vx)->k++] = '$';
 		(*vx)->i++;
 	}
 	else if (str[(*vx)->i] == '?')
-	{
-		j = 0;
-		nbr = ft_itoa(gc, exit_status(0, 0));
-		while (nbr[j])
-			(*vx)->res[(*vx)->k++] = nbr[j++];
-		(*vx)->i++;
-		j = 0;
-	}
+		expand_exit_status(gc, vx);
 	else if (ft_isdigit(str[(*vx)->i]) || str[(*vx)->i] == '@')
 		(*vx)->i++;
 	else if (str[(*vx)->i] && (ft_isalpha(str[(*vx)->i])
 			|| str[(*vx)->i] == '_'))
 		expand_env_var(gc, env, str, vx);
 	else
+	{
+		if ((*vx)->is_her)
+			(*vx)->res[(*vx)->k++] = '$';
 		(*vx)->res[(*vx)->k++] = str[(*vx)->i++];
-}
-
-void	initial_struct_handle_expand(t_gc *gc, t_var_expand	**vx)
-{
-	*vx = gc_malloc(gc, sizeof(t_var_expand), 0);
-	(*vx)->i = 0;
-	(*vx)->k = 0;
-	(*vx)->is_squote = 0;
-	(*vx)->is_dquote = 0;
+	}
 }
 
 char	*handle_expand(t_gc *gc, char *str, t_env *env)
 {
 	t_var_expand	*vx;	
 
-	initial_struct_handle_expand(gc, &vx);
+	initial_struct_handle_expand(gc, &vx, 0);
 	vx->res = gc_malloc(gc, sizeof (char)
 			* (compute_expanded_length(gc, str, env) + 1), 0);
 	while (str[vx->i])

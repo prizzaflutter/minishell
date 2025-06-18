@@ -6,21 +6,21 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 19:49:02 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/18 16:14:11 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/29 17:14:20 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_quote(char *str, int *is_quote, char *quote_char)
+int	check_quote(char str, int *is_quote, char *quote_char)
 {
-	if ((*str == '"' || *str == '\'') && !*is_quote)
+	if ((str == '"' || str == '\'') && !*is_quote)
 	{
 		*is_quote = 1;
-		*quote_char = *str;
+		*quote_char = str;
 		return (2);
 	}
-	else if (*str == *quote_char && *is_quote)
+	else if (str == *quote_char && *is_quote)
 	{
 		*is_quote = 0;
 		*quote_char = 0;
@@ -52,7 +52,7 @@ int	count_word_in_inputs(char *str)
 	cm = 0;
 	while (str[i])
 	{
-		check_quote(&str[i], &is_quote, &quote_char);
+		check_quote(str[i], &is_quote, &quote_char);
 		if (!is_quote)
 		{
 			if (!detect_herdoc_append(str[i], str[i + 1]))
@@ -70,7 +70,7 @@ int	count_word_in_inputs(char *str)
 
 void	handle_new_inputs(char *str, char *new_str, t_add_space	**as)
 {
-	if (check_quote(&str[(*as)->i], &(*as)->isq, &(*as)->quote_char) != 0)
+	if (check_quote(str[(*as)->i], &(*as)->isq, &(*as)->quote_char) != 0)
 		new_str[(*as)->j++] = str[(*as)->i++];
 	else if ((str[(*as)->i] == '>' && str[(*as)->i + 1] == '>') && !(*as)->isq)
 	{

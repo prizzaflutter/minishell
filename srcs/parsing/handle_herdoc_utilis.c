@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_herdoc_utilis.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 16:18:04 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/23 18:15:24 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/06/16 19:17:05 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,17 @@ int	handle_child_status( t_token *tokens, int status, int fd, int fd1)
 		close(fd1);
 		write(1, "\n", 1);
 		tokens->fd_herdoc = -2;
-		exit_status(1, 130);
+		exit_status(1, 130, "handle child status - 1");
 		return (0);
 	}
 	tokens->fd_herdoc = fd1;
-	exit_status(1, WEXITSTATUS(status));
 	return (1);
+}
+
+void	initial_fd_herdoc(int *fd,	int *fd1)
+{
+	*fd = open("/tmp/.heredoc_tmp", O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	*fd1 = open("/tmp/.heredoc_tmp", O_CREAT | O_RDONLY, 0644);
 }
 
 int	handle_herdoc_input(t_gc *gc, char *str, t_token *tokens, t_env *env)
@@ -62,8 +67,7 @@ int	handle_herdoc_input(t_gc *gc, char *str, t_token *tokens, t_env *env)
 	t_herdoc_h	herdoc;
 
 	unlink("/tmp/.heredoc_tmp");
-	herdoc.fd = open("/tmp/.heredoc_tmp", O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	herdoc.fd1 = open("/tmp/.heredoc_tmp", O_CREAT | O_RDONLY, 0644);
+	initial_fd_herdoc(&herdoc.fd, &herdoc.fd1);
 	unlink("/tmp/.heredoc_tmp");
 	if (herdoc.fd < 0 || herdoc.fd1 < 0)
 		return (close(herdoc.fd), close(herdoc.fd1), -1);
@@ -77,7 +81,8 @@ int	handle_herdoc_input(t_gc *gc, char *str, t_token *tokens, t_env *env)
 	}
 	else
 	{
-		signal(SIGINT, SIG_IGN);
+		if (signal(SIGINT, SIG_IGN) == SIG_ERR)
+			perror("signal failed");
 		waitpid(herdoc.pid, &herdoc.status, 0);
 		call_main_signals();
 		if (!handle_child_status(tokens, herdoc.status, herdoc.fd, herdoc.fd1))

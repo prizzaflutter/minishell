@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_signals.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 10:06:37 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/23 18:15:36 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/06/16 18:12:41 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,26 +20,31 @@ void	handle_ctrl_c(int sig)
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
-		exit_status(1, 130);
+		exit_status(1, 130, "handle ctrl c");
 	}
 }
 
 void	call_main_signals(void)
 {
-	signal(SIGINT, handle_ctrl_c);
-	signal(SIGQUIT, SIG_IGN);
+	if (signal(SIGINT, handle_ctrl_c) == SIG_ERR)
+		perror("signal failed");
+	if (signal(SIGQUIT, SIG_IGN) == SIG_ERR)
+		perror("signal failed");
 	rl_catch_signals = 0;
 }
 
 void	call_herdoc_signals(void)
 {
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_IGN);
-	rl_catch_signals = 1;
+	if (signal(SIGINT, SIG_DFL) == SIG_ERR)
+		perror("signal failed");
+	if (signal(SIGQUIT, SIG_IGN) == SIG_ERR)
+		perror("signal failed");
 }
 
 void	child_default_signal(void)
 {
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
+	if (signal(SIGINT, SIG_DFL) == SIG_ERR)
+		perror("signal failed");
+	if (signal(SIGQUIT, SIG_DFL) == SIG_ERR)
+		perror("signal failed");
 }

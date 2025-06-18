@@ -6,7 +6,7 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 09:04:19 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/14 09:46:48 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/06/17 11:05:49 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	is_valid_num(char *str)
 	int	i;
 
 	i = 0;
-	if (str[i] == '+' || str[i] == '-')
+	if ((str[i] == '+' || str[i] == '-') && str[i + 1])
 		i++;
 	while (str[i])
 	{
@@ -39,49 +39,50 @@ int	count_args(char **args)
 	return (i);
 }
 
-int	exit_checker(int num_args, char **args)
+int	exit_checker(int num_args, char **args, int is_pipe)
 {
 	int	num;
 
 	if (!is_valid_num(args[1]))
 	{
-		printf("minishell: exit: %s: numeric argument required\n", args[1]);
-		exit_status(1, 2);
+		ft_printf(2, "minishell: exit: %s: numeric argument required\n", args[1]);
 		exit(2);
 	}
 	if (num_args > 1)
 	{
-		printf("minishell: exit: too many arguments\n");
-		exit_status(1, 1);
-		return (1);
+		ft_printf(2, "minishell: exit: too many arguments\n");
+		if (is_pipe)
+			exit (1);
+		else
+		{
+			exit_status(1, 1, "exit_checker");
+			return (1);
+		}
 	}
-	num = ft_atoi(args[num_args]);
+	num = ft_atoi(args[1]);
 	if (!ft_strcmp(is_overflow(0, " "), "overflow"))
 	{
-		printf("minishell: exit: %d: numeric argument required\n", num);
-		exit_status(1, 2);
+		ft_printf(2, "minishell: exit: %d: numeric argument required\n", num);
 		exit(2);
 	}
-	exit_status(1, num);
 	exit(num % 256);
 }
 
-void	my_exit(char **args)
+void	my_exit(char **args, int is_pip)
 {
 	int	status;
 	int	num_args;
 
-	printf("exit\n");
+	if (!is_pip)
+		ft_printf(2, "exit\n");
 	num_args = count_args(args);
 	num_args--;
 	if (num_args == 0)
 	{
-		status = exit_status(0, 0);
+		status = exit_status(0, 0, "my exit");
 		exit(status);
 	}
 	else
-	{
-		if (exit_checker(num_args, args) == 1)
-			return ;
-	}
+		if (exit_checker(num_args, args, is_pip) == 1)
+			return ; 
 }

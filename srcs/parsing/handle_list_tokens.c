@@ -6,29 +6,34 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:56:35 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/01 10:25:13 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/05/29 16:53:53 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	define_token_type(char *str)
+int	define_token_type(char *str, int quote)
 {
-	if (ft_strcmp(str, "|") == 0)
-		return (PIPE);
-	else if (ft_strcmp(str, "<") == 0)
-		return (REDIR_IN);
-	else if (strcmp(str, ">") == 0)
-		return (REDIR_OUT);
-	else if (ft_strcmp(str, "<<") == 0)
-		return (HEREDOC);
-	else if (ft_strcmp(str, ">>") == 0)
-		return (APPEND);
+	if (quote == 0)
+	{
+		if (ft_strcmp(str, "|") == 0)
+			return (PIPE);
+		else if (ft_strcmp(str, "<") == 0)
+			return (REDIR_IN);
+		else if (strcmp(str, ">") == 0)
+			return (REDIR_OUT);
+		else if (ft_strcmp(str, "<<") == 0)
+			return (HEREDOC);
+		else if (ft_strcmp(str, ">>") == 0)
+			return (APPEND);
+		else
+			return (WORD);
+	}
 	else
 		return (WORD);
 }
 
-t_token	*ft_lstnew(t_gc *gc, char *content, int flag)
+t_token	*ft_lstnew(t_gc *gc, char *content, int flag, int quote)
 {
 	t_token	*nvtlist;
 
@@ -39,7 +44,7 @@ t_token	*ft_lstnew(t_gc *gc, char *content, int flag)
 		return (NULL);
 	}
 	nvtlist->str = content;
-	nvtlist->type = define_token_type(content);
+	nvtlist->type = define_token_type(content, quote);
 	nvtlist->next = NULL;
 	nvtlist->prev = NULL;
 	nvtlist->fd_herdoc = -2;
