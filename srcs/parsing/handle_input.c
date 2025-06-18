@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 13:14:22 by aykassim          #+#    #+#             */
-/*   Updated: 2025/06/03 17:48:51 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/06/18 15:36:53 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,7 @@ void	split_when_dollarsign_bf_exp(t_gc *gc, t_token **tokens,
 void	assistant_all_the_work(t_gc *gc, t_token **tokens, t_env *env,
 	t_token *tmp)
 {
-	if (tmp->prev && ft_strcmp(tmp->prev->str, "echo") == 0)
-		handle_echo_expand_element(gc, tokens, env, tmp->str);
-	else if (its_have_dollar_signe(tmp->str))
+	if (its_have_dollar_signe(tmp->str))
 		handle_expand_dollar_sign(gc, tokens, env, tmp->str);
 	else if (tmp->prev && (tmp->prev->type == REDIR_IN
 			|| tmp->prev->type == REDIR_OUT || tmp->prev->type == APPEND))
@@ -84,7 +82,9 @@ void	all_the_work(t_gc *gc, t_token **tokens, t_env *env, t_token **tmp)
 		instr->echo_str = gc_strdup(gc, (*tmp)->str);
 	if ((*tmp) && (ft_strcmp(new_str, "export") == 0))
 		instr->exp_str = gc_strdup(gc, (*tmp)->str);
-	if ((*tmp)->next && instr->exp_str && (*tmp)->next->type == WORD)
+	if ((*tmp)->next && instr->echo_str && !compare_detect_condition(new_str))
+		handle_echo_expand_element(gc, tokens, env, (*tmp)->str);
+	else if ((*tmp)->next && instr->exp_str && (*tmp)->next->type == WORD)
 	{
 		handle_val_before_addtokens(gc, tokens, new_str);
 		handle_all_export_val(gc, tokens, env, tmp);

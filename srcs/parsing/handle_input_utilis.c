@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 21:03:55 by aykassim          #+#    #+#             */
-/*   Updated: 2025/06/03 17:50:22 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/06/18 15:36:17 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,10 @@ char	*new_value_expand(t_gc *gc, t_env *env, char *str)
 	sp = ft_split_expand(gc, str);
 	while (sp[i])
 	{
-		sp[i] = handle_double_single_quotes(gc, sp[i]);
+		if (ft_strcmp(sp[i], "$") == 0)
+			sp[i] = gc_strdup(gc, "");
 		sp[i] = handle_expand(gc, sp[i], env);
+		sp[i] = handle_double_single_quotes(gc, sp[i]);
 		i++;
 	}
 	i = 0;
@@ -125,7 +127,10 @@ void	handle_echo_expand_element(t_gc *gc, t_token **tokens, t_env *env,
 	char *str)
 {
 	if (its_have_dollar_signe(str))
-		handle_expand_dollar_sign_echo(gc, tokens, env, str);
+		handle_expand_dollar_sign(gc, tokens, env, str);
 	else
 		handle_val_before_addtokens(gc, tokens, str);
 }
+// handle_expand_dollar_sign
+
+// remove handle_expand_dollar_sign_echo

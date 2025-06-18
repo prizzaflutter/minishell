@@ -1,5 +1,4 @@
 
-
 #include "minishell.h"
 
 int	add_tokens_elemnt(t_gc *gc, char *str, t_token **tokens, t_env *env)
@@ -11,7 +10,6 @@ int	add_tokens_elemnt(t_gc *gc, char *str, t_token **tokens, t_env *env)
 		return (exit_status(1, 2, "add tokens element - 1"), -1);
 	if (add_command_element(gc, str, tokens, env))
 		return (-1);
-	print_list(*tokens);
 	if (handle_unexpected_token(*tokens))
 		return (exit_status(1, 2, "add tokens element - 2"), -1);
 	fd = handle_herdocs(gc, *tokens, env);
