@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:53:28 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/28 16:00:26 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/06/18 15:33:45 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	the_main_expand(t_gc *gc, t_env *env, char *str, t_var_expand **vx)
 		expand_env_var(gc, env, str, vx);
 	else
 	{
-		if ((*vx)->is_her)
+		if (!(*vx)->is_her)
 			(*vx)->res[(*vx)->k++] = '$';
 		(*vx)->res[(*vx)->k++] = str[(*vx)->i++];
 	}
