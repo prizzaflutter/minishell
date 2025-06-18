@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_signals.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/18 15:44:55 by aykassim          #+#    #+#             */
+/*   Updated: 2025/06/18 15:46:50 by aykassim         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -19,7 +30,6 @@ void	call_main_signals(void)
 		perror("signal failed");
 	if (signal(SIGQUIT, SIG_IGN) == SIG_ERR)
 		perror("signal failed");
-	rl_catch_signals = 0;
 }
 
 void	call_herdoc_signals(void)

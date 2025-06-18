@@ -57,7 +57,6 @@ int	main(int ac, char **av, char **env)
 	if (!mv->ens)
 		fill_env_manual(mv);
 	call_main_signals();
-	rl_catch_signals = 0;
 	while (1)
 	{
 		mv->input = readline("minishell:</>");
