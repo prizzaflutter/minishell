@@ -6,7 +6,7 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:25:43 by iaskour           #+#    #+#             */
-/*   Updated: 2025/06/03 14:03:04 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/06/18 12:40:46 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,8 @@ char	*remove_back_slash(t_gc *gc, char *path)
 	char	**splited_path;
 	char	*my_path;
 
-	printf("the path before remving back slash: %s\n", path);
 	splited_path = gc_split(gc, path, '/');
 	my_path = gc_strjoin(gc, "/", splited_path[0]);
-	printf("the path after removing back slash: %s\n", my_path);
 	return my_path;
 }
 void	update_pwd(char *path, t_env *env, t_gc *gc)
@@ -77,7 +75,7 @@ void	append_path_pwd(char *path, t_env *env, t_gc *gc, int flag)
 	update_oldpwd(gc, env, oldpwd);
 }
 
-int	get_home(t_gc *gc, t_env *env)
+int	get_home(t_gc *gc, t_env *env, int is_pipe)
 {
 	t_env	*curr;
 	int		result;
@@ -93,7 +91,7 @@ int	get_home(t_gc *gc, t_env *env)
 			args[0] = gc_strdup(gc, "cd");
 			args[1] = gc_strdup(gc, curr->value);
 			args[2] = NULL;
-			my_cd(gc, env, args);
+			my_cd(gc, env, args, is_pipe);
 			result = 1;
 			break ;
 		}
@@ -114,7 +112,7 @@ int	get_len(char **argv)
 	return (size);
 }
 
-int	my_cd(t_gc *gc, t_env *env, char **argv)
+int	my_cd(t_gc *gc, t_env *env, char **argv, int is_pipe)
 {
 	char	*cwd;
 	t_env	*curr;
@@ -124,19 +122,50 @@ int	my_cd(t_gc *gc, t_env *env, char **argv)
 	
 	len = get_len(argv);
 	if (len > 2)
-		return (printf("minishell: too many argument\n"), exit_status(1, 1), 0);
+	{
+		if (is_pipe)
+		{
+			ft_printf(2, "minishell: too many argument\n");
+			exit(1);
+		}
+		else
+		{
+			ft_printf(2, "minishell: too many argument\n");
+			exit_status(1, 1, "my cd - 1");
+			return(0);
+		}
+	}
+	// if (len > 2)
+	// 	return (ft_printf(2, "minishell: too many argument\n"), exit_status(1, 1, "my cd - 1"), 0);
 	if (!argv[1])
 	{
 		curr = env;
-		if (get_home(gc, curr) == 0)
+		if (get_home(gc, curr, is_pipe) == 0)
 		{
-			printf("minishell: cd: HOME not set\n");
-			exit_status(1, 1);
+			ft_printf(2, "minishell: cd: HOME not set\n");
+			if (is_pipe)
+			{
+				exit(1);
+			}
+			else 
+				exit_status(1, 1, "my cd - 2");
 		}
 		return (0);
 	}
 	if (chdir(argv[1]) != 0)
-		return (perror("minishell: cd"), exit_status(1, 1), 0);
+	{
+		if (is_pipe)
+		{
+			perror("minishell: cd");
+			exit(1);
+		}
+		else 
+		{
+			perror("minishell: cd");
+			exit_status(1, 1, "my cd - 3");
+			return 0;
+		}
+	}
 	cwd = getcwd(content, sizeof(content));
 	if (!cwd)
 		return (perror("cd: error retrieving current directory"),
@@ -147,7 +176,10 @@ int	my_cd(t_gc *gc, t_env *env, char **argv)
 	// 	update_pwd(content, env, gc);
 	// else
 	// 	update_pwd(content, env, gc);
-	exit_status(1, 0);
+	if (is_pipe)
+		exit(0);
+	else
+		exit_status(1, 0, "my cd - 4");
 	// free(cwd);
 	return (0);
 }

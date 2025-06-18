@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   handle_herdoc_utilis.c                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/14 16:18:04 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/28 10:02:19 by aykassim         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -49,11 +38,10 @@ int	handle_child_status( t_token *tokens, int status, int fd, int fd1)
 		close(fd1);
 		write(1, "\n", 1);
 		tokens->fd_herdoc = -2;
-		exit_status(1, 130);
+		exit_status(1, 130, "handle child status - 1");
 		return (0);
 	}
 	tokens->fd_herdoc = fd1;
-	exit_status(1, WEXITSTATUS(status));
 	return (1);
 }
 

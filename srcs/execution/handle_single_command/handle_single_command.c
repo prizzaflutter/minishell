@@ -13,13 +13,11 @@ int	excute_single_command(t_gc *gc, t_command *cmd, t_env **env)
 	if (execve(cmd_path, cmd_args, env_array) == -1)
 	{
 		if (errno == EACCES)
-			return (printf("minishell: Permission denied\n"), exit_status(1, 126), exit(126), 0);
+			return (ft_printf(2, "minishell: Permission denied\n"), exit(126), 0);
 		else if (errno == ENOENT)
-			return (printf("minishell: No such file or directory\n"), exit_status(1, 127), exit(127), 0);
+			return (ft_printf(2, "minishell: No such file or directory\n"), exit(127), 0);
 		else if (errno == EINVAL)
-			return (printf("minishell: Invalid executable format\n"), exit_status(1, 127), exit(127), 0) ;
-		else if (errno == ENOEXEC) 
-			return (exit_status(1, 0), exit(0), 0);
+			return (ft_printf(2, "minishell: Invalid executable format\n"), exit(127), 0) ;
 	}
 	return (1);
 }
@@ -38,6 +36,7 @@ void	handle_redirection_and_execute(char *build_in_f,
 		out_file = handle_redirections_single(cmd);
 		if (out_file == -1)
 			exit(1);
+		
 		if (is_on_child(build_in_f, cmd, env, gc) == 0)
 			excute_single_command(gc, cmd, &env);
 		exit(0);
@@ -49,13 +48,13 @@ void	handle_redirection_and_execute(char *build_in_f,
 		waitpid(pid, &status, 0);
 		call_main_signals();
 		if (WIFEXITED(status))
-			exit_status(1, WEXITSTATUS(status));
+			exit_status(1, WEXITSTATUS(status), "handle_redirection_and_execute - 1");
 		else if (WIFSIGNALED(status))
-			exit_status(1, 128 + WTERMSIG(status));
+			exit_status(1, 128 + WTERMSIG(status), "handle_redirection_and_execute- 2");
 		if (WIFSIGNALED(status) && WTERMSIG(status) == SIGQUIT)
-			printf("Quit: 3\n");
+			ft_printf(2, "Quit: 3\n");
 		if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
-			printf("\n");
+			ft_printf(2, "\n");
 	}
 }
 
@@ -67,10 +66,10 @@ void	handle_single_command(t_gc *gc, t_command *cmd, t_env **env)
 
 	save_int_out(&org_stdin, &org_stdout);
 	if ((cmd->cmd[0] == NULL && cmd->inoutfile[0] == NULL))
-		{
-			printf("am over her\n");
-			return ;
-		}
+	{
+		ft_printf(2, "am over her\n");
+		return ;
+	}
 	build_in_f = is_builtin(*cmd->cmd);
 	if (is_on_parent(build_in_f, cmd, env, gc) == 0)
 		handle_redirection_and_execute(build_in_f, gc, cmd, *env);

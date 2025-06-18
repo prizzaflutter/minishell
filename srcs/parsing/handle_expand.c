@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   handle_expand.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/14 12:53:28 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/28 16:00:26 by aykassim         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -50,7 +39,7 @@ void	expand_exit_status(t_gc *gc, t_var_expand **vx)
 	int		j;
 
 	j = 0;
-	nbr = ft_itoa(gc, exit_status(0, 0));
+	nbr = ft_itoa(gc, exit_status(0, 0, "expand exit status"));
 	while (nbr[j])
 		(*vx)->res[(*vx)->k++] = nbr[j++];
 	(*vx)->i++;

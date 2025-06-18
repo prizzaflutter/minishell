@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   update_old_pwd.c                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/12 10:37:54 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/30 11:50:47 by iaskour          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -28,7 +17,6 @@ void	update_oldpwd(t_gc *gc, t_env *env, char *oldpwd)
 			{
 				cur->value = oldpwd;
 				is_exist = 1;
-				printf("the old pwd is : %s\n", oldpwd);
 			}
 			break ;
 		}
@@ -40,6 +28,6 @@ void	update_oldpwd(t_gc *gc, t_env *env, char *oldpwd)
 		key_value[0] = gc_strdup(gc, "");
 		key_value[1] = gc_strjoin(gc, "OLDPWD=", oldpwd);
 		key_value[2] = NULL;
-		my_export(gc, &env, key_value);
+		my_export(gc, &env, key_value, 0);
 	}
 }

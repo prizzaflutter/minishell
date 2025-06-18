@@ -6,11 +6,25 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 15:38:01 by iaskour           #+#    #+#             */
-/*   Updated: 2025/06/03 17:48:18 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/06/18 10:33:24 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	is_path_exist(t_env *env)
+{
+	t_env *tmp;
+
+	tmp = env;
+	while(tmp)
+	{
+		if (!ft_strcmp(tmp->key, "PATH"))
+			return (1);
+		tmp = tmp->next;
+	}
+	return (0);
+}
 
 char	*configure_path(t_gc *gc, char *cmd, t_env *env)
 {
@@ -28,13 +42,18 @@ char	*configure_path(t_gc *gc, char *cmd, t_env *env)
 			cmd_path = cmd;
 		else
 		{
+
+			//am here now 
+			if (!is_path_exist(env))
+				return (ft_printf(2, "minishell4: %s: No such file or directory\n", cmd),
+					exit(127), NULL);
 			if (ft_strncmp(cmd, "./", 2))
 				return (ft_printf(2, "minishell3: %s: Command not found\n", cmd),
-					exit_status(1, 127), exit(127), NULL);
+					exit(127), NULL);
 		}
 	}
 	if (S_ISDIR(sb.st_mode))
-		return (printf("minishell:%s : Is a directory\n", cmd_path), exit(126), NULL);
+		return (ft_printf(2, "minishell:%s : Is a directory\n", cmd_path), exit(126), NULL);
 	return (cmd_path);
 }
 
@@ -63,11 +82,8 @@ char	*get_cmd_path(t_gc *gc, char *cmd, t_env *env)
 	char	**paths;
 	char	*cmd_path;
 
-	if (!cmd || !env)
-	{
-		printf("the command is : %s\n", cmd);
+	if (!cmd || !env || !ft_strcmp(cmd, ""))
 		return (NULL);
-	}
 	if (ft_strchr(cmd, '/'))
 		return (cmd);
 	while (env)

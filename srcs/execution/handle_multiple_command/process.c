@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   process.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/15 11:39:37 by iaskour           #+#    #+#             */
-/*   Updated: 2025/06/03 18:02:07 by iaskour          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -24,17 +13,20 @@ int	child_precess(t_command *current_cmd, int *prev_fd, int *fd_array)
 	out_file = handle_redirections_multiple(current_cmd, fd_array);
 	if (out_file == -1)
 	{
-		printf("the out file == -1\n");
-		exit(1);
+		ft_printf(2, "the out file is - 1");
+		return 0;
 	}
-	if (!out_file && current_cmd->next)
-	{
-		close(fd_array[0]);
-		dup2(fd_array[1], STDOUT_FILENO);
-		close(fd_array[1]);
-	}
+	// if (!out_file && current_cmd->next)
+	// {
+	// 	close(fd_array[0]);
+	// 	dup2(fd_array[1], STDOUT_FILENO);
+	// 	close(fd_array[1]);
+	// }
 	if (current_cmd->cmd[0] == NULL)
+	{
+		ft_printf(2, "current_cmd in 0 is null\n");
 		return (0);
+	}
 	return (1);
 }
 

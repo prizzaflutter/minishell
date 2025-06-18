@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_list_commands.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 09:48:32 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/13 18:21:23 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/06/16 18:15:59 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_command	*ft_lstnew_command(t_gc *gc, t_token *tokens)
 	nvcommand = (t_command *)gc_malloc(gc, sizeof(t_command), 3);
 	if (!nvcommand)
 	{
-		printf("Error in malloc command");
+		ft_printf(2, "Error in malloc command");
 		return (NULL);
 	}
 	nvcommand->cmd = get_commands(gc, tokens);
