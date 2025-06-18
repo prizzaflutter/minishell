@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/23 10:06:47 by aykassim          #+#    #+#             */
-/*   Updated: 2025/06/03 17:48:09 by aykassim         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
 
 void	build_execute_cmds_list(t_gc *gc, t_token *tokens,
@@ -34,6 +22,28 @@ int	initial_main_struct(t_main_var **mvar, char **env)
 	return (0);
 }
 
+void	fill_env_manual(t_main_var *mv)
+{
+	char	cwd[1024];
+	char	**args;
+	char	*pwd;
+
+	if (getcwd(cwd, sizeof(cwd)))
+		pwd = gc_strjoin(mv->gc, "PWD=", cwd);
+	else
+		pwd = gc_strdup(mv->gc, "PWD");
+	args = gc_malloc(mv->gc, sizeof(char *) * 5, 0);
+	args[0] = gc_strdup(mv->gc, "export");
+	args[1] = gc_strdup(mv->gc, pwd);
+	args[2] = gc_strdup(mv->gc, "OLDPWD");
+	args[3] = gc_strdup(mv->gc, "PATH=/run/host/usr/bin:"
+			"/run/host/usr/local/bin:"
+			"/usr/local/bin:/usr/local/sbin:"
+			"/usr/bin:/usr/sbin:/bin:/sbin:.");
+	args[4] = NULL;
+	my_export(mv->gc, &mv->ens, args, 0);
+}
+
 int	main(int ac, char **av, char **env)
 {
 	t_main_var	*mv;
@@ -44,6 +54,8 @@ int	main(int ac, char **av, char **env)
 	mv = malloc(sizeof(t_main_var));
 	if (!mv || initial_main_struct(&mv, env) == 1)
 		return (1);
+	if (!mv->ens)
+		fill_env_manual(mv);
 	call_main_signals();
 	rl_catch_signals = 0;
 	while (1)
@@ -59,5 +71,5 @@ int	main(int ac, char **av, char **env)
 		free_element_inside_while(&mv);
 	}
 	free_element_in_end(&mv);
-	return (exit_status(1, exit_status(0, 0)));
+	return (exit_status(1, exit_status(0, 0, "inside main"), "out side main"));
 }

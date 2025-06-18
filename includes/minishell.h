@@ -13,6 +13,8 @@
 # include <stdarg.h>
 # include <stdint.h>
 # include <signal.h>
+#include <sys/stat.h>
+#include <errno.h>
 
 // static int n = 0;
 // #define malloc(x) (n++ == 100000 ? NULL : (malloc(x)))
@@ -157,12 +159,12 @@ char	*configure_path(t_gc *gc, char *cmd, t_env *env);
 void	handle_single_command(t_gc *gc, t_command *cmd, t_env **env);
 int		handle_multiple_command(t_gc *gc, t_command *cmd, t_env *env);
 char	*is_builtin(char *cmd);
-int		my_cd(t_gc *gc, t_env *env, char *argv);
+int		my_cd(t_gc *gc, t_env *env, char **argv, int is_pipe);
 void	my_pwd(t_env *env);
 void	my_env(t_env *env);
 void	my_unset(t_env **env, char **argv);
 void	ft_lstadd_front_env(t_env **env, t_env *new_env);
-void	my_export(t_gc *gc, t_env **env, char **cmd_args);
+void	my_export(t_gc *gc, t_env **env, char **cmd_args, int is_pipe);
 t_env	*fill_env(t_gc *gc, char **envp);
 int		ft_isalpha(int a);
 int		is_valid_identifier(const char *str);
@@ -189,7 +191,7 @@ void	no_args(t_env *env, t_gc *gc);
 void	add_new_env(char *key, char *value, t_gc *gc, t_env **env);
 void	update_value(char **key_value, t_env **env, t_gc *gc, int is_append);
 int		is_builtin_excute(t_gc *gc, t_env **env, t_command *cmd);
-int		exit_status(int set, int new_status);
+int		exit_status(int set, int new_status, const char *str);
 void	execute_command(t_gc *gc, t_command *cmd, t_env **env);
 void	save_int_out(int *org_int, int *org_out);
 void	restore_in_out(int *org_int, int *org_out);
@@ -199,7 +201,7 @@ t_stack	*ft_lstnew_stack(t_gc *gc, void	*content);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 void	ft_lstadd_front_copy(t_copy **copy, t_copy *new_copy);
 t_copy	*ft_lstnew_copy(t_gc *gc, void	*key, void *value);
-void	my_exit(char **args);
+void	my_exit(char **args, int is_pip);
 char	*normalize_path(t_env *env, t_gc *gc, char *path, int flag);
 void	go_up(t_stack **stack);
 void	add_to_path(t_gc *gc, char *path, t_stack **stack);

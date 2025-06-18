@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   handle_single_command.c                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/30 17:04:07 by iaskour           #+#    #+#             */
-/*   Updated: 2025/06/02 10:54:42 by aykassim         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -19,17 +8,17 @@ int	excute_single_command(t_gc *gc, t_command *cmd, t_env **env)
 	char	**env_array;
 
 	cmd_args = cmd->cmd;
-	if (!cmd_args)
-		return (0);
 	cmd_path = configure_path(gc, *cmd->cmd, *env);
-	if (!cmd_path)
-		return (0);
 	env_array = convert_env_to_array(gc, *env);
-	if (!env_array)
-		return (0);
 	if (execve(cmd_path, cmd_args, env_array) == -1)
-		return (printf("Error: EXECVE => (first child)"),
-			exit_status(1, 127), 0);
+	{
+		if (errno == EACCES)
+			return (ft_printf(2, "minishell: Permission denied\n"), exit(126), 0);
+		else if (errno == ENOENT)
+			return (ft_printf(2, "minishell: No such file or directory\n"), exit(127), 0);
+		else if (errno == EINVAL)
+			return (ft_printf(2, "minishell: Invalid executable format\n"), exit(127), 0) ;
+	}
 	return (1);
 }
 
@@ -47,9 +36,9 @@ void	handle_redirection_and_execute(char *build_in_f,
 		out_file = handle_redirections_single(cmd);
 		if (out_file == -1)
 			exit(1);
+		
 		if (is_on_child(build_in_f, cmd, env, gc) == 0)
-			if (excute_single_command(gc, cmd, &env) == 0)
-				return (perror("Excve Error :"), exit_status(1, 127), exit(1));
+			excute_single_command(gc, cmd, &env);
 		exit(0);
 	}
 	else
@@ -59,13 +48,13 @@ void	handle_redirection_and_execute(char *build_in_f,
 		waitpid(pid, &status, 0);
 		call_main_signals();
 		if (WIFEXITED(status))
-			exit_status(1, WEXITSTATUS(status));
+			exit_status(1, WEXITSTATUS(status), "handle_redirection_and_execute - 1");
 		else if (WIFSIGNALED(status))
-			exit_status(1, 128 + WTERMSIG(status));
+			exit_status(1, 128 + WTERMSIG(status), "handle_redirection_and_execute- 2");
 		if (WIFSIGNALED(status) && WTERMSIG(status) == SIGQUIT)
-			printf("Quit: 3\n");
+			ft_printf(2, "Quit: 3\n");
 		if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
-			printf("\n");
+			ft_printf(2, "\n");
 	}
 }
 
@@ -77,7 +66,10 @@ void	handle_single_command(t_gc *gc, t_command *cmd, t_env **env)
 
 	save_int_out(&org_stdin, &org_stdout);
 	if ((cmd->cmd[0] == NULL && cmd->inoutfile[0] == NULL))
+	{
+		ft_printf(2, "am over her\n");
 		return ;
+	}
 	build_in_f = is_builtin(*cmd->cmd);
 	if (is_on_parent(build_in_f, cmd, env, gc) == 0)
 		handle_redirection_and_execute(build_in_f, gc, cmd, *env);

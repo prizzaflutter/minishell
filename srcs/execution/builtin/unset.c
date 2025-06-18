@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   unset.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/20 12:56:43 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/29 18:00:28 by aykassim         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -28,7 +17,7 @@ void	remove_env(t_env **env, char *arg_key)
 			if (prev)
 				prev->next = current->next;
 			else
-				**env = *current->next;
+				*env = current->next;
 			break ;
 		}
 		prev = current;

@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   handle_herdoc_expand.c                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/18 19:47:32 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/28 16:00:11 by aykassim         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -42,7 +31,7 @@ int	the_main_compute_lenght(t_gc *gc, char *str, int *i, t_env *env)
 	}
 	else if (str[*i] == '?')
 	{
-		len += ft_strlen(ft_itoa(gc, exit_status(0, 0)));
+		len += ft_strlen(ft_itoa(gc, exit_status(0, 0, "the main compute length")));
 		(*i)++;
 	}
 	else if (str[*i] && (ft_isalpha(str[*i]) || str[*i] == '_'))

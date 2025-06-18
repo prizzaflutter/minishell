@@ -1,1 +1,67 @@
 in my_cd function under append_path_pwd ==> if there is memory leaks => i will free cwd over there !!!!
+
+
+test : should return to : 
+
+test 1 =>   ls -la | cat | (ctr c)
+test 2 => echo \n hola
+test 3 => echo $:$= | cat -e  : sigfault
+export HOL\\\$A=bonjour  : sigfault also over here (the same place)
+export HO!LA=bonjour     : sigfault also over here (the same place)
+export HOLA=$HOME        : sigfault also over here (the same place)
+export HOLA$USER=bonjour : sigfault also over here (the same place)
+echo $HOLA$HOLA$HOLA=hey$HOLA : sigfault
+export HOLA=" hola et $HOLA" : sigfault
+export HOLA=' hola et $HOLA' : sigfault
+test 4 => echo ' $ ' | cat -e
+test 5 => echo \$HOME
+test 6 => echo $UID
+test 7 => echo $UID$HOME
+test 8 => echo $USER$var\$USER$USER\$USERtest$USER
+test 9 => echo $hola*
+test 10 => echo *t hola
+test 11 => echo *t
+test 12 =>  echo $*
+test 13 => echo hola*hola *
+test 14 => echo $hola*
+test 15 => $DONTEXIST  : problem in exit_status
+test 16 => hole(ctrl c)
+test 17 => cat (ctrl c)
+test 18 => export____HOLA=Value
+test 19 => export HOLA=bon&jour
+test 20 => export HOLA=bon!jour
+
+
+// should i handle this case : KEY=VALUE or not | no
+
+
+=======================> test 21 <====================== : by the way the problem is in pipe : if i remove | every thing work as expected
+minishell:</>export HOLA="cat Makefile | /bin/grep NAME"
+[exit_status] called from: has error 0 | new status: 0
+minishell:</>echo $HOLA
+[exit_status] called from: waiting - 1 | new status: 1
+minishell:</>
+
+------------------------------------------------------
+
+export HOLA="l"
+'$HOLA's  => should give command not found
+------------------------------------
+export HOLA=p
+export BYE=w
+--- "$HOLA"'$BYE'd ==> should not work
+--------------------------------------
+export A=1 B=2 C=3 D=4 E=5 F=6 G=7 H=8
+echo "$A'$B"'$C"$D'$E'"$F'"'$G'$H"
+
+
+------------------------------------------
+i don't wanna handle this case : no needed
+unset PATH 
+env 
+------------------------------------------
+
+unset PATH
+history 
+
+-----------------------------------------

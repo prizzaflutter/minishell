@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/20 11:04:38 by iaskour           #+#    #+#             */
-/*   Updated: 2025/05/27 11:50:34 by aykassim         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -64,25 +53,19 @@ void	update_value(char **key_value,
 		add_new_env(key_value[0], key_value[1], gc, env);
 }
 
-int	checker(char *key, char *value)
+void	checker(char *key, char *value, int *has_error)
 {
 	if (!is_valid_identifier(key))
 	{
 		if (value)
-			printf("export: `%s%s`: not a valid identifier\n", key, value);
+			ft_printf(2, "export: `%s%s`: not a valid identifier\n", key, value);
 		else
-			printf("export: `%s`: not a valid identifier\n", key);
-		exit_status(1, 1);
-		return (0);
-	}
-	else
-	{
-		exit_status(1, 0);
-		return (1);
+			ft_printf(2, "export: `%s`: not a valid identifier\n", key);
+		*has_error = 1;
 	}
 }
 
-void	fill_key_value(t_gc *gc, t_env **env, char *arg)
+void	fill_key_value(t_gc *gc, t_env **env, char *arg, int *has_error)
 {
 	char	*key;
 	char	*value;
@@ -100,8 +83,7 @@ void	fill_key_value(t_gc *gc, t_env **env, char *arg)
 		key = gc_strdup(gc, arg);
 		value = NULL;
 	}
-	if (!checker(key, value))
-		return ;
+	checker(key, value, has_error);
 	if (!key_value)
 	{
 		key_value[0] = key;
@@ -110,11 +92,13 @@ void	fill_key_value(t_gc *gc, t_env **env, char *arg)
 	update_value(key_value, env, gc, is_append);
 }
 
-void	my_export(t_gc *gc, t_env **env, char **cmd_args)
+void	my_export(t_gc *gc, t_env **env, char **cmd_args, int is_pipe)
 {
 	int	i;
+	int has_error;
 
 	i = 1;
+	has_error = 0;
 	if (!cmd_args[1])
 	{
 		if (!*env)
@@ -123,7 +107,20 @@ void	my_export(t_gc *gc, t_env **env, char **cmd_args)
 	}
 	while (cmd_args[i])
 	{
-		fill_key_value(gc, env, cmd_args[i]);
+		fill_key_value(gc, env, cmd_args[i], &has_error);
 		i++;
+	}
+	if (!is_pipe)
+	{
+		if (has_error)
+			exit_status(1, 1, "has error 1");
+		else
+			exit_status(1, 0, "has error 0");
+	}
+	else {
+		if (has_error)
+			exit(1);
+		else
+			exit(0);
 	}
 }

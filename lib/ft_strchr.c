@@ -6,7 +6,7 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 13:37:28 by iaskour           #+#    #+#             */
-/*   Updated: 2025/04/19 15:03:27 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/05/29 15:01:22 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	*ft_strchr(const char *s, int c)
 
 	i = 0;
 	ch = (char)c;
+	if (!s)
+		return (NULL);
 	while (s[i] != '\0')
 	{
 		if (s[i] == ch)

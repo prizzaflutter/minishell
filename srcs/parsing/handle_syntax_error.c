@@ -1,14 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   handle_syntax_error.c                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/12 15:20:58 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/30 10:42:34 by aykassim         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+
 
 #include "minishell.h"
 
@@ -54,7 +44,7 @@ int	handle_unclosed_quotes(char *str)
 	}
 	if (is_single_quote || is_double_quote)
 	{
-		printf("syntax error near unexpected token `newline'\n");
+		ft_printf(2, "syntax error near unexpected token `newline'\n");
 		return (1);
 	}
 	return (0);
