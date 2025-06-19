@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:45:01 by aykassim          #+#    #+#             */
-/*   Updated: 2025/06/18 15:45:03 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/06/19 13:38:36 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	handle_some_of_unexpected_token(t_token *current)
 			|| current->type == HEREDOC || current->type == APPEND)
 		&& current->next && current->next->type != WORD)
 	{
-		ft_printf(2, "1 - syntax error near unexpected token `%s'\n",
+		ft_printf(2, "syntax error near unexpected token `%s'\n",
 			current->next->str);
 		return (1);
 	}

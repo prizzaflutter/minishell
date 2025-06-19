@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 21:03:55 by aykassim          #+#    #+#             */
-/*   Updated: 2025/06/18 15:36:17 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/06/19 16:10:11 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,33 +96,6 @@ void	handle_expand_dollar_sign(t_gc *gc, t_token **tokens,
 	}
 }
 
-void	handle_expand_dollar_sign_echo(t_gc *gc, t_token **tokens,
-	t_env *env, char *str)
-{
-	char	*new_str;
-	char	**char_tmp;
-	int		i;
-
-	if (detect_dollar_sign_insquote(str)
-		|| detect_quotes(str))
-	{
-		new_str = new_value_expand(gc, env, str);
-		add_element_to_tokens(gc, tokens, new_str);
-	}
-	else
-	{
-		new_str = handle_double_single_quotes(gc, str);
-		new_str = handle_expand(gc, new_str, env);
-		char_tmp = ft_split(gc, new_str);
-		i = 0;
-		while (char_tmp[i])
-		{
-			add_element_to_tokens(gc, tokens, char_tmp[i]);
-			i++;
-		}
-	}
-}
-
 void	handle_echo_expand_element(t_gc *gc, t_token **tokens, t_env *env,
 	char *str)
 {
@@ -131,6 +104,3 @@ void	handle_echo_expand_element(t_gc *gc, t_token **tokens, t_env *env,
 	else
 		handle_val_before_addtokens(gc, tokens, str);
 }
-// handle_expand_dollar_sign
-
-// remove handle_expand_dollar_sign_echo

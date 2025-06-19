@@ -302,4 +302,9 @@ int		detect_nombre_export_value(t_token *tmp);
 int		compare_detect_condition(char *new_str);
 char	*expand_split_first_var(t_gc *gc, char *str, t_env *env);
 int		count_word_test(const char *s, char c);
+void	fill_env_manual(t_main_var *mv);
+int		initial_main_struct(t_main_var **mvar, char **env);
+void	build_execute_cmds_list(t_gc *gc, t_token *tokens,
+	t_command *cmds, t_env **ens);
+int		max_herdoc_element(t_token *tokens);
 #endif

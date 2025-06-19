@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   printing_func.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 11:36:37 by aykassim          #+#    #+#             */
-/*   Updated: 2025/06/03 11:52:13 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/06/19 14:10:39 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ void	print_list(t_token *tokens)
 	current = tokens;
 	while (current != NULL)
 	{
-		// printf("Token:\n");
-		// printf("  -str: %s\n", current->str);
-		// printf("  -type: %d\n", current->type);
-		// printf("  -fd_herdoc: %d\n", current->fd_herdoc);
+		printf("Token:\n");
+		printf("  -str: %s\n", current->str);
+		printf("  -type: %d\n", current->type);
+		printf("  -fd_herdoc: %d\n", current->fd_herdoc);
 		if (current->type == HEREDOC)
 			printf("delimtre = %s\n", current->next->str);
 		current = current->next;
