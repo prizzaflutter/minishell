@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 17:52:53 by aykassim          #+#    #+#             */
-/*   Updated: 2025/06/03 17:55:25 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/06/19 16:19:59 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,23 @@ int	detect_separator_expand(char *str)
 	return (0);
 }
 
+char	*assistanat_func_expfirstvar(t_gc *gc, char *str,
+		char *new_str, char **sp)
+{
+	if (detect_separator_expand(str) == 2)
+	{
+		sp[0] = gc_strjoin(gc, sp[0], "=");
+		new_str = gc_strjoin(gc, sp[0], sp[1]);
+	}
+	else if (detect_separator_expand(str) == 1)
+	{
+		sp[0] = gc_strjoin(gc, sp[0], "+");
+		sp[0] = gc_strjoin(gc, sp[0], "=");
+		new_str = gc_strjoin(gc, sp[0], sp[1]);
+	}
+	return (new_str);
+}
+
 char	*expand_split_first_var(t_gc *gc, char *str, t_env *env)
 {
 	char	**new_sp;
@@ -53,16 +70,6 @@ char	*expand_split_first_var(t_gc *gc, char *str, t_env *env)
 		new_sp = gc_split(gc, sp[0], ' ');
 		sp[0] = gc_strdup(gc, new_sp[count_word_test(sp[0], ' ') - 1]);
 	}
-	if (detect_separator_expand(str) == 2)
-	{
-		sp[0] = gc_strjoin(gc, sp[0], "=");
-		new_str = gc_strjoin(gc, sp[0], sp[1]);
-	}
-	else if (detect_separator_expand(str) == 1)
-	{
-		sp[0] = gc_strjoin(gc, sp[0], "+");
-		sp[0] = gc_strjoin(gc, sp[0], "=");
-		new_str = gc_strjoin(gc, sp[0], sp[1]);
-	}
+	new_str = assistanat_func_expfirstvar(gc, str, new_str, sp);
 	return (new_str);
 }
