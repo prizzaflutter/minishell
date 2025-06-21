@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 11:03:54 by iaskour           #+#    #+#             */
-/*   Updated: 2025/06/21 11:03:56 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/06/21 20:07:45 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	mv = malloc(sizeof(t_main_var));
-	if (!mv || initial_main_struct(&mv, env) == 1)
+	if (!isatty (0) || !mv || initial_main_struct(&mv, env) == 1)
 		return (1);
 	if (!mv->ens)
 		fill_env_manual(mv);
