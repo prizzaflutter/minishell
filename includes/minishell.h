@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/21 11:02:27 by iaskour           #+#    #+#             */
+/*   Updated: 2025/06/21 19:59:31 by aykassim         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # include <stdio.h>
@@ -13,11 +25,8 @@
 # include <stdarg.h>
 # include <stdint.h>
 # include <signal.h>
-#include <sys/stat.h>
-#include <errno.h>
-
-// static int n = 0;
-// #define malloc(x) (n++ == 100000 ? NULL : (malloc(x)))
+# include <sys/stat.h>
+# include <errno.h>
 
 typedef struct s_gc_node
 {
@@ -146,18 +155,25 @@ typedef struct g_count_w_expand
 	char	quote_char;
 }	t_count_w_expand;
 
-// EXEC FUNCTIONS
+typedef struct s_proccess_context
+{
+	t_gc	*gc;
+	t_env	**env;
+	int		*flag_sint;
+	int		*flag_squit;
+}	t_process_context;
+
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 void	my_echo(char **argv);
 char	*make_path(t_gc *gc, char **paths, char **tmp);
 char	*get_cmd_path(t_gc *gc, char *cmd, t_env *env);
-void	ft_printf(int fd, const char *format, ...);
+void	ft_printf(const char *format, ...);
 void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 int		ft_cmdsize(t_command *cmd);
 char	*configure_path(t_gc *gc, char *cmd, t_env *env);
 void	handle_single_command(t_gc *gc, t_command *cmd, t_env **env);
-int		handle_multiple_command(t_gc *gc, t_command *cmd, t_env *env);
+int		handle_multiple_command(t_process_context *ctx, t_command *cmd);
 char	*is_builtin(char *cmd);
 int		my_cd(t_gc *gc, t_env *env, char **argv, int is_pipe);
 void	my_pwd(t_env *env);
@@ -191,11 +207,10 @@ void	no_args(t_env *env, t_gc *gc);
 void	add_new_env(char *key, char *value, t_gc *gc, t_env **env);
 void	update_value(char **key_value, t_env **env, t_gc *gc, int is_append);
 int		is_builtin_excute(t_gc *gc, t_env **env, t_command *cmd);
-int		exit_status(int set, int new_status, const char *str);
+int		exit_status(int set, int new_status);
 void	execute_command(t_gc *gc, t_command *cmd, t_env **env);
 void	save_int_out(int *org_int, int *org_out);
 void	restore_in_out(int *org_int, int *org_out);
-void	print_command_list(t_command *cmds);
 void	ft_lstadd_back_stack(t_stack **stack, t_stack *new);
 t_stack	*ft_lstnew_stack(t_gc *gc, void	*content);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
@@ -210,13 +225,21 @@ void	no_args(t_env *env, t_gc *gc);
 void	ft_lstadd_back_copy(t_copy **copy, t_copy *new);
 int		ft_atoi(const char *str);
 char	*is_overflow(int set, char	*new_status);
-int		redirection_checker(t_command *cmd, int *in, int *out, int i);
+int		redirection_checker(t_command *cmd, int *out_file, int i);
 int		child_precess(t_command *current_cmd, int *prev_fd, int *fd_array);
 void	parent_process(t_command *current_cmd, int *prev_fd, int *fd_array);
 char	*gc_strjoin_1(t_gc *gc, char const *s1, char const *s2);
 t_env	*ft_lstnew_env(t_gc *gc, void	*key, void *value);
-
-// PARSING FUNCTIONS
+void	export_exit(int has_error, int is_pipe);
+int		get_len(char **argv);
+int		is_absolute_path(char *path);
+int		to_manay_args(int len, int is_pipe);
+void	cd_alone(t_gc *gc, t_env *env, int is_pipe);
+int		is_path_exist(t_env *env);
+int		handle_append_redir(t_command *cmd, int *out_file, int i);
+int		handle_trunc_redir(t_command *cmd, int *out_file, int i);
+int		handle_input_redir(t_command *cmd, int i);
+int		handle_herdoc_redir(t_command *cmd);
 t_token	*ft_lstnew(t_gc *gc, char *content, int flag, int quote);
 void	ft_lstadd_back(t_token **lst, t_token *new);
 t_token	*ft_lstlast(t_token *lst);
@@ -248,7 +271,6 @@ int		handle_unclosed_quotes(char *str);
 int		handle_herdocs(t_gc *gc, t_token *t_token, t_env *env);
 int		handle_herdoc_input(t_gc *gc, char *str, t_token *token, t_env *env);
 char	*handle_delemitre(t_gc *gc, char *str);
-// char	*handle_expand_generale(t_gc *gc, char *str, int flag, t_env *env);
 char	*handle_expand(t_gc *gc, char *str, t_env *env);
 int		the_main_compute_lenght(t_gc *gc, char *str, int *i, t_env *env);
 int		compute_expanded_length(t_gc *gc, char *str, t_env *env);
@@ -266,26 +288,17 @@ int		get_herdoc_fd(t_token *tokens);
 void	close_herdoc_fd(t_token **tokens);
 int		count_dollarsign_between_egall(char *str);
 int		detect_dollar_sign_insquote(char *str);
-void	handle_expand_dollar_sign_echo(t_gc *gc, t_token **tokens,
-			t_env *env, char *str);
-//signals
 void	call_main_signals(void);
 void	call_herdoc_signals(void);
 void	child_default_signal(void);
-//MAIN
 int		add_tokens_elemnt(t_gc *gc, char *str, t_token **tokens, t_env *env);
 void	build_execute_cmds_list(t_gc *gc, t_token *tokens,
 			t_command *cmds, t_env **ens);
 int		the_main_work(t_main_var	*mv);
 void	free_element_inside_while(t_main_var **mv);
 void	free_element_in_end(t_main_var **mv);
-// PRINTING FUNCTIONS
-void	print_list(t_token *tokens);
 void	call_read_from_heredoc_fd(t_token *tokens);
-void	print_command_list(t_command *cmds);
-//FD CLEAN
 void	clean_fd_herdoc(t_token *tokens);
-
 void	initia_str_value(t_gc *gc, t_str_inputs **instr,
 			char *str, char *export);
 void	handle_expand_dollar_sign(t_gc *gc, t_token **tokens,
@@ -305,6 +318,6 @@ int		count_word_test(const char *s, char c);
 void	fill_env_manual(t_main_var *mv);
 int		initial_main_struct(t_main_var **mvar, char **env);
 void	build_execute_cmds_list(t_gc *gc, t_token *tokens,
-	t_command *cmds, t_env **ens);
+			t_command *cmds, t_env **ens);
 int		max_herdoc_element(t_token *tokens);
 #endif

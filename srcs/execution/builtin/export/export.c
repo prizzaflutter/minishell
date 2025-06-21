@@ -1,7 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/20 16:19:45 by iaskour           #+#    #+#             */
+/*   Updated: 2025/06/20 18:03:54 by iaskour          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
-// todo : the problem is here : in  head
 void	add_new_env(char *key, char *value, t_gc *gc, t_env **env)
 {
 	t_env	*new_env;
@@ -58,9 +68,10 @@ void	checker(char *key, char *value, int *has_error)
 	if (!is_valid_identifier(key))
 	{
 		if (value)
-			ft_printf(2, "export: `%s%s`: not a valid identifier\n", key, value);
+			ft_printf("export: `%s%s`: not a valid identifier\n",
+				key, value);
 		else
-			ft_printf(2, "export: `%s`: not a valid identifier\n", key);
+			ft_printf("export: `%s`: not a valid identifier\n", key);
 		*has_error = 1;
 	}
 }
@@ -95,7 +106,7 @@ void	fill_key_value(t_gc *gc, t_env **env, char *arg, int *has_error)
 void	my_export(t_gc *gc, t_env **env, char **cmd_args, int is_pipe)
 {
 	int	i;
-	int has_error;
+	int	has_error;
 
 	i = 1;
 	has_error = 0;
@@ -110,17 +121,5 @@ void	my_export(t_gc *gc, t_env **env, char **cmd_args, int is_pipe)
 		fill_key_value(gc, env, cmd_args[i], &has_error);
 		i++;
 	}
-	if (!is_pipe)
-	{
-		if (has_error)
-			exit_status(1, 1, "has error 1");
-		else
-			exit_status(1, 0, "has error 0");
-	}
-	else {
-		if (has_error)
-			exit(1);
-		else
-			exit(0);
-	}
+	export_exit(has_error, is_pipe);
 }

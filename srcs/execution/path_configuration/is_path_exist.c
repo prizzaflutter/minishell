@@ -1,22 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit_status.c                                      :+:      :+:    :+:   */
+/*   is_path_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/20 18:06:10 by iaskour           #+#    #+#             */
-/*   Updated: 2025/06/21 10:06:19 by iaskour          ###   ########.fr       */
+/*   Created: 2025/04/30 15:38:01 by iaskour           #+#    #+#             */
+/*   Updated: 2025/06/21 10:27:31 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	exit_status(int set, int new_status)
+int	is_path_exist(t_env *env)
 {
-	static int	status;
+	t_env	*tmp;
 
-	if (set)
-		status = new_status;
-	return (status);
+	tmp = env;
+	while (tmp)
+	{
+		if (!ft_strcmp(tmp->key, "PATH")
+			&& ft_strcmp(tmp->value, "") && tmp->value != NULL)
+			return (1);
+		tmp = tmp->next;
+	}
+	return (0);
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/21 11:03:54 by iaskour           #+#    #+#             */
+/*   Updated: 2025/06/21 20:07:45 by aykassim         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	main(int ac, char **av, char **env)
@@ -8,7 +20,7 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	mv = malloc(sizeof(t_main_var));
-	if (!mv || initial_main_struct(&mv, env) == 1)
+	if (!isatty (0) || !mv || initial_main_struct(&mv, env) == 1)
 		return (1);
 	if (!mv->ens)
 		fill_env_manual(mv);
@@ -26,5 +38,5 @@ int	main(int ac, char **av, char **env)
 		free_element_inside_while(&mv);
 	}
 	free_element_in_end(&mv);
-	return (exit_status(1, exit_status(0, 0, "inside main"), "out side main"));
+	return (exit_status(1, exit_status(0, 0)));
 }

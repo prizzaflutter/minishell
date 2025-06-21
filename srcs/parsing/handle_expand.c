@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_expand.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:44:09 by aykassim          #+#    #+#             */
-/*   Updated: 2025/06/18 15:44:11 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/06/21 10:07:23 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	expand_exit_status(t_gc *gc, t_var_expand **vx)
 	int		j;
 
 	j = 0;
-	nbr = ft_itoa(gc, exit_status(0, 0, "expand exit status"));
+	nbr = ft_itoa(gc, exit_status(0, 0));
 	while (nbr[j])
 		(*vx)->res[(*vx)->k++] = nbr[j++];
 	(*vx)->i++;

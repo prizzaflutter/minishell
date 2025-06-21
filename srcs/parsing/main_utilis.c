@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utilis.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:45:15 by aykassim          #+#    #+#             */
-/*   Updated: 2025/06/19 16:12:29 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/06/21 11:01:28 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ int	add_tokens_elemnt(t_gc *gc, char *str, t_token **tokens, t_env *env)
 
 	fd = -2;
 	if (handle_unclosed_quotes(str))
-		return (exit_status(1, 2, "add tokens element - 1"), -1);
+		return (exit_status(1, 2), -1);
 	if (add_command_element(gc, str, tokens, env))
 		return (-1);
 	if (handle_unexpected_token(*tokens))
-		return (exit_status(1, 2, "add tokens element - 2"), -1);
+		return (exit_status(1, 2), -1);
 	if (max_herdoc_element(*tokens))
 		return (printf("maximum here-document count exceeded\n"),
-			exit_status(1, 2, "add tokens element - 2"), -1);
+			exit_status(1, 2), -1);
 	fd = handle_herdocs(gc, *tokens, env);
 	if (fd == -1)
 		return (-1);
@@ -49,7 +49,7 @@ int	the_main_work(t_main_var	*mv)
 {
 	if (!mv->input)
 	{
-		ft_printf(2, "exit\n");
+		ft_printf("exit\n");
 		return (2);
 	}
 	if (ft_is_only_whitespace(mv->input))

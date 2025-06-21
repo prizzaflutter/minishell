@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_herdoc_utilis.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:44:30 by aykassim          #+#    #+#             */
-/*   Updated: 2025/06/18 15:44:31 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/06/21 10:07:36 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	handle_child_status( t_token *tokens, int status, int fd, int fd1)
 		close(fd1);
 		write(1, "\n", 1);
 		tokens->fd_herdoc = -2;
-		exit_status(1, 130, "handle child status - 1");
+		exit_status(1, 130);
 		return (0);
 	}
 	tokens->fd_herdoc = fd1;

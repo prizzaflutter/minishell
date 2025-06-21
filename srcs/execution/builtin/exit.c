@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/21 17:53:05 by iaskour           #+#    #+#             */
+/*   Updated: 2025/06/21 17:54:31 by iaskour          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -34,24 +45,24 @@ int	exit_checker(int num_args, char **args, int is_pipe)
 
 	if (!is_valid_num(args[1]))
 	{
-		ft_printf(2, "minishell: exit: %s: numeric argument required\n", args[1]);
+		ft_printf("minishell: exit: %s: numeric argument required\n", args[1]);
 		exit(2);
 	}
 	if (num_args > 1)
 	{
-		ft_printf(2, "minishell: exit: too many arguments\n");
+		ft_printf("minishell: exit: too many arguments\n");
 		if (is_pipe)
 			exit (1);
 		else
 		{
-			exit_status(1, 1, "exit_checker");
+			exit_status(1, 1);
 			return (1);
 		}
 	}
 	num = ft_atoi(args[1]);
 	if (!ft_strcmp(is_overflow(0, " "), "overflow"))
 	{
-		ft_printf(2, "minishell: exit: %d: numeric argument required\n", num);
+		ft_printf("minishell: exit: %d: numeric argument required\n", num);
 		exit(2);
 	}
 	exit(num % 256);
@@ -63,15 +74,15 @@ void	my_exit(char **args, int is_pip)
 	int	num_args;
 
 	if (!is_pip)
-		ft_printf(2, "exit\n");
+		ft_printf("exit\n");
 	num_args = count_args(args);
 	num_args--;
 	if (num_args == 0)
 	{
-		status = exit_status(0, 0, "my exit");
+		status = exit_status(0, 0);
 		exit(status);
 	}
 	else
 		if (exit_checker(num_args, args, is_pip) == 1)
-			return ; 
+			return ;
 }

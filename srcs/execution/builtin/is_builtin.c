@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   is_builtin.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/20 16:18:53 by iaskour           #+#    #+#             */
+/*   Updated: 2025/06/20 16:19:35 by iaskour          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -30,7 +41,7 @@ int	is_builtin_excute(t_gc *gc, t_env **env, t_command *cmd)
 	if (!ft_strcmp(*cmd->cmd, "echo"))
 	{
 		my_echo(cmd->cmd);
-		return 1;
+		return (1);
 	}
 	else if (ft_strncmp(*cmd->cmd, "cd", 2) == 0)
 		return (my_cd(gc, *env, cmd->cmd, 1), 1);

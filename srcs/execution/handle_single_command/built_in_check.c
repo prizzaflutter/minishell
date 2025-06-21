@@ -6,7 +6,7 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 13:28:10 by iaskour           #+#    #+#             */
-/*   Updated: 2025/06/18 10:27:41 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/06/21 10:08:24 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	is_on_parent(char *build_in_f, t_command *cmd, t_env **env, t_gc *gc)
 		if (!ft_strcmp(build_in_f, "cd"))
 			return (my_cd(gc, *env, cmd->cmd, 0), 1);
 		else if (!ft_strcmp(build_in_f, "unset"))
-			return (my_unset(env, cmd->cmd), exit_status(1, 0, "my unset"), 1);
+			return (my_unset(env, cmd->cmd), exit_status(1, 0), 1);
 		else if (!ft_strcmp(build_in_f, "export"))
 			return (my_export(gc, env, cmd->cmd, 0), 1);
 		else if (!ft_strcmp(build_in_f, "exit"))
