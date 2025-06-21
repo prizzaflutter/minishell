@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:56:35 by aykassim          #+#    #+#             */
-/*   Updated: 2025/05/29 16:53:53 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/06/19 16:04:26 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,7 @@ t_token	*ft_lstnew(t_gc *gc, char *content, int flag, int quote)
 
 	nvtlist = (t_token *)gc_malloc(gc, sizeof(t_token), flag);
 	if (!nvtlist)
-	{
-		printf("Error in malloc");
 		return (NULL);
-	}
 	nvtlist->str = content;
 	nvtlist->type = define_token_type(content, quote);
 	nvtlist->next = NULL;

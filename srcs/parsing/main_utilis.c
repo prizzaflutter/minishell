@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main_utilis.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/18 15:45:15 by aykassim          #+#    #+#             */
+/*   Updated: 2025/06/21 11:01:28 by iaskour          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -12,6 +23,9 @@ int	add_tokens_elemnt(t_gc *gc, char *str, t_token **tokens, t_env *env)
 		return (-1);
 	if (handle_unexpected_token(*tokens))
 		return (exit_status(1, 2), -1);
+	if (max_herdoc_element(*tokens))
+		return (printf("maximum here-document count exceeded\n"),
+			exit_status(1, 2), -1);
 	fd = handle_herdocs(gc, *tokens, env);
 	if (fd == -1)
 		return (-1);
