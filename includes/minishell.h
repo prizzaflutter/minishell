@@ -146,18 +146,26 @@ typedef struct g_count_w_expand
 	char	quote_char;
 }	t_count_w_expand;
 
+typedef struct s_proccess_context
+{
+	t_gc	*gc;
+	t_env	**env;
+	int		*flag_sint;
+	int		*flag_squit;
+} t_process_context;
+
 // EXEC FUNCTIONS
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 void	my_echo(char **argv);
 char	*make_path(t_gc *gc, char **paths, char **tmp);
 char	*get_cmd_path(t_gc *gc, char *cmd, t_env *env);
-void	ft_printf(int fd, const char *format, ...);
+void	ft_printf(const char *format, ...);
 void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 int		ft_cmdsize(t_command *cmd);
 char	*configure_path(t_gc *gc, char *cmd, t_env *env);
 void	handle_single_command(t_gc *gc, t_command *cmd, t_env **env);
-int		handle_multiple_command(t_gc *gc, t_command *cmd, t_env *env);
+int		handle_multiple_command(t_process_context *ctx, t_command *cmd);
 char	*is_builtin(char *cmd);
 int		my_cd(t_gc *gc, t_env *env, char **argv, int is_pipe);
 void	my_pwd(t_env *env);
@@ -191,7 +199,7 @@ void	no_args(t_env *env, t_gc *gc);
 void	add_new_env(char *key, char *value, t_gc *gc, t_env **env);
 void	update_value(char **key_value, t_env **env, t_gc *gc, int is_append);
 int		is_builtin_excute(t_gc *gc, t_env **env, t_command *cmd);
-int		exit_status(int set, int new_status, const char *str);
+int		exit_status(int set, int new_status);
 void	execute_command(t_gc *gc, t_command *cmd, t_env **env);
 void	save_int_out(int *org_int, int *org_out);
 void	restore_in_out(int *org_int, int *org_out);
@@ -215,6 +223,16 @@ int		child_precess(t_command *current_cmd, int *prev_fd, int *fd_array);
 void	parent_process(t_command *current_cmd, int *prev_fd, int *fd_array);
 char	*gc_strjoin_1(t_gc *gc, char const *s1, char const *s2);
 t_env	*ft_lstnew_env(t_gc *gc, void	*key, void *value);
+void	export_exit(int has_error, int is_pipe);
+int		get_len(char **argv);
+int		is_absolute_path(char *path);
+int		to_manay_args(int len, int is_pipe);
+void	cd_alone(t_gc *gc, t_env *env, int is_pipe);
+int		is_path_exist(t_env *env);
+int		handle_append_redir(t_command *cmd, int *out_file, int i);
+int		handle_trunc_redir(t_command *cmd, int *out_file, int i);
+int		handle_input_redir(t_command *cmd, int i);
+int		handle_herdoc_redir(t_command *cmd);
 
 // PARSING FUNCTIONS
 t_token	*ft_lstnew(t_gc *gc, char *content, int flag, int quote);

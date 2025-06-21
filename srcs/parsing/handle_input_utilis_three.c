@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_input_utilis_three.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/01 15:52:14 by aykassim          #+#    #+#             */
-/*   Updated: 2025/06/17 16:27:46 by iaskour          ###   ########.fr       */
+/*   Created: 2025/06/18 15:44:37 by aykassim          #+#    #+#             */
+/*   Updated: 2025/06/18 15:44:39 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,6 @@ int	its_have_dollar_signe(char *str)
 	return (0);
 }
 
-
-// SIGFLT OVER HERE
 void	initia_str_value(t_gc *gc, t_str_inputs **instr,
 	char *str, char *export)
 {

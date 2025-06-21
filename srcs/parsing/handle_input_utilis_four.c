@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_input_utilis_four.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 17:52:53 by aykassim          #+#    #+#             */
-/*   Updated: 2025/06/03 17:55:25 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/06/21 10:57:22 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,3 +66,4 @@ char	*expand_split_first_var(t_gc *gc, char *str, t_env *env)
 	}
 	return (new_str);
 }
+

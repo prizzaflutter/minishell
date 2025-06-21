@@ -1,22 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit_status.c                                      :+:      :+:    :+:   */
+/*   export_exit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/20 18:06:10 by iaskour           #+#    #+#             */
-/*   Updated: 2025/06/21 10:06:19 by iaskour          ###   ########.fr       */
+/*   Created: 2025/06/20 16:48:44 by iaskour           #+#    #+#             */
+/*   Updated: 2025/06/21 10:07:07 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	exit_status(int set, int new_status)
+void	export_exit(int has_error, int is_pipe)
 {
-	static int	status;
-
-	if (set)
-		status = new_status;
-	return (status);
+	if (!is_pipe)
+	{
+		if (has_error)
+			exit_status(1, 1);
+		else
+			exit_status(1, 0);
+	}
+	else
+	{
+		if (has_error)
+			exit(1);
+		else
+			exit(0);
+	}
 }

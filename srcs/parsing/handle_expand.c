@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/14 12:53:28 by aykassim          #+#    #+#             */
-/*   Updated: 2025/06/16 09:49:14 by iaskour          ###   ########.fr       */
+/*   Created: 2025/06/18 15:44:09 by aykassim          #+#    #+#             */
+/*   Updated: 2025/06/21 10:07:23 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	expand_exit_status(t_gc *gc, t_var_expand **vx)
 	int		j;
 
 	j = 0;
-	nbr = ft_itoa(gc, exit_status(0, 0, "expand exit status"));
+	nbr = ft_itoa(gc, exit_status(0, 0));
 	while (nbr[j])
 		(*vx)->res[(*vx)->k++] = nbr[j++];
 	(*vx)->i++;

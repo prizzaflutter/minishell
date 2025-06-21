@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/30 15:53:37 by iaskour           #+#    #+#             */
-/*   Updated: 2025/06/17 16:15:36 by iaskour          ###   ########.fr       */
+/*   Created: 2025/06/20 16:18:53 by iaskour           #+#    #+#             */
+/*   Updated: 2025/06/20 16:19:35 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	is_builtin_excute(t_gc *gc, t_env **env, t_command *cmd)
 	if (!ft_strcmp(*cmd->cmd, "echo"))
 	{
 		my_echo(cmd->cmd);
-		return 1;
+		return (1);
 	}
 	else if (ft_strncmp(*cmd->cmd, "cd", 2) == 0)
 		return (my_cd(gc, *env, cmd->cmd, 1), 1);

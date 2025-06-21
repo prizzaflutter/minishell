@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/12 15:20:58 by aykassim          #+#    #+#             */
-/*   Updated: 2025/06/16 18:16:07 by iaskour          ###   ########.fr       */
+/*   Created: 2025/06/18 15:45:01 by aykassim          #+#    #+#             */
+/*   Updated: 2025/06/20 18:05:57 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	handle_unclosed_quotes(char *str)
 	}
 	if (is_single_quote || is_double_quote)
 	{
-		ft_printf(2, "syntax error near unexpected token `newline'\n");
+		ft_printf("syntax error near unexpected token `newline'\n");
 		return (1);
 	}
 	return (0);
@@ -66,7 +66,7 @@ int	handle_some_of_unexpected_token(t_token *current)
 			|| current->type == HEREDOC || current->type == APPEND)
 		&& current->next && current->next->type != WORD)
 	{
-		ft_printf(2, "1 - syntax error near unexpected token `%s'\n",
+		ft_printf("1 - syntax error near unexpected token `%s'\n",
 			current->next->str);
 		return (1);
 	}
@@ -74,12 +74,11 @@ int	handle_some_of_unexpected_token(t_token *current)
 			|| current->type == HEREDOC || current->type == APPEND)
 		&& (!current->next || current->next->type != WORD))
 	{
-		ft_printf(2, "syntax error near unexpected token `newline'\n");
+		ft_printf("syntax error near unexpected token `newline'\n");
 		return (1);
 	}
 	if (current->type == PIPE && current->next && current->next->type == PIPE)
-		return (ft_printf(2,
-				"syntax error near unexpected token `|'\n"), 1);
+		return (ft_printf("syntax error near unexpected token `|'\n"), 1);
 	return (0);
 }
 
@@ -95,17 +94,15 @@ int	handle_unexpected_token(t_token *tokens)
 		if (current->type == REDIR_IN && current->next
 			&& current->next->type == REDIR_OUT)
 		{
-			ft_printf(2, "syntax error near unexpected token `newline'\n");
+			ft_printf("syntax error near unexpected token `newline'\n");
 			return (1);
 		}
 		if (current->type == PIPE && !current->next)
-			return (ft_printf(2,
-					"syntax error near unexpected token `|'\n"), 1);
+			return (ft_printf("syntax error near unexpected token `|'\n"), 1);
 		if (handle_some_of_unexpected_token(current))
 			return (1);
 		if (top->type == PIPE)
-			return (ft_printf(2,
-					"syntax error near unexpected token `|'\n"), 1);
+			return (ft_printf("syntax error near unexpected token `|'\n"), 1);
 		current = current->next;
 	}
 	return (0);

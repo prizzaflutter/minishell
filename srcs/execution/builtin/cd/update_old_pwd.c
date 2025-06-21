@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/12 10:37:54 by iaskour           #+#    #+#             */
-/*   Updated: 2025/06/16 20:31:17 by iaskour          ###   ########.fr       */
+/*   Created: 2025/06/20 16:58:59 by iaskour           #+#    #+#             */
+/*   Updated: 2025/06/20 17:15:36 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,20 @@ void	update_oldpwd(t_gc *gc, t_env *env, char *oldpwd)
 {
 	int		is_exist;
 	char	**key_value;
-	t_env	*cur;
 
 	is_exist = 0;
-	cur = env;
-	while (cur)
+	while (env)
 	{
-		if (!ft_strcmp(cur->key, "OLDPWD"))
+		if (!ft_strcmp(env->key, "OLDPWD"))
 		{
-			if (cur->value)
+			if (env->value)
 			{
-				cur->value = oldpwd;
+				env->value = oldpwd;
 				is_exist = 1;
 			}
 			break ;
 		}
-		cur = cur->next;
+		env = env->next;
 	}
 	if (!is_exist && oldpwd)
 	{

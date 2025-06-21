@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/23 10:06:37 by aykassim          #+#    #+#             */
-/*   Updated: 2025/06/16 18:12:41 by iaskour          ###   ########.fr       */
+/*   Created: 2025/06/18 15:44:55 by aykassim          #+#    #+#             */
+/*   Updated: 2025/06/21 10:07:40 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	handle_ctrl_c(int sig)
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
-		exit_status(1, 130, "handle ctrl c");
+		exit_status(1, 130);
 	}
 }
 
@@ -30,7 +30,6 @@ void	call_main_signals(void)
 		perror("signal failed");
 	if (signal(SIGQUIT, SIG_IGN) == SIG_ERR)
 		perror("signal failed");
-	rl_catch_signals = 0;
 }
 
 void	call_herdoc_signals(void)

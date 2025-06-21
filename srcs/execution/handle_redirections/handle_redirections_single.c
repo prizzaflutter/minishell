@@ -6,7 +6,7 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:52:25 by iaskour           #+#    #+#             */
-/*   Updated: 2025/06/18 15:38:16 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/06/19 11:43:07 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	handle_redirections_single(t_command *cmd)
 	int	out_file;
 	int	i;
 
-	out_file = -1;
+	out_file = -3;
 	i = 0;
 	while (cmd->inoutfile && cmd->inoutfile[i])
 	{

@@ -57,7 +57,6 @@ int	main(int ac, char **av, char **env)
 	if (!mv->ens)
 		fill_env_manual(mv);
 	call_main_signals();
-	rl_catch_signals = 0;
 	while (1)
 	{
 		mv->input = readline("minishell:</>");
@@ -71,5 +70,5 @@ int	main(int ac, char **av, char **env)
 		free_element_inside_while(&mv);
 	}
 	free_element_in_end(&mv);
-	return (exit_status(1, exit_status(0, 0, "inside main"), "out side main"));
+	return (exit_status(1, exit_status(0, 0)));
 }
