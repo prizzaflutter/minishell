@@ -6,7 +6,7 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 17:52:53 by aykassim          #+#    #+#             */
-/*   Updated: 2025/06/21 10:59:07 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/06/21 11:22:01 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,3 @@ char	*expand_split_first_var(t_gc *gc, char *str, t_env *env)
 	new_str = assistanat_func_expfirstvar(gc, str, new_str, sp);
 	return (new_str);
 }
-

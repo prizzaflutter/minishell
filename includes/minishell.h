@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/21 11:02:27 by iaskour           #+#    #+#             */
+/*   Updated: 2025/06/21 11:03:17 by iaskour          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # include <stdio.h>
@@ -13,8 +25,8 @@
 # include <stdarg.h>
 # include <stdint.h>
 # include <signal.h>
-#include <sys/stat.h>
-#include <errno.h>
+# include <sys/stat.h>
+# include <errno.h>
 
 // static int n = 0;
 // #define malloc(x) (n++ == 100000 ? NULL : (malloc(x)))
@@ -152,7 +164,7 @@ typedef struct s_proccess_context
 	t_env	**env;
 	int		*flag_sint;
 	int		*flag_squit;
-} t_process_context;
+}	t_process_context;
 
 // EXEC FUNCTIONS
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
@@ -323,6 +335,6 @@ int		count_word_test(const char *s, char c);
 void	fill_env_manual(t_main_var *mv);
 int		initial_main_struct(t_main_var **mvar, char **env);
 void	build_execute_cmds_list(t_gc *gc, t_token *tokens,
-	t_command *cmds, t_env **ens);
+			t_command *cmds, t_env **ens);
 int		max_herdoc_element(t_token *tokens);
 #endif

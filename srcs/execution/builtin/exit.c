@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/20 16:08:59 by iaskour           #+#    #+#             */
-/*   Updated: 2025/06/21 10:06:53 by iaskour          ###   ########.fr       */
+/*   Created: 2025/06/21 17:53:05 by iaskour           #+#    #+#             */
+/*   Updated: 2025/06/21 17:54:31 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,7 @@ int	exit_checker(int num_args, char **args, int is_pipe)
 
 	if (!is_valid_num(args[1]))
 	{
-		ft_printf("minishell: exit: %s:numeric argument required\n",
-			args[1]);
+		ft_printf("minishell: exit: %s: numeric argument required\n", args[1]);
 		exit(2);
 	}
 	if (num_args > 1)
@@ -55,7 +54,10 @@ int	exit_checker(int num_args, char **args, int is_pipe)
 		if (is_pipe)
 			exit (1);
 		else
-			return (exit_status(1, 1), 1);
+		{
+			exit_status(1, 1);
+			return (1);
+		}
 	}
 	num = ft_atoi(args[1]);
 	if (!ft_strcmp(is_overflow(0, " "), "overflow"))
