@@ -6,7 +6,7 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 11:02:27 by iaskour           #+#    #+#             */
-/*   Updated: 2025/06/21 11:03:17 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/06/21 19:43:14 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,11 +222,10 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 void	ft_lstadd_front_copy(t_copy **copy, t_copy *new_copy);
 t_copy	*ft_lstnew_copy(t_gc *gc, void	*key, void *value);
 void	my_exit(char **args, int is_pip);
-char	*normalize_path(t_env *env, t_gc *gc, char *path, int flag);
+char	*normalize_path(t_env *env, t_gc *gc, char *path);
 void	go_up(t_stack **stack);
 void	add_to_path(t_gc *gc, char *path, t_stack **stack);
 void	update_oldpwd(t_gc *gc, t_env *env, char *oldpwd);
-void	no_args(t_env *env, t_gc *gc);
 void	ft_lstadd_back_copy(t_copy **copy, t_copy *new);
 int		ft_atoi(const char *str);
 char	*is_overflow(int set, char	*new_status);

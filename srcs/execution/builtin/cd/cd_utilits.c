@@ -6,7 +6,7 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 17:00:29 by iaskour           #+#    #+#             */
-/*   Updated: 2025/06/21 10:07:01 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/06/21 19:12:44 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,6 @@ void	cd_alone(t_gc *gc, t_env *env, int is_pipe)
 		if (is_pipe)
 			exit(1);
 		else
-		{
 			exit_status(1, 1);
-		}
 	}
 }

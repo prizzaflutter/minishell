@@ -6,7 +6,7 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 15:37:59 by iaskour           #+#    #+#             */
-/*   Updated: 2025/06/21 10:07:19 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/06/21 20:00:16 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	handle_redirection_and_execute(char *build_in_f,
 
 	pid = fork();
 	if (pid < -1)
-		return (ft_printf("for error\n"), exit(1));
+		return (ft_printf("from error\n"), exit(1));
 	if (pid == 0)
 	{
 		child_default_signal();
@@ -83,10 +83,7 @@ void	handle_single_command(t_gc *gc, t_command *cmd, t_env **env)
 
 	save_int_out(&org_stdin, &org_stdout);
 	if ((cmd->cmd[0] == NULL && cmd->inoutfile[0] == NULL))
-	{
-		ft_printf("am over her\n");
 		return ;
-	}
 	build_in_f = is_builtin(*cmd->cmd);
 	if (is_on_parent(build_in_f, cmd, env, gc) == 0)
 		handle_redirection_and_execute(build_in_f, gc, cmd, *env);

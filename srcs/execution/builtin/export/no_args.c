@@ -6,7 +6,7 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:03:38 by iaskour           #+#    #+#             */
-/*   Updated: 2025/06/16 19:57:35 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/06/21 18:39:44 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_copy	*create_copy(t_env *env, t_gc *gc)
 	return (copy);
 }
 
-void	sort_env(t_copy *env)
+void	sort_env(t_copy *copy)
 {
 	t_copy	*current;
 	int		is_swapped;
@@ -51,7 +51,7 @@ void	sort_env(t_copy *env)
 	while (is_swapped)
 	{
 		is_swapped = 0;
-		current = env;
+		current = copy;
 		while (current && current->next)
 		{
 			if (ft_strcmp(current->key, current->next->key) > 0)

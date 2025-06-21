@@ -6,7 +6,7 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 16:19:45 by iaskour           #+#    #+#             */
-/*   Updated: 2025/06/20 18:03:54 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/06/21 20:49:15 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	update_value(char **key_value,
 		add_new_env(key_value[0], key_value[1], gc, env);
 }
 
-void	checker(char *key, char *value, int *has_error)
+int	checker(char *key, char *value, int *has_error)
 {
 	if (!is_valid_identifier(key))
 	{
@@ -73,7 +73,9 @@ void	checker(char *key, char *value, int *has_error)
 		else
 			ft_printf("export: `%s`: not a valid identifier\n", key);
 		*has_error = 1;
+		return (0);
 	}
+	return (1);
 }
 
 void	fill_key_value(t_gc *gc, t_env **env, char *arg, int *has_error)
@@ -94,13 +96,15 @@ void	fill_key_value(t_gc *gc, t_env **env, char *arg, int *has_error)
 		key = gc_strdup(gc, arg);
 		value = NULL;
 	}
-	checker(key, value, has_error);
-	if (!key_value)
+	if (checker(key, value, has_error))
 	{
-		key_value[0] = key;
-		key_value[1] = value;
+		if (!key_value)
+		{
+			key_value[0] = key;
+			key_value[1] = value;
+		}
+		update_value(key_value, env, gc, is_append);
 	}
-	update_value(key_value, env, gc, is_append);
 }
 
 void	my_export(t_gc *gc, t_env **env, char **cmd_args, int is_pipe)
