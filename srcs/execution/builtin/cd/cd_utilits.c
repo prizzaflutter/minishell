@@ -6,19 +6,19 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 17:00:29 by iaskour           #+#    #+#             */
-/*   Updated: 2025/06/21 19:12:44 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/06/21 21:51:54 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	get_home(t_gc *gc, t_env *env, int is_pipe)
+int	get_home(t_gc *gc, t_env **env, int is_pipe)
 {
 	t_env	*curr;
 	int		result;
 	char	**args;
 
-	curr = env;
+	curr = *env;
 	result = 0;
 	while (curr)
 	{
@@ -70,12 +70,9 @@ int	to_manay_args(int len, int is_pipe)
 	return (1);
 }
 
-void	cd_alone(t_gc *gc, t_env *env, int is_pipe)
+void	cd_alone(t_gc *gc, t_env **env, int is_pipe)
 {
-	t_env	*curr;
-
-	curr = env;
-	if (get_home(gc, curr, is_pipe) == 0)
+	if (get_home(gc, env, is_pipe) == 0)
 	{
 		ft_printf("minishell: cd: HOME not set\n");
 		if (is_pipe)

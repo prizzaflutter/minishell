@@ -6,19 +6,19 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:25:43 by iaskour           #+#    #+#             */
-/*   Updated: 2025/06/21 19:42:18 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/06/21 21:52:04 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	update_pwd(char *path, t_env *env, t_gc *gc)
+void	update_pwd(char *path, t_env **env, t_gc *gc)
 {
 	char	*oldpwd;
 	t_env	*curr;
 
 	oldpwd = NULL;
-	curr = env;
+	curr = *env;
 	while (curr)
 	{
 		if (!ft_strcmp(curr->key, "PWD"))
@@ -32,13 +32,13 @@ void	update_pwd(char *path, t_env *env, t_gc *gc)
 	update_oldpwd(gc, env, oldpwd);
 }
 
-void	append_path_pwd(char *path, t_env *env, t_gc *gc)
+void	append_path_pwd(char *path, t_env **env, t_gc *gc)
 {
 	char	*oldpwd;
 	t_env	*curr;
 
 	oldpwd = NULL;
-	curr = env;
+	curr = *env;
 	while (curr)
 	{
 		if (!ft_strcmp(curr->key, "PWD"))
@@ -63,7 +63,7 @@ void	cd_exit(int is_pipe)
 		exit_status(1, 0);
 }
 
-int	my_cd(t_gc *gc, t_env *env, char **argv, int is_pipe)
+int	my_cd(t_gc *gc, t_env **env, char **argv, int is_pipe)
 {
 	char	*cwd;
 	char	content[4096];

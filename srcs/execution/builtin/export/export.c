@@ -6,7 +6,7 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 16:19:45 by iaskour           #+#    #+#             */
-/*   Updated: 2025/06/21 20:49:15 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/06/21 22:06:08 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ void	my_export(t_gc *gc, t_env **env, char **cmd_args, int is_pipe)
 	}
 	while (cmd_args[i])
 	{
+		printf("the cmd arg[%d], is %s\n", i, cmd_args[i]);
 		fill_key_value(gc, env, cmd_args[i], &has_error);
 		i++;
 	}

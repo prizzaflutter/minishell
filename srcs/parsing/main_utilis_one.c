@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utilis_one.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 16:10:50 by aykassim          #+#    #+#             */
-/*   Updated: 2025/06/19 16:12:39 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/06/22 09:42:37 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	initial_main_struct(t_main_var **mvar, char **env)
 
 void	fill_env_manual(t_main_var *mv)
 {
-	char	cwd[1024];
+	char	cwd[4096];
 	char	**args;
 	char	*pwd;
 
@@ -47,7 +47,7 @@ void	fill_env_manual(t_main_var *mv)
 	args = gc_malloc(mv->gc, sizeof(char *) * 5, 0);
 	args[0] = gc_strdup(mv->gc, "export");
 	args[1] = gc_strdup(mv->gc, pwd);
-	args[2] = gc_strdup(mv->gc, "OLDPWD");
+	args[2] = gc_strdup(mv->gc, "OLDPWD=");
 	args[3] = gc_strdup(mv->gc, "PATH=/run/host/usr/bin:"
 			"/run/host/usr/local/bin:"
 			"/usr/local/bin:/usr/local/sbin:"
