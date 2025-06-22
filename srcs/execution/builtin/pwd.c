@@ -6,7 +6,7 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:26:00 by iaskour           #+#    #+#             */
-/*   Updated: 2025/06/03 12:44:10 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/06/22 09:28:07 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ void	my_pwd(t_env *env)
 	cwd = getcwd(content, sizeof(content));
 	if (cwd)
 	{
-		if (cwd)
-			printf("%s\n", content);
+		printf("%s\n", content);
 		return ;
 	}
 	while (env)

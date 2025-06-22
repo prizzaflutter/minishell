@@ -6,7 +6,7 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 16:18:53 by iaskour           #+#    #+#             */
-/*   Updated: 2025/06/20 16:19:35 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/06/21 21:50:16 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	is_builtin_excute(t_gc *gc, t_env **env, t_command *cmd)
 		return (1);
 	}
 	else if (ft_strncmp(*cmd->cmd, "cd", 2) == 0)
-		return (my_cd(gc, *env, cmd->cmd, 1), 1);
+		return (my_cd(gc, env, cmd->cmd, 1), 1);
 	else if (ft_strncmp(*cmd->cmd, "pwd", 3) == 0)
 		return (my_pwd(*env), 1);
 	else if (ft_strncmp(*cmd->cmd, "export", 6) == 0)

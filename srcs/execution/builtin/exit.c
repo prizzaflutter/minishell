@@ -6,7 +6,7 @@
 /*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 17:53:05 by iaskour           #+#    #+#             */
-/*   Updated: 2025/06/21 17:54:31 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/06/21 17:56:46 by iaskour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	exit_checker(int num_args, char **args, int is_pipe)
 		ft_printf("minishell: exit: %d: numeric argument required\n", num);
 		exit(2);
 	}
-	exit(num % 256);
+	exit(num);
 }
 
 void	my_exit(char **args, int is_pip)

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   handle_herdoc_utilis.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:44:30 by aykassim          #+#    #+#             */
-/*   Updated: 2025/06/21 10:07:36 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/06/22 15:49:15 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	all_child_process(t_gc *gc, char *str, t_env *env, int fd)
+int	all_child_process(t_gc *gc, char *str, t_env *env, t_herdoc_h her_fd)
 {
 	char	*line;
 	char	*new_str;
@@ -22,26 +22,26 @@ int	all_child_process(t_gc *gc, char *str, t_env *env, int fd)
 		line = readline("herdoc>");
 		if (!line || ft_strcmp(line, handle_delemitre(gc, str)) == 0)
 		{
-			close(fd);
+			close(her_fd.fd);
 			free(line);
 			return (0);
 		}
 		new_str = handle_expand_herdoc(gc, line, detect_quotes(str), env);
 		if (!new_str)
 		{
-			close(fd);
+			close(her_fd.fd);
 			free(line);
 			return (0);
 		}
-		write(fd, new_str, ft_strlen(new_str));
-		write(fd, "\n", 1);
+		write(her_fd.fd, new_str, ft_strlen(new_str));
+		write(her_fd.fd, "\n", 1);
 		free(line);
 	}
-	close(fd);
+	close(her_fd.fd);
 	return (free(line), 1);
 }
 
-int	handle_child_status( t_token *tokens, int status, int fd, int fd1)
+int	handle_child_status(t_token *tokens, int status, int fd, int fd1)
 {
 	close(fd);
 	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
@@ -75,7 +75,7 @@ int	handle_herdoc_input(t_gc *gc, char *str, t_token *tokens, t_env *env)
 	if (herdoc.pid == 0)
 	{
 		call_herdoc_signals();
-		if (!all_child_process(gc, str, env, herdoc.fd))
+		if (!all_child_process(gc, str, env, herdoc))
 			exit (1);
 		exit (0);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_list_commands.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 09:48:32 by aykassim          #+#    #+#             */
-/*   Updated: 2025/06/21 11:27:44 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/06/22 15:30:04 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ t_command	*ft_lstnew_command(t_gc *gc, t_token *tokens)
 		return (NULL);
 	nvcommand->cmd = get_commands(gc, tokens);
 	nvcommand->inoutfile = get_inoutfile(gc, tokens);
-	close_herdoc_fd(&tokens);
 	nvcommand->fd_in = get_herdoc_fd(tokens);
 	nvcommand->next = NULL;
 	nvcommand->prev = NULL;
@@ -75,4 +74,21 @@ void	build_command_list(t_gc *gc, t_token *tokens, t_command **cmd_list)
 		else
 			break ;
 	}
+}
+
+int	get_herdoc_fd(t_token *tokens)
+{
+	int	fd;
+
+	fd = -2;
+	while (tokens)
+	{
+		if (tokens->type == HEREDOC && tokens->fd_herdoc != -2)
+		{
+			fd = tokens->fd_herdoc;
+			break ;
+		}
+		tokens = tokens->next;
+	}
+	return (fd);
 }
