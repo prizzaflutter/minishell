@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 13:14:22 by aykassim          #+#    #+#             */
-/*   Updated: 2025/06/19 16:09:57 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/06/21 21:31:02 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	handle_all_export_val(t_gc *gc, t_token **tokens,
 	int				i;
 	t_str_inputs	*ins;
 
+	ins = gc_malloc(gc, sizeof(t_str_inputs), 0);
 	count = detect_nombre_export_value(*tmp);
 	i = 0;
 	cur = *tmp;
@@ -75,6 +76,8 @@ void	all_the_work(t_gc *gc, t_token **tokens, t_env *env, t_token **tmp)
 
 	new_str = handle_double_single_quotes(gc, (*tmp)->str);
 	instr = gc_malloc(gc, sizeof(t_str_inputs), 0);
+	instr->echo_str = NULL;
+	instr->exp_str = NULL;
 	if ((*tmp) && (ft_strcmp((*tmp)->str, "echo") == 0))
 		instr->echo_str = gc_strdup(gc, (*tmp)->str);
 	if ((*tmp) && (ft_strcmp(new_str, "export") == 0))
@@ -88,10 +91,8 @@ void	all_the_work(t_gc *gc, t_token **tokens, t_env *env, t_token **tmp)
 		&& !compare_detect_condition(new_str))
 		handle_echo_expand_element(gc, tokens, env, (*tmp)->str);
 	else if ((*tmp)->next && instr->exp_str && (*tmp)->next->type == WORD)
-	{
-		handle_val_before_addtokens(gc, tokens, new_str);
-		handle_all_export_val(gc, tokens, env, tmp);
-	}
+		return (handle_val_before_addtokens(gc, tokens, new_str),
+		handle_all_export_val(gc, tokens, env, tmp));
 	else
 		assistant_all_the_work(gc, tokens, env, *tmp);
 }

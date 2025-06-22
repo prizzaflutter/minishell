@@ -11,7 +11,7 @@ HEADER = includes/minishell.h
 SRCPARS = srcs/parsing/main.c srcs/parsing/main_utilis.c srcs/parsing/handle_input.c srcs/parsing/handle_list_tokens.c \
 	srcs/parsing/handle_syntax_error.c srcs/parsing/handle_herdoc.c srcs/parsing/handle_list_commands.c srcs/parsing/main_utilis_one.c\
 	srcs/parsing/handle_list_commands_utilis.c srcs/parsing/handle_signals.c srcs/parsing/add_space_to_inputs.c \
-	srcs/parsing/handle_list_commands_utilis_one.c srcs/parsing/handle_herdoc_utilis.c srcs/parsing/handle_input_utilis.c\
+	srcs/parsing/handle_herdoc_utilis.c srcs/parsing/handle_input_utilis.c\
 	srcs/parsing/handle_herdoc_expand.c srcs/parsing/handle_expand_utilis.c srcs/parsing/handle_input_utilis_one.c \
 	srcs/parsing/handle_input_utilis_two.c srcs/parsing/handle_input_utilis_three.c srcs/parsing/handle_input_utilis_four.c \
 	lib/ft_split_expand.c lib/ft_split_expand_utilis.c lib/ft_isalnum.c srcs/parsing/handle_expand.c lib/ft_itoa.c \

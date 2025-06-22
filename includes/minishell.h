@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 11:02:27 by iaskour           #+#    #+#             */
-/*   Updated: 2025/06/21 19:59:31 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/06/22 15:44:07 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 # include <sys/wait.h>
 # include <limits.h>
 # include <stdarg.h>
-# include <stdint.h>
 # include <signal.h>
 # include <sys/stat.h>
 # include <errno.h>
@@ -285,7 +284,6 @@ void	build_command_list(t_gc *gc, t_token *tokens, t_command **cmd_list);
 char	**get_inoutfile(t_gc *gc, t_token *tokens);
 char	**get_commands(t_gc *gc, t_token *tokens);
 int		get_herdoc_fd(t_token *tokens);
-void	close_herdoc_fd(t_token **tokens);
 int		count_dollarsign_between_egall(char *str);
 int		detect_dollar_sign_insquote(char *str);
 void	call_main_signals(void);
@@ -297,7 +295,6 @@ void	build_execute_cmds_list(t_gc *gc, t_token *tokens,
 int		the_main_work(t_main_var	*mv);
 void	free_element_inside_while(t_main_var **mv);
 void	free_element_in_end(t_main_var **mv);
-void	call_read_from_heredoc_fd(t_token *tokens);
 void	clean_fd_herdoc(t_token *tokens);
 void	initia_str_value(t_gc *gc, t_str_inputs **instr,
 			char *str, char *export);

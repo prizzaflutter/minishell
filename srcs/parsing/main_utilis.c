@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utilis.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:45:15 by aykassim          #+#    #+#             */
-/*   Updated: 2025/06/21 11:01:28 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/06/22 15:27:43 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ int	the_main_work(t_main_var	*mv)
 
 void	free_element_inside_while(t_main_var **mv)
 {
-	clean_fd_herdoc((*mv)->tokens);
 	gc_clear((*mv)->gc, 1);
 	gc_clear((*mv)->gc, 3);
 	(*mv)->tokens = NULL;
@@ -82,7 +81,6 @@ void	free_element_inside_while(t_main_var **mv)
 
 void	free_element_in_end(t_main_var **mv)
 {
-	clean_fd_herdoc((*mv)->tokens);
 	gc_clear((*mv)->gc, 1);
 	gc_clear((*mv)->gc, 0);
 	free((*mv)->gc);

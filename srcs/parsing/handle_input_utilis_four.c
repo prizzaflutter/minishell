@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_input_utilis_four.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 17:52:53 by aykassim          #+#    #+#             */
-/*   Updated: 2025/06/21 11:22:01 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/06/22 15:31:40 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ char	*expand_split_first_var(t_gc *gc, char *str, t_env *env)
 	char	*new_str;
 	char	**sp;
 
+	sp = NULL;
 	new_str = gc_strdup(gc, str);
 	if (detect_separator_expand(str) == 2)
 		sp = gc_split(gc, str, '=');
