@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 21:03:55 by aykassim          #+#    #+#             */
-/*   Updated: 2025/06/21 20:36:22 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/06/22 20:21:57 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,6 @@ char	*new_value_expand(t_gc *gc, t_env *env, char *str)
 	sp = ft_split_expand(gc, str);
 	while (sp[i])
 	{
-		if (ft_strcmp(sp[i], "$") == 0)
-			sp[i] = gc_strdup(gc, "");
 		sp[i] = handle_expand(gc, sp[i], env);
 		sp[i] = handle_double_single_quotes(gc, sp[i]);
 		i++;

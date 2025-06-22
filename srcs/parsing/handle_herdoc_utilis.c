@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:44:30 by aykassim          #+#    #+#             */
-/*   Updated: 2025/06/22 15:21:43 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/06/22 15:49:15 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	initial_fd_herdoc(int *fd,	int *fd1)
 int	handle_herdoc_input(t_gc *gc, char *str, t_token *tokens, t_env *env)
 {
 	t_herdoc_h	herdoc;
- 
+
 	unlink("/tmp/.heredoc_tmp");
 	initial_fd_herdoc(&herdoc.fd, &herdoc.fd1);
 	unlink("/tmp/.heredoc_tmp");

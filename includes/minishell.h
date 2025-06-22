@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 11:02:27 by iaskour           #+#    #+#             */
-/*   Updated: 2025/06/22 15:44:07 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/06/22 16:46:15 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,15 +174,13 @@ char	*configure_path(t_gc *gc, char *cmd, t_env *env);
 void	handle_single_command(t_gc *gc, t_command *cmd, t_env **env);
 int		handle_multiple_command(t_process_context *ctx, t_command *cmd);
 char	*is_builtin(char *cmd);
-int		my_cd(t_gc *gc, t_env *env, char **argv, int is_pipe);
+int		my_cd(t_gc *gc, t_env **env, char **argv, int is_pipe);
 void	my_pwd(t_env *env);
 void	my_env(t_env *env);
 void	my_unset(t_env **env, char **argv);
 void	ft_lstadd_front_env(t_env **env, t_env *new_env);
 void	my_export(t_gc *gc, t_env **env, char **cmd_args, int is_pipe);
 t_env	*fill_env(t_gc *gc, char **envp);
-int		ft_isalpha(int a);
-int		is_valid_identifier(const char *str);
 char	**convert_env_to_array(t_gc *gc, t_env *env);
 int		handle_redirections_single(t_command *cmd);
 int		handle_redirections_multiple(t_command *current_cmd, int fd_array[]);
@@ -216,11 +214,10 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 void	ft_lstadd_front_copy(t_copy **copy, t_copy *new_copy);
 t_copy	*ft_lstnew_copy(t_gc *gc, void	*key, void *value);
 void	my_exit(char **args, int is_pip);
-char	*normalize_path(t_env *env, t_gc *gc, char *path, int flag);
+char	*normalize_path(t_env *env, t_gc *gc, char *path);
 void	go_up(t_stack **stack);
 void	add_to_path(t_gc *gc, char *path, t_stack **stack);
-void	update_oldpwd(t_gc *gc, t_env *env, char *oldpwd);
-void	no_args(t_env *env, t_gc *gc);
+void	update_oldpwd(t_gc *gc, t_env **env, char *oldpwd);
 void	ft_lstadd_back_copy(t_copy **copy, t_copy *new);
 int		ft_atoi(const char *str);
 char	*is_overflow(int set, char	*new_status);
@@ -233,7 +230,7 @@ void	export_exit(int has_error, int is_pipe);
 int		get_len(char **argv);
 int		is_absolute_path(char *path);
 int		to_manay_args(int len, int is_pipe);
-void	cd_alone(t_gc *gc, t_env *env, int is_pipe);
+void	cd_alone(t_gc *gc, t_env **env, int is_pipe);
 int		is_path_exist(t_env *env);
 int		handle_append_redir(t_command *cmd, int *out_file, int i);
 int		handle_trunc_redir(t_command *cmd, int *out_file, int i);
@@ -317,4 +314,5 @@ int		initial_main_struct(t_main_var **mvar, char **env);
 void	build_execute_cmds_list(t_gc *gc, t_token *tokens,
 			t_command *cmds, t_env **ens);
 int		max_herdoc_element(t_token *tokens);
+
 #endif

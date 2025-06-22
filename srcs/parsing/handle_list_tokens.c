@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:56:35 by aykassim          #+#    #+#             */
-/*   Updated: 2025/06/19 16:04:26 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/06/22 18:03:13 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	define_token_type(char *str, int quote)
 			return (PIPE);
 		else if (ft_strcmp(str, "<") == 0)
 			return (REDIR_IN);
-		else if (strcmp(str, ">") == 0)
+		else if (ft_strcmp(str, ">") == 0)
 			return (REDIR_OUT);
 		else if (ft_strcmp(str, "<<") == 0)
 			return (HEREDOC);

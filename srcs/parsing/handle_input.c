@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 13:14:22 by aykassim          #+#    #+#             */
-/*   Updated: 2025/06/21 21:31:02 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/06/22 20:22:50 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,29 +70,28 @@ void	handle_all_export_val(t_gc *gc, t_token **tokens,
 
 void	all_the_work(t_gc *gc, t_token **tokens, t_env *env, t_token **tmp)
 {
-	t_str_inputs	*instr;
+	t_str_inputs	instr;
 	t_token			*new_token;
 	char			*new_str;
 
 	new_str = handle_double_single_quotes(gc, (*tmp)->str);
-	instr = gc_malloc(gc, sizeof(t_str_inputs), 0);
-	instr->echo_str = NULL;
-	instr->exp_str = NULL;
+	instr.exp_str = gc_strdup(gc, "");
+	instr.echo_str = gc_strdup(gc, "");
 	if ((*tmp) && (ft_strcmp((*tmp)->str, "echo") == 0))
-		instr->echo_str = gc_strdup(gc, (*tmp)->str);
+		instr.echo_str = gc_strdup(gc, (*tmp)->str);
 	if ((*tmp) && (ft_strcmp(new_str, "export") == 0))
-		instr->exp_str = gc_strdup(gc, (*tmp)->str);
-	if (compare_detect_condition(new_str) && instr->echo_str)
+		instr.exp_str = gc_strdup(gc, (*tmp)->str);
+	if (compare_detect_condition(new_str) && instr.echo_str)
 	{
 		new_token = ft_lstnew(gc, new_str, 1, 1);
 		ft_lstadd_back(tokens, new_token);
 	}
-	else if ((*tmp)->next && instr->echo_str
+	else if ((*tmp)->next && instr.echo_str
 		&& !compare_detect_condition(new_str))
 		handle_echo_expand_element(gc, tokens, env, (*tmp)->str);
-	else if ((*tmp)->next && instr->exp_str && (*tmp)->next->type == WORD)
+	else if ((*tmp)->next && instr.exp_str && (*tmp)->next->type == WORD)
 		return (handle_val_before_addtokens(gc, tokens, new_str),
-		handle_all_export_val(gc, tokens, env, tmp));
+			handle_all_export_val(gc, tokens, env, tmp));
 	else
 		assistant_all_the_work(gc, tokens, env, *tmp);
 }
@@ -100,11 +99,11 @@ void	all_the_work(t_gc *gc, t_token **tokens, t_env *env, t_token **tmp)
 int	add_command_element(t_gc *gc, char *str, t_token **tokens, t_env *env)
 {
 	t_token	*tmp;
-	t_token	*tokens_tmp;
 
-	tokens_tmp = NULL;
-	add_element_to_listcopy(gc, str, &tokens_tmp);
-	tmp = tokens_tmp;
+	tmp = NULL;
+	add_element_to_listcopy(gc, str, &tmp);
+	if (handle_unexpected_token(tmp))
+		return (exit_status(1, 2), -1);
 	while (tmp)
 	{
 		if (tmp->type == WORD)
@@ -122,5 +121,5 @@ int	add_command_element(t_gc *gc, char *str, t_token **tokens, t_env *env)
 			add_element_to_tokens(gc, tokens, tmp->str);
 		tmp = tmp->next;
 	}
-	return (gc_clear(gc, 4), tokens_tmp = NULL, 0);
+	return (gc_clear(gc, 4), tmp = NULL, 0);
 }

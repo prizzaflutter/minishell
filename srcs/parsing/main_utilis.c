@@ -6,7 +6,7 @@
 /*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:45:15 by aykassim          #+#    #+#             */
-/*   Updated: 2025/06/22 15:27:43 by aykassim         ###   ########.fr       */
+/*   Updated: 2025/06/22 20:20:45 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ int	add_tokens_elemnt(t_gc *gc, char *str, t_token **tokens, t_env *env)
 		return (exit_status(1, 2), -1);
 	if (add_command_element(gc, str, tokens, env))
 		return (-1);
-	if (handle_unexpected_token(*tokens))
-		return (exit_status(1, 2), -1);
 	if (max_herdoc_element(*tokens))
 		return (printf("maximum here-document count exceeded\n"),
 			exit_status(1, 2), -1);

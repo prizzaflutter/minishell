@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_expand.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iaskour <iaskour@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aykassim <aykassim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:44:09 by aykassim          #+#    #+#             */
-/*   Updated: 2025/06/21 10:07:23 by iaskour          ###   ########.fr       */
+/*   Updated: 2025/06/22 20:20:12 by aykassim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	expand_env_var(t_gc *gc, t_env *env, char *str, t_var_expand **vx)
 		(*vx)->i++;
 	env_tmp = ft_substr(gc, str, j, (*vx)->i - j);
 	new_str = get_varenv_value(env_tmp, env);
+	if (!new_str)
+		new_str = gc_strdup(gc, "");
 	j = 0;
 	while (new_str && new_str[j])
 		(*vx)->res[(*vx)->k++] = new_str[j++];
@@ -82,7 +84,7 @@ char	*handle_expand(t_gc *gc, char *str, t_env *env)
 {
 	t_var_expand	*vx;	
 
-	initial_struct_handle_expand(gc, &vx, 0);
+	initial_struct_handle_expand(gc, &vx, 1);
 	vx->res = gc_malloc(gc, sizeof (char)
 			* (compute_expanded_length(gc, str, env) + 1), 0);
 	while (str[vx->i])
